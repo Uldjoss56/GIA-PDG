@@ -20,7 +20,7 @@ class SellerList extends ConsumerStatefulWidget {
 
 class _SellerListState extends ConsumerState<SellerList> {
   bool selectAll = false;
-  List<User> distSellers = [];
+  List<User> sellers = [];
   List<bool> itemSelections = [];
 
   bool isLoading = false;
@@ -30,15 +30,15 @@ class _SellerListState extends ConsumerState<SellerList> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final user = ref.watch(userProvider);
-    loadUserSeller(user.id!);
+    loadUserSeller();
   }
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
+    sellers = ref.watch(sellersProvider);
     itemSelections = List.generate(
-      distSellers.length,
+      sellers.length,
       (index) {
         if (itemSelections.isNotEmpty && itemSelections.length >= index) {
           if (itemSelections[index] == true) {
@@ -213,12 +213,22 @@ class _SellerListState extends ConsumerState<SellerList> {
                   const SizedBox(
                     height: 20,
                   ),
-                  if (distSellers.isEmpty)
+                  if (isLoading)
                     const CircularProgressIndicator()
+                  else if (sellers.isEmpty)
+                    const Center(
+                      child: Text(
+                        "Aucun vendeur",
+                        style: TextStyle(
+                          fontFamily: "Manrope",
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    )
                   else
                     Column(
-                      children: List.generate(distSellers.length, (index) {
-                        final seller = distSellers[index];
+                      children: List.generate(sellers.length, (index) {
+                        final seller = sellers[index];
                         return Card(
                           elevation: 2,
                           surfaceTintColor: myWhite,
@@ -308,7 +318,7 @@ class _SellerListState extends ConsumerState<SellerList> {
     });
   }
 
-  loadUserSeller(int distID) async {
+  loadUserSeller() async {
     final internetConnexion = await checkUserConnexion();
     if (internetConnexion) {
       setState(() {
@@ -321,16 +331,15 @@ class _SellerListState extends ConsumerState<SellerList> {
           },
         );
         final users = response["users"];
-        distSellers = [];
+        sellers = [];
         for (var user in users) {
-          if (user["valider_id"] == distID) {
-            distSellers.add(
-              User.fromJson(user),
-            );
+          if (user["is_valided"] == 1) {
+            sellers.add(User.fromJson(user));
           }
         }
+
         final sellerNotifier = ref.read(sellersProvider.notifier);
-        sellerNotifier.updateListUser(distSellers);
+        sellerNotifier.updateListUser(sellers);
       } on DioException catch (e) {
         // ignore: use_build_context_synchronously
         messenger(

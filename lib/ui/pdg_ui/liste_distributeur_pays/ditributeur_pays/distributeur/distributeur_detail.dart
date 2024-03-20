@@ -174,15 +174,16 @@ class _DistributeurDetailState extends ConsumerState<DistributeurDetail> {
               ),
             ),
             const SizedBox(
-              height: 5,
+              height: 20,
             ),
             Padding(
               padding: EdgeInsets.only(
-                right: 0.8 * width,
+                right: 0.6 * width,
+                left: 0.05 * width,
               ),
               child: const Divider(
                 height: 1,
-                thickness: 4,
+                thickness: 2,
                 color: myPink,
               ),
             ),
@@ -385,15 +386,16 @@ class _DistributeurDetailState extends ConsumerState<DistributeurDetail> {
               ],
             ),
             const SizedBox(
-              height: 5,
+              height: 20,
             ),
             Padding(
               padding: EdgeInsets.only(
-                right: 0.8 * width,
+                right: 0.59 * width,
+                left: 0.01 * width,
               ),
               child: const Divider(
                 height: 1,
-                thickness: 4,
+                thickness: 2,
                 color: myPink,
               ),
             ),

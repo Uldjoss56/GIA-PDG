@@ -5,6 +5,7 @@ import 'package:gia_pdg_partenaire/datas/datas.dart';
 import 'package:gia_pdg_partenaire/models/other_models.dart';
 import 'package:gia_pdg_partenaire/models/user.dart';
 import 'package:gia_pdg_partenaire/provider/other_provider.dart';
+import 'package:gia_pdg_partenaire/ui/pdg_ui/liste_assist/assist_list.dart';
 import 'package:gia_pdg_partenaire/ui/pdg_ui/liste_distributeur/distributeur_list.dart';
 import 'package:gia_pdg_partenaire/ui/pdg_ui/liste_distributeur_pays/distributeur_pays_list.dart';
 import 'package:gia_pdg_partenaire/ui/pdg_ui/liste_vendeur/seller_list.dart';
@@ -105,11 +106,17 @@ class _HomeState extends ConsumerState<Home> {
                                     return const DistributeurList();
                                   }),
                                 )
-                              : Navigator.of(context).push(
-                                  MaterialPageRoute(builder: (context) {
-                                    return const DistributeurPaysList();
-                                  }),
-                                );
+                              : index == 2
+                                  ? Navigator.of(context).push(
+                                      MaterialPageRoute(builder: (context) {
+                                        return const DistributeurPaysList();
+                                      }),
+                                    )
+                                  : Navigator.of(context).push(
+                                      MaterialPageRoute(builder: (context) {
+                                        return const AssistList();
+                                      }),
+                                    );
                     },
                     child: Card(
                       color: myWhite,

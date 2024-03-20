@@ -4,6 +4,8 @@ import 'package:gia_pdg_partenaire/ui/pdg_ui/distributeur_officiel/distributeur_
 import 'package:gia_pdg_partenaire/ui/pdg_ui/home/home.dart';
 import 'package:gia_pdg_partenaire/ui/pdg_ui/profil/user_profil.dart';
 
+const staticPath = "assets/img/africa_flag/";
+
 List<Map<String, dynamic>> registrationData = [
   {
     "isPassword": false,
@@ -205,11 +207,11 @@ List<Map<String, dynamic>> bottomList = [
   {
     'label': 'Distributeur Officiel',
     'icon': Image.asset(
-      'assets/img/icons/electronic.png',
+      'assets/img/icons/distribution_01.png',
       width: 25,
     ),
     'active_icon': Image.asset(
-      'assets/img/icons/electronic01.png',
+      'assets/img/icons/distribution.png',
       width: 25,
     ),
     "screen": const DistributeurOffiDetail(),
@@ -295,36 +297,220 @@ List<Map<String, dynamic>> paymentMethodData = [
 
 List<Map<String, dynamic>> countriesList = [
   {
-    "img": "assets/img/flags/benin.png",
-    "noum": "Bénin",
+    "img": "${staticPath}algeria.png",
+    "noum": "Algérie",
   },
   {
-    "img": "assets/img/flags/cote-d-ivoire.png",
-    "noum": "Côte d'Ivoire",
-  },
-  {
-    "img": "assets/img/flags/togo.png",
-    "noum": "Togo",
-  },
-  {
-    "img": "assets/img/flags/nigeria.png",
-    "noum": "Nigeria",
-  },
-  {
-    "img": "assets/img/flags/niger.png",
-    "noum": "Niger",
-  },
-  {
-    "img": "assets/img/flags/angola.png",
+    "img": "${staticPath}angola.png",
     "noum": "Angola",
   },
   {
-    "img": "assets/img/flags/south-africa.png",
+    "img": "${staticPath}benin.png",
+    "noum": "Bénin",
+  },
+  {
+    "img": "${staticPath}botswana.png",
+    "noum": "Botswana",
+  },
+  {
+    "img": "${staticPath}burkina-faso.png",
+    "noum": "Burkina Faso",
+  },
+  {
+    "img": "${staticPath}burundi.png",
+    "noum": "Burundi",
+  },
+  {
+    "img": "${staticPath}cape-verde.png",
+    "noum": "Cap-Vert",
+  },
+  {
+    "img": "${staticPath}cameroon.png",
+    "noum": "Cameroun",
+  },
+  {
+    "img": "${staticPath}central-african-republic.png",
+    "noum": "République centrafricaine",
+  },
+  {
+    "img": "${staticPath}chad.png",
+    "noum": "Tchad",
+  },
+  {
+    "img": "${staticPath}comoros.png",
+    "noum": "Comores",
+  },
+  {
+    "img": "${staticPath}congo-republic.png",
+    "noum": "Congo",
+  },
+  {
+    "img": "${staticPath}ivory-coast.png",
+    "noum": "Côte d'Ivoire",
+  },
+  {
+    "img": "${staticPath}dr-congo.png",
+    "noum": "République démocratique du Congo",
+  },
+  {
+    "img": "${staticPath}djibouti.png",
+    "noum": "Djibouti",
+  },
+  {
+    "img": "${staticPath}egypt.png",
+    "noum": "Égypte",
+  },
+  {
+    "img": "${staticPath}equatorial-guinea.png",
+    "noum": "Guinée équatoriale",
+  },
+  {
+    "img": "${staticPath}eritrea.png",
+    "noum": "Érythrée",
+  },
+  {
+    "img": "${staticPath}swaziland.png",
+    "noum": "Swaziland",
+  },
+  {
+    "img": "${staticPath}ethiopia.png",
+    "noum": "Éthiopie",
+  },
+  {
+    "img": "${staticPath}gabon.png",
+    "noum": "Gabon",
+  },
+  {
+    "img": "${staticPath}gambia.png",
+    "noum": "Gambie",
+  },
+  {
+    "img": "${staticPath}ghana.png",
+    "noum": "Ghana",
+  },
+  {
+    "img": "${staticPath}guinea.png",
+    "noum": "Guinée",
+  },
+  {
+    "img": "${staticPath}guinea-bissau.png",
+    "noum": "Guinée-Bissau",
+  },
+  {
+    "img": "${staticPath}kenya.png",
+    "noum": "Kenya",
+  },
+  {
+    "img": "${staticPath}lesotho.png",
+    "noum": "Lesotho",
+  },
+  {
+    "img": "${staticPath}liberia.png",
+    "noum": "Libéria",
+  },
+  {
+    "img": "${staticPath}libya.png",
+    "noum": "Libye",
+  },
+  {
+    "img": "${staticPath}madagascar.png",
+    "noum": "Madagascar",
+  },
+  {
+    "img": "${staticPath}malawi.png",
+    "noum": "Malawi",
+  },
+  {
+    "img": "${staticPath}mali.png",
+    "noum": "Mali",
+  },
+  {
+    "img": "${staticPath}mauritania.png",
+    "noum": "Mauritanie",
+  },
+  {
+    "img": "${staticPath}mauritius.png",
+    "noum": "Maurice",
+  },
+  {
+    "img": "${staticPath}morocco.png",
+    "noum": "Maroc",
+  },
+  {
+    "img": "${staticPath}mozambique.png",
+    "noum": "Mozambique",
+  },
+  {
+    "img": "${staticPath}namibia.png",
+    "noum": "Namibie",
+  },
+  {
+    "img": "${staticPath}niger.png",
+    "noum": "Niger",
+  },
+  {
+    "img": "${staticPath}nigeria.png",
+    "noum": "Nigeria",
+  },
+  {
+    "img": "${staticPath}rwanda.png",
+    "noum": "Rwanda",
+  },
+  {
+    "img": "${staticPath}sao-tome-and-principe.png",
+    "noum": "Sao Tomé-et-Principe",
+  },
+  {
+    "img": "${staticPath}senegal.png",
+    "noum": "Sénégal",
+  },
+  {
+    "img": "${staticPath}seychelles.png",
+    "noum": "Seychelles",
+  },
+  {
+    "img": "${staticPath}sierra-leone.png",
+    "noum": "Sierra Leone",
+  },
+  {
+    "img": "${staticPath}somalia.png",
+    "noum": "Somalie",
+  },
+  {
+    "img": "${staticPath}south-africa.png",
     "noum": "Afrique du Sud",
   },
   {
-    "img": "assets/img/flags/namibia.png",
-    "noum": "Namibie",
+    "img": "${staticPath}south-sudan.png",
+    "noum": "Soudan du Sud",
+  },
+  {
+    "img": "${staticPath}sudan.png",
+    "noum": "Soudan",
+  },
+  {
+    "img": "${staticPath}tanzania.png",
+    "noum": "Tanzanie",
+  },
+  {
+    "img": "${staticPath}togo.png",
+    "noum": "Togo",
+  },
+  {
+    "img": "${staticPath}tunisia.png",
+    "noum": "Tunisie",
+  },
+  {
+    "img": "${staticPath}uganda.png",
+    "noum": "Ouganda",
+  },
+  {
+    "img": "${staticPath}zambia.png",
+    "noum": "Zambie",
+  },
+  {
+    "img": "${staticPath}zimbabwe.png",
+    "noum": "Zimbabwe",
   },
 ];
 
@@ -352,9 +538,11 @@ List<String> pdgOptions = [
   "Liste des vendeurs",
   "Liste des distributeurs",
   "Liste des distributeurs pays",
+  "Liste des assistants clientèles",
 ];
 
 List<String> pdgOptionsImg = [
+  "assets/img/list.jpg",
   "assets/img/list.jpg",
   "assets/img/list.jpg",
   "assets/img/list.jpg",

@@ -164,17 +164,21 @@ class _DistributeurPaysState extends ConsumerState<DistributeurPays> {
                 ),
               ),
               const SizedBox(
-                height: 10,
+                height: 20,
               ),
               Padding(
                 padding: EdgeInsets.only(
-                  right: 0.8 * width,
+                  right: 0.6 * width,
+                  left: 0.2 * width,
                 ),
                 child: const Divider(
                   height: 1,
-                  thickness: 4,
+                  thickness: 2,
                   color: myPink,
                 ),
+              ),
+              const SizedBox(
+                height: 40,
               ),
               const Align(
                 alignment: Alignment.centerLeft,
@@ -371,13 +375,17 @@ class _DistributeurPaysState extends ConsumerState<DistributeurPays> {
                   ),
                 ],
               ),
+              const SizedBox(
+                height: 20,
+              ),
               Padding(
                 padding: EdgeInsets.only(
-                  right: 0.8 * width,
+                  right: 0.5 * width,
+                  left: 0.1 * width,
                 ),
                 child: const Divider(
                   height: 1,
-                  thickness: 4,
+                  thickness: 2,
                   color: myPink,
                 ),
               ),
@@ -412,65 +420,60 @@ class _DistributeurPaysState extends ConsumerState<DistributeurPays> {
                     : Column(
                         children: List.generate(dists.length, (index) {
                           final dist = dists[index];
-                          return Card(
-                            elevation: 2,
-                            surfaceTintColor: myWhite,
-                            child: ListTile(
-                              onTap: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(builder: (context) {
-                                    return DistributeurDetail(
-                                      dist: dist,
-                                    );
-                                  }),
-                                );
-                              },
-                              shape: const ContinuousRectangleBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(20),
-                                ),
+                          return ListTile(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(builder: (context) {
+                                  return DistributeurDetail(
+                                    dist: dist,
+                                  );
+                                }),
+                              );
+                            },
+                            shape: const ContinuousRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(20),
                               ),
-                              leading: CircleAvatar(
-                                backgroundColor: myPink,
-                                child: ClipOval(
-                                  child: AspectRatio(
-                                    aspectRatio: 1,
-                                    child: Image.asset(
-                                      "assets/img/user_image.jpg",
-                                      fit: BoxFit.cover,
-                                    ),
+                            ),
+                            leading: CircleAvatar(
+                              backgroundColor: myPink,
+                              child: ClipOval(
+                                child: AspectRatio(
+                                  aspectRatio: 1,
+                                  child: Image.asset(
+                                    "assets/img/user_image.jpg",
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
                               ),
-                              title: Text(
-                                "Distributeur ${numberFormat.format(index + 1)}",
-                                style: const TextStyle(
-                                  fontFamily: 'Manrope',
-                                  fontWeight: FontWeight.w600,
+                            ),
+                            title: Text(
+                              "Distributeur ${numberFormat.format(index + 1)}",
+                              style: const TextStyle(
+                                fontFamily: 'Manrope',
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            subtitle: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  dist.name ?? "---",
+                                  style: const TextStyle(
+                                    fontFamily: 'Manrope',
+                                    fontWeight: FontWeight.w400,
+                                  ),
                                 ),
-                              ),
-                              subtitle: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    dist.name ?? "---",
-                                    style: const TextStyle(
-                                      fontFamily: 'Manrope',
-                                      fontWeight: FontWeight.w400,
-                                    ),
+                                Text(
+                                  dist.email ?? "---",
+                                  style: const TextStyle(
+                                    fontFamily: 'Manrope',
+                                    color: myPink,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 10,
                                   ),
-                                  Text(
-                                    dist.email ?? "---",
-                                    style: const TextStyle(
-                                      fontFamily: 'Manrope',
-                                      color: myPink,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 10,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           );
                         }),

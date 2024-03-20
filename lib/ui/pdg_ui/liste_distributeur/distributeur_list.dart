@@ -5,6 +5,7 @@ import 'package:gia_pdg_partenaire/components/const/colors.dart';
 import 'package:gia_pdg_partenaire/components/const/number.dart';
 import 'package:gia_pdg_partenaire/components/show_info.dart';
 import 'package:gia_pdg_partenaire/components/sort_alert.dart';
+import 'package:gia_pdg_partenaire/models/other_models.dart';
 import 'package:gia_pdg_partenaire/models/user.dart';
 import 'package:gia_pdg_partenaire/provider/user_provider.dart';
 import 'package:gia_pdg_partenaire/services/const.dart';
@@ -19,6 +20,10 @@ class DistributeurList extends ConsumerStatefulWidget {
 }
 
 class _DistributeurListState extends ConsumerState<DistributeurList> {
+  List<User> distList = [];
+  List<Country> countryList = [];
+  User? currentUser;
+
   bool selectAll = false;
   List<bool> itemSelections = [];
 
@@ -26,18 +31,16 @@ class _DistributeurListState extends ConsumerState<DistributeurList> {
 
   final _userService = UserService();
 
-  List<User> distList = [];
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final user = ref.watch(userProvider);
-    loadUserDist(user.id!);
+    loadUserDist();
   }
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
+    distList = ref.watch(distributeursProvider);
     itemSelections = List.generate(
       distList.length,
       (index) {
@@ -225,7 +228,7 @@ class _DistributeurListState extends ConsumerState<DistributeurList> {
                           Navigator.of(context).push(
                             MaterialPageRoute(builder: (context) {
                               return DistributeurDetail(
-                                userID:  index,
+                                userID: index,
                               );
                             }),
                           );
@@ -264,13 +267,19 @@ class _DistributeurListState extends ConsumerState<DistributeurList> {
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
-                            Text(
-                              dist.email ?? "----",
-                              style: const TextStyle(
-                                fontFamily: 'Manrope',
-                                color: myPink,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 10,
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            SizedBox(
+                              width: 0.2 * width,
+                              child: Text(
+                                dist.email ?? "----",
+                                style: const TextStyle(
+                                  fontFamily: 'Manrope',
+                                  color: myPink,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 10,
+                                ),
                               ),
                             ),
                           ],
@@ -303,7 +312,7 @@ class _DistributeurListState extends ConsumerState<DistributeurList> {
     });
   }
 
-  loadUserDist(int distPaysID) async {
+  loadUserDist() async {
     final internetConnexion = await checkUserConnexion();
     if (internetConnexion) {
       setState(() {
@@ -318,7 +327,7 @@ class _DistributeurListState extends ConsumerState<DistributeurList> {
         final users = response["users"];
         distList = [];
         for (var user in users) {
-          if (user["valider_id"] == distPaysID) {
+          if (user["is_valided"] == 1) {
             distList.add(
               User.fromJson(user),
             );

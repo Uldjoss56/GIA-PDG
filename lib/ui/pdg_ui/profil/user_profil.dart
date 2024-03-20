@@ -1,23 +1,37 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gia_pdg_partenaire/const/colors.dart';
 import 'package:gia_pdg_partenaire/datas/datas.dart';
+import 'package:gia_pdg_partenaire/models/user.dart';
+import 'package:gia_pdg_partenaire/provider/user_provider.dart';
+import 'package:gia_pdg_partenaire/services/users_service.dart';
+import 'package:gia_pdg_partenaire/ui/begin.dart';
 import 'package:gia_pdg_partenaire/ui/pdg_ui/profil/account.dart';
 import 'package:gia_pdg_partenaire/ui/pdg_ui/widget/image_input.dart';
 
-class UserProfil extends StatefulWidget {
+class UserProfil extends ConsumerStatefulWidget {
   const UserProfil({super.key});
 
   @override
-  State<UserProfil> createState() => _UserProfilState();
+  ConsumerState<UserProfil> createState() => _UserProfilState();
 }
 
-class _UserProfilState extends State<UserProfil> {
+class _UserProfilState extends ConsumerState<UserProfil> {
   bool statusLangue = false;
   String selectLangue = "Français";
 
   File? selectedImage;
+  User? currentUser;
+
+  final _userService = UserService();
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    currentUser = ref.watch(userProvider);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,12 +69,12 @@ class _UserProfilState extends State<UserProfil> {
                         height: 0.2 * width,
                       ),
                       Text(
-                        "DJOSSOU Comlan Ulrich",
+                        currentUser?.name ?? "-----",
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
-                      const Text(
-                        "uldjoss56@gmail.com",
-                        style: TextStyle(
+                      Text(
+                        currentUser?.email ?? "-----",
+                        style: const TextStyle(
                           fontFamily: "Manrope",
                           color: myGrisFonce,
                         ),
@@ -157,8 +171,8 @@ class _UserProfilState extends State<UserProfil> {
                                     title: const Text(
                                       "date de naissance",
                                     ),
-                                    subtitle: const Text(
-                                      "20-07-2004",
+                                    subtitle: Text(
+                                      currentUser?.dateOfBirth ?? "-----",
                                     ),
                                   ),
                                 ),
@@ -171,24 +185,51 @@ class _UserProfilState extends State<UserProfil> {
                                     title: const Text(
                                       "sexe",
                                     ),
-                                    subtitle: const Text(
-                                      "Masculin",
+                                    subtitle: Text(
+                                      currentUser?.sex ?? "-----",
                                     ),
                                   ),
                                 ),
                               ],
                             ),
-                            ListTile(
-                              leading: Image.asset(
-                                "assets/img/icons/phone_pink.png",
-                                width: 0.08 * width,
-                              ),
-                              title: const Text(
-                                "phone",
-                              ),
-                              subtitle: const Text(
-                                "00229 64548929",
-                              ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: ListTile(
+                                    leading: Image.asset(
+                                      "assets/img/icons/phone_pink.png",
+                                      width: 0.08 * width,
+                                    ),
+                                    title: const Text(
+                                      "phone",
+                                    ),
+                                    subtitle: const Text(
+                                      "------",
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: ListTile(
+                                    leading: ColorFiltered(
+                                      colorFilter: const ColorFilter.mode(
+                                        myPink,
+                                        BlendMode.srcIn,
+                                      ),
+                                      child: Image.asset(
+                                        "assets/img/icons/link.png",
+                                        width: 0.07 * width,
+                                      ),
+                                    ),
+                                    title: const Text(
+                                      "statut",
+                                    ),
+                                    subtitle: Text(
+                                      "PDG",
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
@@ -307,6 +348,55 @@ class _UserProfilState extends State<UserProfil> {
                         ),
                       ),
                       ListTile(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: const Text(
+                                  "Déconnexion",
+                                ),
+                                content: const Text(
+                                  "Voulez-vous vraiment déconnecter ?",
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () async {
+                                      await _userService.disconnectUser();
+                                      // ignore: use_build_context_synchronously
+                                      Navigator.of(context).pushAndRemoveUntil(
+                                        MaterialPageRoute(builder: (_) {
+                                          return const Begin();
+                                        }),
+                                        (value) => false,
+                                      );
+                                    },
+                                    child: const Text(
+                                      "Se déconnecter",
+                                      style: TextStyle(
+                                        fontFamily: "Manrope",
+                                        fontSize: 14,
+                                        color: myGrisFonce,
+                                      ),
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text(
+                                      "Annuler",
+                                      style: TextStyle(
+                                        fontFamily: "Manrope",
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
                         leading: ColorFiltered(
                           colorFilter: const ColorFilter.mode(
                             myPink,

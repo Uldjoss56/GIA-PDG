@@ -61,3 +61,21 @@ final assistantClientProvider = StateNotifierProvider<UserNotifier, User>(
     User(),
   ),
 );
+
+
+class AssistNotifier extends StateNotifier<List<User>> {
+  AssistNotifier(List<User> assist) : super(assist);
+
+  void updateListUser(List<User> assist) {
+    state = assist;
+  }
+}
+
+final assistProvider =
+    StateNotifierProvider<AssistNotifier, List<User>>(
+  (ref) => AssistNotifier(
+    [],
+  ),
+);
+
+
