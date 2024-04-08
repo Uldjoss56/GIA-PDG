@@ -5,6 +5,9 @@ import 'package:gia_pdg_partenaire/datas/datas.dart';
 import 'package:gia_pdg_partenaire/models/other_models.dart';
 import 'package:gia_pdg_partenaire/models/user.dart';
 import 'package:gia_pdg_partenaire/provider/other_provider.dart';
+import 'package:gia_pdg_partenaire/provider/user_provider.dart';
+import 'package:gia_pdg_partenaire/ui/pdg_ui/commander_dma/commander_dma.dart';
+import 'package:gia_pdg_partenaire/ui/pdg_ui/distributeur_officiel/distributeur_off_detail.dart';
 import 'package:gia_pdg_partenaire/ui/pdg_ui/liste_assist/assist_list.dart';
 import 'package:gia_pdg_partenaire/ui/pdg_ui/liste_distributeur/distributeur_list.dart';
 import 'package:gia_pdg_partenaire/ui/pdg_ui/liste_distributeur_pays/distributeur_pays_list.dart';
@@ -25,12 +28,14 @@ class _HomeState extends ConsumerState<Home> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    currentUser = ref.watch(userProvider);
     listOfCountries = ref.watch(countriesProvider);
   }
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: Column(
         children: [
@@ -97,26 +102,40 @@ class _HomeState extends ConsumerState<Home> {
                       index == 0
                           ? Navigator.of(context).push(
                               MaterialPageRoute(builder: (context) {
-                                return const SellerList();
+                                return const DistributeurOffiDetail();
                               }),
                             )
                           : index == 1
                               ? Navigator.of(context).push(
                                   MaterialPageRoute(builder: (context) {
-                                    return const DistributeurList();
+                                    return const SellerList();
                                   }),
                                 )
                               : index == 2
                                   ? Navigator.of(context).push(
                                       MaterialPageRoute(builder: (context) {
-                                        return const DistributeurPaysList();
+                                        return const DistributeurList();
                                       }),
                                     )
-                                  : Navigator.of(context).push(
-                                      MaterialPageRoute(builder: (context) {
-                                        return const AssistList();
-                                      }),
-                                    );
+                                  : index == 3
+                                      ? Navigator.of(context).push(
+                                          MaterialPageRoute(builder: (context) {
+                                            return const DistributeurPaysList();
+                                          }),
+                                        )
+                                      : index == 4
+                                          ? Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) {
+                                                return const AssistList();
+                                              }),
+                                            )
+                                          : Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) {
+                                                return const CommanderDMA();
+                                              }),
+                                            );
                     },
                     child: Card(
                       color: myWhite,

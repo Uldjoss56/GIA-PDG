@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:gia_pdg_partenaire/components/const/number.dart';
 import 'package:gia_pdg_partenaire/const/colors.dart';
 import 'package:gia_pdg_partenaire/ui/pdg_ui/paiement/paiement.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:intl/intl.dart';
 import 'package:location/location.dart';
 
 class ReceptionAddress extends StatefulWidget {
@@ -13,7 +13,6 @@ class ReceptionAddress extends StatefulWidget {
 }
 
 class _ReceptionAddressState extends State<ReceptionAddress> {
-  final format = NumberFormat("#,###", "fr");
   Location location = Location();
 
   bool? _serviceEnabled;
@@ -260,7 +259,7 @@ class _ReceptionAddressState extends State<ReceptionAddress> {
                               height: 5,
                             ),
                             Text(
-                              "XOF ${format.format(20000)}",
+                              "XOF ${moneyFormat.format(20000)}",
                               style: const TextStyle(
                                 fontFamily: "Manrope",
                                 color: myGrisFonce,

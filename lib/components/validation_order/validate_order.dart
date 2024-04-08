@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gia_pdg_partenaire/components/button.dart';
 import 'package:gia_pdg_partenaire/components/const/colors.dart';
 import 'package:gia_pdg_partenaire/datas/datas.dart';
 import 'package:gia_pdg_partenaire/models/orders.dart';
@@ -61,235 +60,191 @@ class _ValidateOrderState extends ConsumerState<ValidateOrder> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Card(
-              margin: const EdgeInsets.symmetric(
-                vertical: 30,
-                horizontal: 18,
-              ),
-              elevation: 5,
-              color: Colors.white,
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Column(
+        child: Card(
+          margin: const EdgeInsets.symmetric(
+            vertical: 30,
+            horizontal: 18,
+          ),
+          elevation: 5,
+          color: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              children: [
+                const Text(
+                  "Informations sur la commande",
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontFamily: "Manrope",
+                    color: myPink,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                ListTile(
+                  leading: const Icon(
+                    Icons.numbers,
+                    color: myPink,
+                  ),
+                  title: const Text(
+                    "nombre de DMAs",
+                  ),
+                  subtitle: Text(
+                    order?.number.toString() ?? "------",
+                    style: const TextStyle(
+                      fontFamily: "Manrope",
+                      fontSize: 20,
+                      fontWeight: FontWeight.w800,
+                      color: myPink,
+                    ),
+                  ),
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      "Informations sur la commande",
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontFamily: "Manrope",
-                        color: myPink,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
+                    Expanded(
+                      child: ListTile(
+                        leading: ColorFiltered(
+                          colorFilter: const ColorFilter.mode(
+                            myPink,
+                            BlendMode.srcIn,
+                          ),
+                          child: Image.asset(
+                            "assets/img/icons/user.png",
+                            width: 0.08 * width,
+                          ),
+                        ),
+                        title: const Text(
+                          "nom & prénoms",
+                        ),
+                        subtitle: Text(
+                          order?.author?.name ?? "------",
+                        ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    ListTile(
-                      leading: const Icon(
-                        Icons.numbers,
-                        color: myPink,
-                      ),
-                      title: const Text(
-                        "nombre de DMAs",
-                      ),
-                      subtitle: Text(
-                        order?.number.toString() ?? "------",
-                        style: const TextStyle(
-                          fontFamily: "Manrope",
-                          fontSize: 20,
-                          fontWeight: FontWeight.w800,
+                    Expanded(
+                      child: ListTile(
+                        leading: Icon(
+                          Icons.mail_outline,
                           color: myPink,
+                          size: 0.08 * width,
+                        ),
+                        title: const Text(
+                          "email",
+                        ),
+                        subtitle: Text(
+                          order?.author?.email ?? "------",
                         ),
                       ),
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: ListTile(
-                            leading: ColorFiltered(
-                              colorFilter: const ColorFilter.mode(
-                                myPink,
-                                BlendMode.srcIn,
-                              ),
-                              child: Image.asset(
-                                "assets/img/icons/user.png",
-                                width: 0.08 * width,
-                              ),
-                            ),
-                            title: const Text(
-                              "nom & prénoms",
-                            ),
-                            subtitle: Text(
-                              order?.author?.name ?? "------",
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: ListTile(
-                            leading: Icon(
-                              Icons.mail_outline,
-                              color: myPink,
-                              size: 0.08 * width,
-                            ),
-                            title: const Text(
-                              "email",
-                            ),
-                            subtitle: Text(
-                              order?.author?.email ?? "------",
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: ListTile(
-                            leading: Image.asset(
-                              "assets/img/icons/birthday-cake_pink.png",
-                              width: 0.08 * width,
-                            ),
-                            title: const Text(
-                              "date de naissance",
-                            ),
-                            subtitle: Text(
-                              order?.author?.dateOfBirth ?? "------",
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: ListTile(
-                            leading: Image.asset(
-                              "assets/img/icons/gender-fluid_pink.png",
-                              width: 0.08 * width,
-                            ),
-                            title: const Text(
-                              "sexe",
-                            ),
-                            subtitle: Text(
-                              order?.author?.sex ?? "------",
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: ListTile(
-                            leading: ColorFiltered(
-                              colorFilter: const ColorFilter.mode(
-                                myPink,
-                                BlendMode.srcIn,
-                              ),
-                              child: RotatedBox(
-                                quarterTurns: 1,
-                                child: Image.asset(
-                                  "assets/img/icons/country.png",
-                                  width: 0.08 * width,
-                                ),
-                              ),
-                            ),
-                            title: const Text(
-                              "pays",
-                            ),
-                            subtitle: Row(
-                              children: [
-                                ClipOval(
-                                  child: Image.asset(
-                                    countriesList[
-                                            (order?.author?.countryId ?? 1) - 1]
-                                        ["img"],
-                                    fit: BoxFit.cover,
-                                    width: 20,
-                                    height: 20,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  countriesList[
-                                          (order?.author?.countryId ?? 1) - 1]
-                                      ["noum"],
-                                  style: const TextStyle(
-                                    fontFamily: "Manrope",
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                    color: myGrisFonce,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: ListTile(
-                            leading: Icon(
-                              Icons.perm_identity_rounded,
-                              color: myPink,
-                              size: 0.08 * width,
-                            ),
-                            title: const Text(
-                              "Rôle",
-                            ),
-                            subtitle: const Text(
-                              "Vendeur",
-                            ),
-                          ),
-                        ),
-                      ],
                     ),
                   ],
                 ),
-              ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: ListTile(
+                        leading: Image.asset(
+                          "assets/img/icons/birthday-cake_pink.png",
+                          width: 0.08 * width,
+                        ),
+                        title: const Text(
+                          "date de naissance",
+                        ),
+                        subtitle: Text(
+                          order?.author?.dateOfBirth ?? "------",
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: ListTile(
+                        leading: Image.asset(
+                          "assets/img/icons/gender-fluid_pink.png",
+                          width: 0.08 * width,
+                        ),
+                        title: const Text(
+                          "sexe",
+                        ),
+                        subtitle: Text(
+                          order?.author?.sex ?? "------",
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: ListTile(
+                        leading: ColorFiltered(
+                          colorFilter: const ColorFilter.mode(
+                            myPink,
+                            BlendMode.srcIn,
+                          ),
+                          child: RotatedBox(
+                            quarterTurns: 1,
+                            child: Image.asset(
+                              "assets/img/icons/country.png",
+                              width: 0.08 * width,
+                            ),
+                          ),
+                        ),
+                        title: const Text(
+                          "pays",
+                        ),
+                        subtitle: Row(
+                          children: [
+                            ClipOval(
+                              child: Image.asset(
+                                countriesList[
+                                    (order?.author?.countryId ?? 1) - 1]["img"],
+                                fit: BoxFit.cover,
+                                width: 20,
+                                height: 20,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              countriesList[(order?.author?.countryId ?? 1) - 1]
+                                  ["noum"],
+                              style: const TextStyle(
+                                fontFamily: "Manrope",
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: myGrisFonce,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: ListTile(
+                        leading: Icon(
+                          Icons.perm_identity_rounded,
+                          color: myPink,
+                          size: 0.08 * width,
+                        ),
+                        title: const Text(
+                          "Rôle",
+                        ),
+                        subtitle: const Text(
+                          "Vendeur",
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Button(
-                    buttonText: const Text(
-                      "Annuler",
-                      style: TextStyle(
-                        fontFamily: "Manrope",
-                        color: myGris,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    onpressed: () {},
-                    buttonWidth: width * 0.3,
-                    buttonHeight: width * 0.15,
-                  ),
-                  Button(
-                    buttonText: const Text(
-                      "Valider",
-                      style: TextStyle(
-                        color: myGris,
-                        fontFamily: "Manrope",
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    onpressed: () {},
-                    buttonWidth: width * 0.3,
-                    buttonHeight: width * 0.15,
-                  )
-                ],
-              ),
-            )
-          ],
+          ),
         ),
       ),
     );

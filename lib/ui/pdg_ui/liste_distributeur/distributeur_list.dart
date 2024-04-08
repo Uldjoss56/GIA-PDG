@@ -228,7 +228,7 @@ class _DistributeurListState extends ConsumerState<DistributeurList> {
                           Navigator.of(context).push(
                             MaterialPageRoute(builder: (context) {
                               return DistributeurDetail(
-                                userID: index,
+                                user: dist,
                               );
                             }),
                           );

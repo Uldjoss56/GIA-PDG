@@ -1,74 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:gia_pdg_partenaire/const/colors.dart';
-import 'package:gia_pdg_partenaire/ui/partner_ui/screen/login_partner/login_partner.dart';
-import 'package:gia_pdg_partenaire/ui/pdg_ui/login/pdg_login.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gia_pdg_partenaire/components/const/colors.dart';
+import 'package:gia_pdg_partenaire/ui/pdg_ui/messaging_ui/messaging.dart';
 
-class ChooseAccount extends StatelessWidget {
-  const ChooseAccount({super.key});
+class ChatList extends ConsumerWidget {
+  const ChatList({
+    super.key,
+  });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Container(
-        color: myPink,
+        margin: const EdgeInsets.only(top: 20),
+        color: myWhite,
         child: Column(
           children: [
-            SizedBox(
-              width: width,
-              height: 0.6 * height,
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(50),
-                      bottomRight: Radius.circular(50),
-                    ),
-                    child: Image.asset(
-                      "assets/img/background_pdg.jpg",
-                      fit: BoxFit.cover,
-                      width: double.infinity,
-                      height: double.infinity,
-                    ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.all(20),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          "Bienvenue sur votre application",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: "Manrope",
-                            fontSize: 24,
-                            fontWeight: FontWeight.w700,
-                            color: myWhite,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          "choisissez votre compte pour continuer",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: "Manrope",
-                            fontWeight: FontWeight.w500,
-                            color: myPink02,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
             Padding(
               padding: const EdgeInsets.all(20),
               child: Row(
@@ -81,7 +29,9 @@ class ChooseAccount extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const LoginPartner(),
+                            builder: (context) => const MessagingUI(
+                              title: "Administrateur",
+                            ),
                           ),
                         );
                       },
@@ -95,7 +45,7 @@ class ChooseAccount extends StatelessWidget {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: Image.asset(
-                                "assets/img/partners.jpg",
+                                "assets/img/dist.jpg",
                                 fit: BoxFit.fitWidth,
                                 height: 0.3 * width,
                                 width: 0.6 * width,
@@ -104,7 +54,7 @@ class ChooseAccount extends StatelessWidget {
                             const Padding(
                               padding: EdgeInsets.all(10),
                               child: Text(
-                                "Partenaire",
+                                "Admin",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontFamily: "Manrope-Medium",
@@ -128,7 +78,9 @@ class ChooseAccount extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const PdgLogin(),
+                            builder: (context) => const MessagingUI(
+                              title: "Distributeur Officiel",
+                            ),
                           ),
                         );
                       },
@@ -142,7 +94,7 @@ class ChooseAccount extends StatelessWidget {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: Image.asset(
-                                "assets/img/pdg.jpg",
+                                "assets/img/heart_phone.jpg",
                                 fit: BoxFit.fitWidth,
                                 height: 0.3 * width,
                                 width: 0.6 * width,
@@ -151,7 +103,7 @@ class ChooseAccount extends StatelessWidget {
                             const Padding(
                               padding: EdgeInsets.all(10),
                               child: Text(
-                                "PDG",
+                                "Distributeur Officiel",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontFamily: "Manrope-Medium",

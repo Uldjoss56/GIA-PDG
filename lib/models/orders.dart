@@ -198,3 +198,36 @@ class Author {
         "ca": ca,
       };
 }
+
+class OrderMeData {
+  final bool? status;
+  final String? message;
+  final List<Order>? data;
+
+  OrderMeData({
+    this.status,
+    this.message,
+    this.data,
+  });
+
+  factory OrderMeData.fromRawJson(String str) =>
+      OrderMeData.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory OrderMeData.fromJson(Map<String, dynamic> json) => OrderMeData(
+        status: json["status"],
+        message: json["message"],
+        data: json["data"] == null
+            ? []
+            : List<Order>.from(json["data"]!.map((x) => Order.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "status": status,
+        "message": message,
+        "data": data == null
+            ? []
+            : List<dynamic>.from(data!.map((x) => x.toJson())),
+      };
+}

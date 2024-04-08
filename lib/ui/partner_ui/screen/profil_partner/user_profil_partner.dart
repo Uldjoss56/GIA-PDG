@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:gia_pdg_partenaire/const/colors.dart';
 import 'package:gia_pdg_partenaire/datas/datas.dart';
+import 'package:gia_pdg_partenaire/services/users_service.dart';
+import 'package:gia_pdg_partenaire/ui/begin.dart';
 import 'package:gia_pdg_partenaire/ui/partner_ui/screen/profil_partner/widgets/image_input.dart';
 import 'account_partner.dart';
 
@@ -18,6 +20,8 @@ class _PartnerProfilState extends State<PartnerProfil> {
   String selectLangue = "Français";
 
   File? selectedImage;
+
+  final _userService = UserService();
 
   @override
   Widget build(BuildContext context) {
@@ -350,6 +354,55 @@ class _PartnerProfilState extends State<PartnerProfil> {
                         ),
                       ),
                       ListTile(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: const Text(
+                                  "Déconnexion",
+                                ),
+                                content: const Text(
+                                  "Voulez-vous vraiment déconnecter ?",
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () async {
+                                      await _userService.disconnectUser();
+                                      // ignore: use_build_context_synchronously
+                                      Navigator.of(context).pushAndRemoveUntil(
+                                        MaterialPageRoute(builder: (_) {
+                                          return const Begin();
+                                        }),
+                                        (value) => false,
+                                      );
+                                    },
+                                    child: const Text(
+                                      "Se déconnecter",
+                                      style: TextStyle(
+                                        fontFamily: "Manrope",
+                                        fontSize: 14,
+                                        color: myGrisFonce,
+                                      ),
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text(
+                                      "Annuler",
+                                      style: TextStyle(
+                                        fontFamily: "Manrope",
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
                         leading: ColorFiltered(
                           colorFilter: const ColorFilter.mode(
                             myPink,

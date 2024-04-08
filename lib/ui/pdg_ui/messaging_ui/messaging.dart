@@ -4,7 +4,12 @@ import 'package:gia_pdg_partenaire/datas/datas.dart';
 import 'package:gia_pdg_partenaire/ui/pdg_ui/widget/custom_clipper.dart';
 
 class MessagingUI extends StatefulWidget {
-  const MessagingUI({super.key});
+  const MessagingUI({
+    super.key,
+    required this.title,
+  });
+
+  final String title;
 
   @override
   State<MessagingUI> createState() => _MessagingUIState();
@@ -14,97 +19,35 @@ class _MessagingUIState extends State<MessagingUI> {
   bool isChatbot = false;
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: Column(
-          children: [
-            Text(
-              "Chat",
-              style: Theme.of(context).textTheme.titleMedium,
+        automaticallyImplyLeading: false,
+        title: Text(
+          widget.title,
+          style: const TextStyle(
+            color: myPink,
+            fontFamily: "Manrope",
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          icon: const Center(
+            child: Icon(
+              Icons.keyboard_arrow_left_rounded,
+              color: myPink,
+              size: 30,
+              weight: 30,
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 0.4 * width,
-              ),
-              child: Container(
-                height: 4,
-                decoration: BoxDecoration(
-                  color: myPink,
-                  borderRadius: BorderRadius.circular(4),
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          isChatbot = true;
-                        });
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: isChatbot ? myPink : null,
-                          borderRadius: const BorderRadius.only(
-                            topRight: Radius.circular(30),
-                          ),
-                        ),
-                        child: Text(
-                          "Chatbot",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: "Manrope",
-                            color: isChatbot ? myWhite : myGrisFonceAA,
-                            fontSize: isChatbot ? 16 : 14,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          isChatbot = false;
-                        });
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: isChatbot ? null : myPink,
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(30),
-                          ),
-                        ),
-                        child: Text(
-                          "Chat en direct",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: "Manrope",
-                            color: isChatbot ? myGrisFonceAA : myWhite,
-                            fontSize: isChatbot ? 14 : 16,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(

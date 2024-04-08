@@ -224,7 +224,7 @@ class _UserProfilState extends ConsumerState<UserProfil> {
                                     title: const Text(
                                       "statut",
                                     ),
-                                    subtitle: Text(
+                                    subtitle: const Text(
                                       "PDG",
                                     ),
                                   ),

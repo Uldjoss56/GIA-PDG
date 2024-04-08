@@ -4,7 +4,10 @@ import 'package:gia_pdg_partenaire/const/colors.dart';
 class DMADetail extends StatefulWidget {
   const DMADetail({
     super.key,
+    required this.productIndex,
   });
+
+  final String productIndex;
 
   @override
   State<DMADetail> createState() => _DMADetailState();

@@ -9,15 +9,15 @@ import 'package:gia_pdg_partenaire/models/user.dart';
 import 'package:gia_pdg_partenaire/provider/user_provider.dart';
 import 'package:gia_pdg_partenaire/services/const.dart';
 import 'package:gia_pdg_partenaire/services/users_service.dart';
-import 'package:gia_pdg_partenaire/ui/pdg_ui/liste_distributeur/ditributeur/seller/seller_detail.dart';
+import 'package:gia_pdg_partenaire/ui/pdg_ui/liste_vendeur/seller/seller_detail.dart';
 
 class DistributeurDetail extends ConsumerStatefulWidget {
   const DistributeurDetail({
     super.key,
-    required this.userID,
+    required this.user,
   });
 
-  final int userID;
+  final User user;
 
   @override
   ConsumerState<DistributeurDetail> createState() => _DistributeurDetailState();
@@ -42,8 +42,7 @@ class _DistributeurDetailState extends ConsumerState<DistributeurDetail> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final userDists = ref.watch(distributeursProvider);
-    dist = userDists[widget.userID];
+    dist = widget.user;
     loadUserSeller(dist!.id!);
   }
 
@@ -75,7 +74,7 @@ class _DistributeurDetailState extends ConsumerState<DistributeurDetail> {
           ),
         ),
         title: Text(
-          "Distributeur ${numberFormat.format(widget.userID + 1)}",
+          "Distributeur ${numberFormat.format((widget.user.id ?? 0) + 1)}",
           style: const TextStyle(
             fontFamily: 'Manrope-SemiBold',
           ),
@@ -200,13 +199,13 @@ class _DistributeurDetailState extends ConsumerState<DistributeurDetail> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Card(
+                Card(
                   elevation: 2,
                   child: Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
-                        Text(
+                        const Text(
                           "aujourd'hui",
                           style: TextStyle(
                             fontFamily: "Manrope",
@@ -214,10 +213,10 @@ class _DistributeurDetailState extends ConsumerState<DistributeurDetail> {
                             color: myGrisFonceAA,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
-                        Row(
+                        const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Column(
@@ -231,7 +230,7 @@ class _DistributeurDetailState extends ConsumerState<DistributeurDetail> {
                                   ),
                                 ),
                                 Text(
-                                  "50 DMAs",
+                                  "-- DMA",
                                   style: TextStyle(
                                     fontFamily: "Manrope",
                                     fontWeight: FontWeight.w800,
@@ -252,7 +251,7 @@ class _DistributeurDetailState extends ConsumerState<DistributeurDetail> {
                                   ),
                                 ),
                                 Text(
-                                  "10 DMAs",
+                                  "-- DMA",
                                   style: TextStyle(
                                     fontFamily: "Manrope",
                                     fontWeight: FontWeight.w800,
@@ -264,7 +263,7 @@ class _DistributeurDetailState extends ConsumerState<DistributeurDetail> {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         Row(
@@ -272,7 +271,7 @@ class _DistributeurDetailState extends ConsumerState<DistributeurDetail> {
                           children: [
                             Column(
                               children: [
-                                Text(
+                                const Text(
                                   "Total restant",
                                   style: TextStyle(
                                     fontFamily: "Manrope",
@@ -281,8 +280,8 @@ class _DistributeurDetailState extends ConsumerState<DistributeurDetail> {
                                   ),
                                 ),
                                 Text(
-                                  "40 DMAs",
-                                  style: TextStyle(
+                                  "${moneyFormat.format(double.parse(dist?.stock ?? "0"))} DMAs",
+                                  style: const TextStyle(
                                     fontFamily: "Manrope",
                                     fontWeight: FontWeight.w800,
                                     fontSize: 18,
@@ -291,7 +290,7 @@ class _DistributeurDetailState extends ConsumerState<DistributeurDetail> {
                                 ),
                               ],
                             ),
-                            Column(
+                            const Column(
                               children: [
                                 Text(
                                   "Stock critique",
@@ -302,7 +301,7 @@ class _DistributeurDetailState extends ConsumerState<DistributeurDetail> {
                                   ),
                                 ),
                                 Text(
-                                  "10 DMAs",
+                                  "-- DMA",
                                   style: TextStyle(
                                     fontFamily: "Manrope",
                                     fontWeight: FontWeight.w800,
@@ -314,7 +313,7 @@ class _DistributeurDetailState extends ConsumerState<DistributeurDetail> {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                       ],
@@ -323,57 +322,6 @@ class _DistributeurDetailState extends ConsumerState<DistributeurDetail> {
                 ),
                 const SizedBox(
                   height: 20,
-                ),
-                Row(
-                  children: [
-                    const Text(
-                      "Entrée",
-                      style: TextStyle(
-                        fontFamily: "Manrope",
-                        fontWeight: FontWeight.w800,
-                        fontSize: 18,
-                        color: myGrisFonce,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Container(
-                      height: 15,
-                      width: 15,
-                      decoration: const BoxDecoration(
-                        color: myPink,
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    const Text(
-                      "Sortie",
-                      style: TextStyle(
-                        fontFamily: "Manrope",
-                        fontWeight: FontWeight.w800,
-                        fontSize: 18,
-                        color: myGrisFonce,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Container(
-                      height: 15,
-                      width: 15,
-                      decoration: const BoxDecoration(
-                        color: myBlue,
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-                  ],
                 ),
               ],
             ),
@@ -420,7 +368,7 @@ class _DistributeurDetailState extends ConsumerState<DistributeurDetail> {
                             onTap: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(builder: (context) {
-                                  return DistPaysSellerDetail(
+                                  return SellerDetail(
                                     sellerIndex: subIndex,
                                   );
                                 }),

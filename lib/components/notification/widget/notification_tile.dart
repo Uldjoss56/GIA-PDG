@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gia_pdg_partenaire/components/const/colors.dart';
+import 'package:gia_pdg_partenaire/components/const/number.dart';
 import 'package:gia_pdg_partenaire/components/show_info.dart';
 import 'package:gia_pdg_partenaire/components/validation_inscription/validate_registration.dart';
 import 'package:gia_pdg_partenaire/components/validation_order/validate_order.dart';
@@ -11,7 +12,6 @@ import 'package:gia_pdg_partenaire/models/user.dart';
 import 'package:gia_pdg_partenaire/provider/notifications_provider.dart';
 import 'package:gia_pdg_partenaire/services/const.dart';
 import 'package:gia_pdg_partenaire/services/notifications_service.dart';
-import 'package:intl/intl.dart';
 
 class NotificationTile extends ConsumerStatefulWidget {
   const NotificationTile({
@@ -117,7 +117,7 @@ class _NotificationTileState extends ConsumerState<NotificationTile> {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                DateFormat('dd-MM-yyyy, HH:mm').format(
+                dateFormatDH.format(
                   widget.notification.createdAt ?? DateTime.now(),
                 ),
                 style: const TextStyle(

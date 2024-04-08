@@ -202,16 +202,16 @@ List<Map<String, dynamic>> bottomList = [
       'assets/img/icons/home_white.png',
       width: 25,
     ),
-    "screen": const PartnerHome(), 
+    "screen": const PartnerHome(),
   },
   {
     'label': 'Chat',
     'icon': Image.asset(
-      'assets/img/icons/chat.png',
+      'assets/img/icons/distribution_01.png',
       width: 25,
     ),
     'active_icon': Image.asset(
-      'assets/img/icons/chat_white.png',
+      'assets/img/icons/distribution.png',
       width: 25,
     ),
     "screen": const DistributeurOffiDetail(),

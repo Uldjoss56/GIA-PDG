@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:gia_pdg_partenaire/components/const/number.dart';
 import 'package:gia_pdg_partenaire/const/colors.dart';
-import 'package:intl/intl.dart';
+import 'package:gia_pdg_partenaire/models/orders.dart';
 
 class CommandeDetail extends StatefulWidget {
   const CommandeDetail({
     super.key,
     required this.commande,
   });
-  final Map<String, dynamic> commande;
+  final Order commande;
 
   @override
   State<CommandeDetail> createState() => _CommandeDetailState();
 }
 
 class _CommandeDetailState extends State<CommandeDetail> {
-  final format = NumberFormat("#,###", "fr");
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -53,7 +53,7 @@ class _CommandeDetailState extends State<CommandeDetail> {
                       BlendMode.srcIn,
                     ),
                     child: Image.asset(
-                      cmd["imgPath"],
+                      "assets/img/icons/credit-card_white.png",
                       width: 0.2 * width,
                       height: 0.2 * width,
                     ),
@@ -75,7 +75,7 @@ class _CommandeDetailState extends State<CommandeDetail> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Commande n° ${cmd["numCmd"]}",
+                  "Commande n° ${cmd.id}",
                   style: const TextStyle(
                     fontFamily: "Manrope",
                     fontWeight: FontWeight.w800,
@@ -100,7 +100,9 @@ class _CommandeDetailState extends State<CommandeDetail> {
                             ),
                           ),
                           Text(
-                            cmd["dateCmd"],
+                            cmd.createdAt == null
+                                ? "----"
+                                : dateFormatDH.format(cmd.createdAt!),
                             style: const TextStyle(
                               fontFamily: "Manrope",
                               color: myGrisFonce,
@@ -121,7 +123,9 @@ class _CommandeDetailState extends State<CommandeDetail> {
                             ),
                           ),
                           Text(
-                            cmd["dateReception"],
+                            cmd.updatedAt == null
+                                ? "----"
+                                : dateFormatDH.format(cmd.updatedAt!),
                             style: const TextStyle(
                               fontFamily: "Manrope",
                               color: myGrisFonce,
@@ -136,6 +140,7 @@ class _CommandeDetailState extends State<CommandeDetail> {
                 const SizedBox(
                   height: 10,
                 ),
+                /*
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -186,6 +191,7 @@ class _CommandeDetailState extends State<CommandeDetail> {
                     ),
                   ],
                 ),
+                
                 const SizedBox(
                   height: 10,
                 ),
@@ -204,7 +210,7 @@ class _CommandeDetailState extends State<CommandeDetail> {
                             ),
                           ),
                           Text(
-                            cmd["adressReception"],
+                            cmd.,
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                               fontFamily: "Manrope",
@@ -227,7 +233,7 @@ class _CommandeDetailState extends State<CommandeDetail> {
                           ),
                           Text(
                             "${cmd["devise"]} ${format.format(
-                              double.parse(cmd["prixVente"]).toInt(),
+                              double.parse(cmd.).toInt(),
                             )}",
                             style: const TextStyle(
                               fontFamily: "Manrope",
@@ -240,6 +246,7 @@ class _CommandeDetailState extends State<CommandeDetail> {
                     ),
                   ],
                 ),
+                */
                 const SizedBox(
                   height: 10,
                 ),
@@ -248,7 +255,7 @@ class _CommandeDetailState extends State<CommandeDetail> {
                   child: TextButton(
                     onPressed: () {},
                     child: const Text(
-                      "Télécharger la facture",
+                      "Télécharger le document",
                       style: TextStyle(
                         fontFamily: "Manrope",
                         fontWeight: FontWeight.w600,

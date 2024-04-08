@@ -8,6 +8,7 @@ import 'package:gia_pdg_partenaire/services/const.dart';
 import 'package:gia_pdg_partenaire/services/users_service.dart';
 import 'package:gia_pdg_partenaire/ui/pdg_ui/home/pdg_home.dart';
 import 'package:gia_pdg_partenaire/ui/pdg_ui/recoverypassword/recovery_password.dart';
+import 'package:gia_pdg_partenaire/ui/pdg_ui/registration/pdg_registration.dart';
 import 'package:gia_pdg_partenaire/ui/pdg_ui/widget/show_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -217,7 +218,7 @@ class _PdgLoginState extends ConsumerState<PdgLogin> {
                                   ),
                                 ],
                               ),
-                            ),
+                            ),    
                           ),
                         ),
                       ],
@@ -227,6 +228,44 @@ class _PdgLoginState extends ConsumerState<PdgLogin> {
               ),
               const SizedBox(
                 height: 20,
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    children: [
+                      const TextSpan(
+                        text: "Vous n'avez pas un compte ?  ",
+                        style: TextStyle(
+                          fontFamily: "Manrope",
+                          fontSize: 14,
+                          color: myGrisFonce,
+                        ),
+                      ),
+                      WidgetSpan(
+                        child: InkWell(
+                          splashColor: myPink55,
+                          onTap: () {
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(builder: (context) {
+                                return const PdgRegistration();
+                              }),
+                            );
+                          },
+                          child: const Text(
+                            "S'inscrire",
+                            style: TextStyle(
+                              fontFamily: "Manrope",
+                              fontSize: 14,
+                              color: myPink,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),

@@ -72,115 +72,112 @@ class _DistributeurPaysListState extends ConsumerState<DistributeurPaysList> {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(10),
-          child: isLoading
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
-              : Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        IconButton(
-                          splashColor: myWhite,
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return const SortAlert();
-                              },
-                            );
-                          },
-                          icon: ColorFiltered(
-                            colorFilter: const ColorFilter.mode(
-                              myPink,
-                              BlendMode.srcIn,
-                            ),
-                            child: Image.asset(
-                              "assets/img/icons/sort_pink.png",
-                              fit: BoxFit.cover,
-                              width: 35,
-                              height: 35,
-                            ),
-                          ),
-                        ),
-                        Checkbox(
-                          value: selectAll,
-                          checkColor: myWhite,
-                          activeColor: myPink,
-                          side: const BorderSide(
-                            color: myPink,
-                            width: 1,
-                          ),
-                          onChanged: (value) {
-                            if (value!) {
-                              setState(() {});
-                            } else {
-                              setState(() {});
-                            }
-                            setState(() {
-                              selectAll = value;
-                              itemSelections = List.generate(
-                                itemSelections.length,
-                                (index) => value,
-                              );
-                            });
-                          },
-                        ),
-                        Container(
-                          constraints: BoxConstraints(
-                            maxWidth: 0.2 * width,
-                          ),
-                          child: Text(
-                            selectAll
-                                ? "Tout désélectionné"
-                                : "Tout sélectionné",
-                            style: const TextStyle(
-                              color: myGrisFonce,
-                              fontFamily: "Manrope",
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ),
-                      ],
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                    splashColor: myWhite,
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return const SortAlert();
+                        },
+                      );
+                    },
+                    icon: ColorFiltered(
+                      colorFilter: const ColorFilter.mode(
+                        myPink,
+                        BlendMode.srcIn,
+                      ),
+                      child: Image.asset(
+                        "assets/img/icons/sort_pink.png",
+                        fit: BoxFit.cover,
+                        width: 35,
+                        height: 35,
+                      ),
                     ),
-                    TextField(
+                  ),
+                  Checkbox(
+                    value: selectAll,
+                    checkColor: myWhite,
+                    activeColor: myPink,
+                    side: const BorderSide(
+                      color: myPink,
+                      width: 1,
+                    ),
+                    onChanged: (value) {
+                      if (value!) {
+                        setState(() {});
+                      } else {
+                        setState(() {});
+                      }
+                      setState(() {
+                        selectAll = value;
+                        itemSelections = List.generate(
+                          itemSelections.length,
+                          (index) => value,
+                        );
+                      });
+                    },
+                  ),
+                  Container(
+                    constraints: BoxConstraints(
+                      maxWidth: 0.2 * width,
+                    ),
+                    child: Text(
+                      selectAll ? "Tout désélectionné" : "Tout sélectionné",
                       style: const TextStyle(
                         color: myGrisFonce,
-                      ),
-                      decoration: InputDecoration(
-                        suffixIcon: const Icon(
-                          Icons.search,
-                        ),
-                        filled: true,
-                        fillColor: Colors.white,
-                        hintText: 'Rechercher',
-                        contentPadding: const EdgeInsets.symmetric(
-                          vertical: 10,
-                          horizontal: 20,
-                        ),
-                        hintStyle:
-                            Theme.of(context).textTheme.labelMedium!.copyWith(
-                                  color: Colors.black.withOpacity(0.5),
-                                ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          borderSide: const BorderSide(
-                            color: myGrisFonce22,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          borderSide: const BorderSide(
-                            color: myGrisFonce22,
-                          ),
-                        ),
+                        fontFamily: "Manrope",
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    const SizedBox(
-                      height: 20,
+                  ),
+                ],
+              ),
+              TextField(
+                style: const TextStyle(
+                  color: myGrisFonce,
+                ),
+                decoration: InputDecoration(
+                  suffixIcon: const Icon(
+                    Icons.search,
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                  hintText: 'Rechercher',
+                  contentPadding: const EdgeInsets.symmetric(
+                    vertical: 10,
+                    horizontal: 20,
+                  ),
+                  hintStyle: Theme.of(context).textTheme.labelMedium!.copyWith(
+                        color: Colors.black.withOpacity(0.5),
+                      ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: const BorderSide(
+                      color: myGrisFonce22,
                     ),
-                    Column(
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: const BorderSide(
+                      color: myGrisFonce22,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              isLoading
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : Column(
                       children: List.generate(distPays.length, (index) {
                         final aDistPays = distPays[index];
                         return Container(
@@ -304,8 +301,8 @@ class _DistributeurPaysListState extends ConsumerState<DistributeurPaysList> {
                         );
                       }),
                     ),
-                  ],
-                ),
+            ],
+          ),
         ),
       ),
     );

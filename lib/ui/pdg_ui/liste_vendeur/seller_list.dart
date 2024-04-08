@@ -20,12 +20,15 @@ class SellerList extends ConsumerStatefulWidget {
 
 class _SellerListState extends ConsumerState<SellerList> {
   bool selectAll = false;
+  List<User> searchData = [];
   List<User> sellers = [];
   List<bool> itemSelections = [];
 
   bool isLoading = false;
 
   final _userService = UserService();
+
+  final _searchController = TextEditingController();
 
   @override
   void didChangeDependencies() {
@@ -36,9 +39,9 @@ class _SellerListState extends ConsumerState<SellerList> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    sellers = ref.watch(sellersProvider);
+    //sellers = ref.watch(sellersProvider);
     itemSelections = List.generate(
-      sellers.length,
+      searchData.length,
       (index) {
         if (itemSelections.isNotEmpty && itemSelections.length >= index) {
           if (itemSelections[index] == true) {
@@ -178,6 +181,7 @@ class _SellerListState extends ConsumerState<SellerList> {
                     ],
                   ),
                   TextField(
+                    controller: _searchController,
                     style: const TextStyle(
                       color: myGrisFonce,
                     ),
@@ -209,13 +213,29 @@ class _SellerListState extends ConsumerState<SellerList> {
                         ),
                       ),
                     ),
+                    onChanged: (value) {
+                      searchData = [];
+                      setState(() {
+                        isLoading = true;
+                        if (value.isNotEmpty) {
+                          for (User user in sellers) {
+                            if (user.name!.contains(value)) {
+                              searchData.add(user);
+                            }
+                          }
+                        } else {
+                          searchData = sellers;
+                        }
+                        isLoading = false;
+                      });
+                    },
                   ),
                   const SizedBox(
                     height: 20,
                   ),
                   if (isLoading)
                     const CircularProgressIndicator()
-                  else if (sellers.isEmpty)
+                  else if (searchData.isEmpty)
                     const Center(
                       child: Text(
                         "Aucun vendeur",
@@ -227,8 +247,8 @@ class _SellerListState extends ConsumerState<SellerList> {
                     )
                   else
                     Column(
-                      children: List.generate(sellers.length, (index) {
-                        final seller = sellers[index];
+                      children: List.generate(searchData.length, (index) {
+                        final seller = searchData[index];
                         return Card(
                           elevation: 2,
                           surfaceTintColor: myWhite,
@@ -340,6 +360,9 @@ class _SellerListState extends ConsumerState<SellerList> {
 
         final sellerNotifier = ref.read(sellersProvider.notifier);
         sellerNotifier.updateListUser(sellers);
+        if (_searchController.text.isEmpty) {
+          searchData = sellers;
+        }
       } on DioException catch (e) {
         // ignore: use_build_context_synchronously
         messenger(

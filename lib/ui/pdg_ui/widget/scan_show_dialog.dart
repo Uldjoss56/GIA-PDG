@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:gia_pdg_partenaire/const/colors.dart';
-import 'package:gia_pdg_partenaire/ui/pdg_ui/dma/add_dma.dart';
-import 'package:gia_pdg_partenaire/ui/pdg_ui/dma/dma_detail.dart';
+import 'package:gia_pdg_partenaire/components/const/colors.dart';
+import 'package:gia_pdg_partenaire/models/product.dart';
 
 class ScanShowDialog extends StatefulWidget {
   const ScanShowDialog({
     super.key,
     required this.height,
     required this.width,
+    this.product,
     this.isAuthentificate,
   });
 
   final double height;
   final double width;
   final bool? isAuthentificate;
+  final Product? product;
 
   @override
   State<ScanShowDialog> createState() => _ScanShowDialogState();
@@ -23,6 +24,7 @@ class _ScanShowDialogState extends State<ScanShowDialog> {
   @override
   Widget build(BuildContext context) {
     final isAuth = widget.isAuthentificate;
+    final product = widget.product;
     return AlertDialog(
       backgroundColor: myGrisFonce55,
       content: Container(
@@ -49,13 +51,21 @@ class _ScanShowDialogState extends State<ScanShowDialog> {
                       width: 0.1 * widget.width,
                     ),
                   ),
-                Text(
-                  isAuth == false ? "DMA non authentifié" : "DMA authentifié",
-                  style: const TextStyle(
-                    color: myPink,
-                    fontFamily: "Manrope",
-                    fontWeight: FontWeight.w800,
-                    fontSize: 18,
+                SizedBox(
+                  width: 0.6 * widget.width,
+                  child: Text(
+                    isAuth == null
+                        ? "DMA non authentifié"
+                        : isAuth == false
+                            ? "DMA Authentifié - Non Activé"
+                            : "DMA authentifié",
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      color: myPink,
+                      fontFamily: "Manrope",
+                      fontWeight: FontWeight.w800,
+                      fontSize: 18,
+                    ),
                   ),
                 ),
               ],
@@ -67,11 +77,14 @@ class _ScanShowDialogState extends State<ScanShowDialog> {
               ),
             ),
             Text(
-              isAuth == false
+              isAuth == null
                   ? "Désolé, le code QR ne correspond à aucun produit DMA"
-                  : isAuth == null
-                      ? "Votre DMA a été déjà associé à votre compte."
-                      : "Enregistrez le nouveau DMA",
+                  : isAuth == false
+                      ? "Ce produit DMA n'est pas encore activé"
+                      : product?.isAssociatedWith == null ||
+                              product?.isAssociatedWith == ""
+                          ? "Enregistrez votre nouveau DMA"
+                          : "Ce produit DMA est déjà activé",
               style: const TextStyle(
                 fontFamily: "Manrope",
                 color: myWhite,
@@ -109,27 +122,11 @@ class _ScanShowDialogState extends State<ScanShowDialog> {
                         ),
                       ),
                       onPressed: () {
-                        if (isAuth == false) {
-                          Navigator.pop(context);
-                        } else {
-                          Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(builder: (_) {
-                              if (isAuth == null) {
-                                return const DMADetail();
-                              } else {
-                                return const AddDMA();
-                              }
-                            }),
-                          );
-                        }
+                        Navigator.pop(context);
                       },
-                      child: Text(
-                        isAuth == false
-                            ? "Réessayez"
-                            : isAuth == null
-                                ? "Voir"
-                                : "Suivant",
-                        style: const TextStyle(
+                      child: const Text(
+                        "ok",
+                        style: TextStyle(
                           fontFamily: "Manrope",
                           fontWeight: FontWeight.w900,
                           fontSize: 18,

@@ -25,6 +25,9 @@ dependencies:
   dio: ^5.4.1
   path_provider: ^2.1.2
   fl_chart: ^0.66.2
+  audioplayers: ^5.2.1
+  flutter_keyboard_visibility: ^6.0.0
+  flutter_file_downloader: ^1.2.1
 
 dev_dependencies:
   flutter_test:
@@ -37,6 +40,7 @@ flutter:
   assets:
     - assets/
     - assets/img/
+    - assets/audios/
     - assets/img/flags/
     - assets/img/africa_flag/
     - assets/img/icons/

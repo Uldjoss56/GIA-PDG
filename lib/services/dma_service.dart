@@ -6,18 +6,24 @@ import 'package:shared_preferences/shared_preferences.dart';
 class DmaService {
   Dio api = Api.api();
   String? responseMessage;
-  getAllDma() {}
 
   orderDma(Map<String, dynamic> data) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String userToken = prefs.getString('userToken') ?? "";
+
+    final options = Options(headers: {
+      "Authorization": "Bearer $userToken",
+    });
     final response = await api.post(
       'orders/init',
       data: data,
+      options: options,
     );
 
     return response.data;
   }
 
-  currentUserDmaOrders() async {
+  Future<OrderMeData> currentUserDmaOrders() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String userToken = prefs.getString('userToken') ?? "";
 
@@ -29,7 +35,7 @@ class DmaService {
       options: options,
     );
 
-    return response.data;
+    return OrderMeData.fromJson(response.data);
   }
 
   Future<OrderData> getDMAOrders() async {
@@ -45,5 +51,20 @@ class DmaService {
     );
 
     return OrderData.fromJson(response.data);
+  }
+
+  Future setAsReceived(int id) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String userToken = prefs.getString('userToken') ?? "";
+
+    final options = Options(headers: {
+      "Authorization": "Bearer $userToken",
+    });
+    final response = await api.put(
+      'orders/deliver/$id',
+      options: options,
+    );
+
+    return response.data;
   }
 }

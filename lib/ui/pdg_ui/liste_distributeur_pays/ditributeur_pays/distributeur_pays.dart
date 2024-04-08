@@ -8,7 +8,7 @@ import 'package:gia_pdg_partenaire/datas/datas.dart';
 import 'package:gia_pdg_partenaire/models/user.dart';
 import 'package:gia_pdg_partenaire/services/const.dart';
 import 'package:gia_pdg_partenaire/services/users_service.dart';
-import 'package:gia_pdg_partenaire/ui/pdg_ui/liste_distributeur_pays/ditributeur_pays/distributeur/distributeur_detail.dart';
+import 'package:gia_pdg_partenaire/ui/pdg_ui/liste_distributeur/ditributeur/distributeur_detail.dart';
 
 class DistributeurPays extends ConsumerStatefulWidget {
   const DistributeurPays({
@@ -164,20 +164,6 @@ class _DistributeurPaysState extends ConsumerState<DistributeurPays> {
                 ),
               ),
               const SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  right: 0.6 * width,
-                  left: 0.2 * width,
-                ),
-                child: const Divider(
-                  height: 1,
-                  thickness: 2,
-                  color: myPink,
-                ),
-              ),
-              const SizedBox(
                 height: 40,
               ),
               const Align(
@@ -198,13 +184,13 @@ class _DistributeurPaysState extends ConsumerState<DistributeurPays> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Card(
+                  Card(
                     elevation: 2,
                     child: Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(8.0),
                       child: Column(
                         children: [
-                          Text(
+                          const Text(
                             "aujourd'hui",
                             style: TextStyle(
                               fontFamily: "Manrope",
@@ -212,10 +198,10 @@ class _DistributeurPaysState extends ConsumerState<DistributeurPays> {
                               color: myGrisFonceAA,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
-                          Row(
+                          const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Column(
@@ -229,7 +215,7 @@ class _DistributeurPaysState extends ConsumerState<DistributeurPays> {
                                     ),
                                   ),
                                   Text(
-                                    "50 DMAs",
+                                    "-- DMA",
                                     style: TextStyle(
                                       fontFamily: "Manrope",
                                       fontWeight: FontWeight.w800,
@@ -250,7 +236,7 @@ class _DistributeurPaysState extends ConsumerState<DistributeurPays> {
                                     ),
                                   ),
                                   Text(
-                                    "10 DMAs",
+                                    "-- DMA",
                                     style: TextStyle(
                                       fontFamily: "Manrope",
                                       fontWeight: FontWeight.w800,
@@ -262,7 +248,7 @@ class _DistributeurPaysState extends ConsumerState<DistributeurPays> {
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           Row(
@@ -270,7 +256,7 @@ class _DistributeurPaysState extends ConsumerState<DistributeurPays> {
                             children: [
                               Column(
                                 children: [
-                                  Text(
+                                  const Text(
                                     "Total restant",
                                     style: TextStyle(
                                       fontFamily: "Manrope",
@@ -279,8 +265,8 @@ class _DistributeurPaysState extends ConsumerState<DistributeurPays> {
                                     ),
                                   ),
                                   Text(
-                                    "40 DMAs",
-                                    style: TextStyle(
+                                    "${moneyFormat.format(double.parse(distPays.stock ?? "0"))} DMA",
+                                    style: const TextStyle(
                                       fontFamily: "Manrope",
                                       fontWeight: FontWeight.w800,
                                       fontSize: 18,
@@ -289,7 +275,7 @@ class _DistributeurPaysState extends ConsumerState<DistributeurPays> {
                                   ),
                                 ],
                               ),
-                              Column(
+                              const Column(
                                 children: [
                                   Text(
                                     "Stock critique",
@@ -300,7 +286,7 @@ class _DistributeurPaysState extends ConsumerState<DistributeurPays> {
                                     ),
                                   ),
                                   Text(
-                                    "10 DMAs",
+                                    "-- DMA",
                                     style: TextStyle(
                                       fontFamily: "Manrope",
                                       fontWeight: FontWeight.w800,
@@ -312,7 +298,7 @@ class _DistributeurPaysState extends ConsumerState<DistributeurPays> {
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                         ],
@@ -322,61 +308,7 @@ class _DistributeurPaysState extends ConsumerState<DistributeurPays> {
                   const SizedBox(
                     height: 20,
                   ),
-                  Row(
-                    children: [
-                      const Text(
-                        "Entrée",
-                        style: TextStyle(
-                          fontFamily: "Manrope",
-                          fontWeight: FontWeight.w800,
-                          fontSize: 18,
-                          color: myGrisFonce,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      Container(
-                        height: 15,
-                        width: 15,
-                        decoration: const BoxDecoration(
-                          color: myPink,
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    children: [
-                      const Text(
-                        "Sortie",
-                        style: TextStyle(
-                          fontFamily: "Manrope",
-                          fontWeight: FontWeight.w800,
-                          fontSize: 18,
-                          color: myGrisFonce,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      Container(
-                        height: 15,
-                        width: 15,
-                        decoration: const BoxDecoration(
-                          color: myBlue,
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                    ],
-                  ),
                 ],
-              ),
-              const SizedBox(
-                height: 20,
               ),
               Padding(
                 padding: EdgeInsets.only(
@@ -425,7 +357,7 @@ class _DistributeurPaysState extends ConsumerState<DistributeurPays> {
                               Navigator.of(context).push(
                                 MaterialPageRoute(builder: (context) {
                                   return DistributeurDetail(
-                                    dist: dist,
+                                    user: dist,
                                   );
                                 }),
                               );
@@ -448,7 +380,7 @@ class _DistributeurPaysState extends ConsumerState<DistributeurPays> {
                               ),
                             ),
                             title: Text(
-                              "Distributeur ${numberFormat.format(index + 1)}",
+                              "Distributeur ${numberFormat.format((dist.id ?? 0) + 1)}",
                               style: const TextStyle(
                                 fontFamily: 'Manrope',
                                 fontWeight: FontWeight.w600,
@@ -479,6 +411,7 @@ class _DistributeurPaysState extends ConsumerState<DistributeurPays> {
                         }),
                       ),
               ),
+              const SizedBox(height: 20),
             ],
           ),
         ),

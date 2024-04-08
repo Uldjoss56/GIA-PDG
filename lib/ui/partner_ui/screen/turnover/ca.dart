@@ -1,15 +1,245 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gia_pdg_partenaire/components/const/number.dart';
+import 'package:gia_pdg_partenaire/components/show_info.dart';
 import 'package:gia_pdg_partenaire/const/colors.dart';
-import '../payement_partner/validate_payement_partner.dart';
+import 'package:gia_pdg_partenaire/models/user.dart';
+import 'package:gia_pdg_partenaire/provider/user_provider.dart';
+import 'package:gia_pdg_partenaire/services/const.dart';
+import 'package:gia_pdg_partenaire/services/users_service.dart';
 
-class CA extends StatefulWidget {
+class CA extends ConsumerStatefulWidget {
   const CA({super.key});
 
   @override
-  State<CA> createState() => _CAState();
+  ConsumerState<CA> createState() => _CAState();
 }
 
-class _CAState extends State<CA> {
+class _CAState extends ConsumerState<CA> {
+   bool isLoading = false;
+
+  User? currentUser;
+  final _userService = UserService();
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    loadCurrentUserData();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
+    currentUser = ref.watch(userProvider);
+    return Scaffold(
+      backgroundColor: myPink01,
+      body: Column(
+        children: [
+          SizedBox(
+            height: 0.4 * height,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 0.06 * height,
+                ),
+                Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(
+                        Icons.keyboard_arrow_left_rounded,
+                        color: myWhite,
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    const Text(
+                      "Chiffre d'affaire",
+                      style: TextStyle(
+                        fontFamily: 'Manrope-SemiBold',
+                        fontSize: 22,
+                        color: myWhite,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 0.14 * height,
+                ),
+                Column(
+                  children: [
+                    const Text(
+                      "TOTAL ACTU",
+                      style: TextStyle(
+                        color: Colors.white60,
+                        fontSize: 20,
+                      ),
+                    ),
+                    isLoading
+                        ? const CircularProgressIndicator(
+                            color: myWhite,
+                          )
+                        : Text(
+                            moneyFormat.format(currentUser?.ca ?? 0),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 35,
+                            ),
+                          ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 0.2 * height,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Card(
+                    elevation: 2,
+                    color: myPink02,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          height: 100,
+                          decoration: BoxDecoration(
+                            color: myWhite,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: myPink02,
+                            ),
+                          ),
+                          child: Center(
+                            child: isLoading
+                                ? const CircularProgressIndicator()
+                                : Text(
+                                    moneyFormat.format(currentUser?.pv ?? 0),
+                                    style: const TextStyle(
+                                      fontFamily: "Manrope",
+                                      color: myPink01,
+                                      fontSize: 35,
+                                    ),
+                                  ),
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Text(
+                            "Prix de vente unitaire",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: "Manrope-Medium",
+                              fontWeight: FontWeight.w700,
+                              color: myPink01,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Expanded(
+                  child: Card(
+                    elevation: 2,
+                    color: myPink02,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          height: 100,
+                          decoration: BoxDecoration(
+                            color: myWhite,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: myPink02,
+                            ),
+                          ),
+                          child: Center(
+                            child: isLoading
+                                ? const CircularProgressIndicator()
+                                : Text(
+                                    moneyFormat.format(currentUser?.b ?? 0),
+                                    style: const TextStyle(
+                                      fontFamily: "Manrope",
+                                      color: myPink01,
+                                      fontSize: 35,
+                                    ),
+                                  ),
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Text(
+                            "Bénéfice",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: "Manrope-Medium",
+                              fontWeight: FontWeight.w700,
+                              color: myPink01,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  loadCurrentUserData() async {
+    final internetConnexion = await checkUserConnexion();
+    if (internetConnexion) {
+      setState(() {
+        isLoading = true;
+      });
+      try {
+        final response = await _userService.getUserProfile();
+
+        final userNotifier = ref.read(userProvider.notifier);
+        userNotifier.updateUser(response);
+      } on DioException catch (e) {
+        // ignore: use_build_context_synchronously
+        messenger(
+          context,
+          e.response!.data["message"],
+        );
+      } finally {
+        setState(() {
+          isLoading = false;
+        });
+      }
+    } else {
+      // ignore: use_build_context_synchronously
+      messenger(
+        context,
+        "Connectez-vous à internet",
+      );
+    }
+  }
+}
+
+/* 
   bool isSelectedIn = true;
 
   @override
@@ -210,3 +440,4 @@ class _CAState extends State<CA> {
     );
   }
 }
+*/

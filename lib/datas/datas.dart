@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gia_pdg_partenaire/components/notification/notification_page.dart';
-import 'package:gia_pdg_partenaire/ui/pdg_ui/distributeur_officiel/distributeur_off_detail.dart';
 import 'package:gia_pdg_partenaire/ui/pdg_ui/home/home.dart';
+import 'package:gia_pdg_partenaire/ui/pdg_ui/messaging_ui/chat_list.dart';
 import 'package:gia_pdg_partenaire/ui/pdg_ui/profil/user_profil.dart';
 
 const staticPath = "assets/img/africa_flag/";
@@ -205,16 +205,16 @@ List<Map<String, dynamic>> bottomList = [
     "screen": const Home(),
   },
   {
-    'label': 'Distributeur Officiel',
+    'label': 'Chat',
     'icon': Image.asset(
-      'assets/img/icons/distribution_01.png',
+      'assets/img/icons/chat.png',
       width: 25,
     ),
     'active_icon': Image.asset(
-      'assets/img/icons/distribution.png',
+      'assets/img/icons/chat_white.png',
       width: 25,
     ),
-    "screen": const DistributeurOffiDetail(),
+    "screen": const ChatList(),
   },
   {
     'label': '',
@@ -535,15 +535,19 @@ List<Map<String, dynamic>> notifData = [
 ];
 
 List<String> pdgOptions = [
+  "Distributeur Officiel",
   "Liste des vendeurs",
   "Liste des distributeurs",
   "Liste des distributeurs pays",
   "Liste des assistants clientèles",
+  "Commande",
 ];
 
 List<String> pdgOptionsImg = [
+  "assets/img/heart_phone.jpg",
   "assets/img/list.jpg",
   "assets/img/list.jpg",
   "assets/img/list.jpg",
   "assets/img/list.jpg",
+  "assets/img/order.jpg",
 ];

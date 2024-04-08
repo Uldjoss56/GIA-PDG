@@ -117,7 +117,9 @@ class User {
         identityCards: json["identity_cards"],
         sex: json["sex"],
         stock: json["stock"],
-        countryId: double.parse(json["country_id"].toString()).toInt(),
+        countryId: json["country_id"] == null
+            ? null
+            : double.parse(json["country_id"].toString()).toInt(),
         isValided: json["is_valided"],
         roleId: double.parse(json["role_id"].toString()).toInt(),
         validerId: json["valider_id"],

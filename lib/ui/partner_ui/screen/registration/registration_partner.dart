@@ -47,11 +47,13 @@ class _RegistrationPartnerState extends ConsumerState<RegistrationPartner> {
   List<Country> _lineCountries = [];
   String? _countryImg;
 
+  bool _radioAccTypGroup = false;
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _lineCountries = ref.watch(countriesProvider);
-    _country = _lineCountries[0];
+    _country = _lineCountries[2];
     final countryID = _country!.countryId;
     _countryImg = countriesList[countryID! - 1]["img"];
   }
@@ -250,7 +252,7 @@ class _RegistrationPartnerState extends ConsumerState<RegistrationPartner> {
                     const Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        "Pays ",
+                        "Associer à ",
                         style: TextStyle(
                           fontFamily: "Manrope",
                           fontWeight: FontWeight.w400,
@@ -260,73 +262,135 @@ class _RegistrationPartnerState extends ConsumerState<RegistrationPartner> {
                     ),
                     Row(
                       children: [
-                        CircleAvatar(
-                          child: ClipOval(
-                            child: AspectRatio(
-                              aspectRatio: 1,
-                              child: Image.asset(
-                                _countryImg!,
-                                fit: BoxFit.cover,
+                        Expanded(
+                          child: RadioListTile(
+                            value: true,
+                            groupValue: _radioAccTypGroup,
+                            title: const Text(
+                              "Distributeur officiel",
+                              style: TextStyle(
+                                fontFamily: "Manrope",
+                                fontWeight: FontWeight.w500,
+                                color: myGrisFonce,
                               ),
                             ),
+                            onChanged: (value) {
+                              setState(() {
+                                _radioAccTypGroup = value!;
+                              });
+                            },
                           ),
                         ),
-                        const SizedBox(width: 10),
                         Expanded(
-                          child: DropdownButtonFormField(
-                            value: _country,
-                            decoration: const InputDecoration(
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: myPink),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                                borderSide: BorderSide(
-                                  color: myGrisFonce55,
-                                ),
-                              ),
-                              contentPadding: EdgeInsets.symmetric(
-                                horizontal: 15,
-                                vertical: 10,
+                          child: RadioListTile(
+                            value: false,
+                            groupValue: _radioAccTypGroup,
+                            title: const Text(
+                              "Distributeur Pays",
+                              style: TextStyle(
+                                fontFamily: "Manrope",
+                                fontWeight: FontWeight.w500,
+                                color: myGrisFonce,
                               ),
                             ),
-                            padding: const EdgeInsets.all(10),
-                            items:
-                                List.generate(_lineCountries.length, (index) {
-                              return DropdownMenuItem(
-                                value: _lineCountries[index],
-                                child: Container(
-                                  constraints: BoxConstraints(
-                                    maxWidth: 0.4 * width,
-                                  ),
-                                  child: Text(
-                                    _lineCountries[index].name.toString(),
-                                    overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(
-                                      color: myGrisFonce,
-                                      fontFamily: "Manrope",
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 16,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                ),
-                              );
-                            }),
                             onChanged: (value) {
-                              _country = value;
                               setState(() {
-                                final id = _country!.countryId;
-                                _countryImg = countriesList[id! - 1]["img"];
+                                _radioAccTypGroup = value!;
                               });
                             },
                           ),
                         ),
                       ],
                     ),
+                    if (!_radioAccTypGroup)
+                      Column(
+                        children: [
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          const Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "Pays ",
+                              style: TextStyle(
+                                fontFamily: "Manrope",
+                                fontWeight: FontWeight.w400,
+                                color: myGrisFonce,
+                              ),
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              CircleAvatar(
+                                child: ClipOval(
+                                  child: AspectRatio(
+                                    aspectRatio: 1,
+                                    child: Image.asset(
+                                      _countryImg!,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: DropdownButtonFormField(
+                                  value: _country,
+                                  decoration: const InputDecoration(
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: myPink),
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(10)),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(10)),
+                                      borderSide: BorderSide(
+                                        color: myGrisFonce55,
+                                      ),
+                                    ),
+                                    contentPadding: EdgeInsets.symmetric(
+                                      horizontal: 15,
+                                      vertical: 10,
+                                    ),
+                                  ),
+                                  padding: const EdgeInsets.all(10),
+                                  items: List.generate(_lineCountries.length,
+                                      (index) {
+                                    return DropdownMenuItem(
+                                      value: _lineCountries[index],
+                                      child: Container(
+                                        constraints: BoxConstraints(
+                                          maxWidth: 0.4 * width,
+                                        ),
+                                        child: Text(
+                                          _lineCountries[index].name.toString(),
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                            color: myGrisFonce,
+                                            fontFamily: "Manrope",
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 16,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }),
+                                  onChanged: (value) {
+                                    _country = value;
+                                    setState(() {
+                                      final id = _country!.countryId;
+                                      _countryImg =
+                                          countriesList[id! - 1]["img"];
+                                    });
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     const SizedBox(
                       height: 20,
                     ),
@@ -392,12 +456,13 @@ class _RegistrationPartnerState extends ConsumerState<RegistrationPartner> {
                                     "email": textEditingControllers[1].text,
                                     "name": textEditingControllers[0].text,
                                     "sex": _radioSexGroup,
-                                    "country_id": "${_country!.countryId}",
+                                    "country_id":
+                                        "${_radioAccTypGroup ? "" : _country!.countryId}",
                                     "date_of_birth": "--/--/----",
                                     "profil": "",
                                     "password": textEditingControllers[2].text,
                                     "confirm_code": "",
-                                    "role_id": "6",
+                                    "role_id": "1",
                                     "isValided": "",
                                     "codeDistr": "",
                                   });
@@ -496,6 +561,7 @@ class _RegistrationPartnerState extends ConsumerState<RegistrationPartner> {
 
         if (response["status_code"] == 200) {
           final user = User.fromJson(response["user"]);
+          print(user.confirmCode);
           final userNotifier = ref.read(userProvider.notifier);
           userNotifier.updateUser(user);
           // ignore: use_build_context_synchronously

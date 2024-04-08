@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:gia_pdg_partenaire/components/const/number.dart';
 import 'package:gia_pdg_partenaire/const/colors.dart';
 import 'package:gia_pdg_partenaire/datas/datas.dart';
 import 'package:gia_pdg_partenaire/ui/pdg_ui/home/pdg_home.dart';
 import 'package:gia_pdg_partenaire/ui/pdg_ui/widget/payment_show_dialog.dart';
-import 'package:intl/intl.dart';
 
 class Paiement extends StatefulWidget {
   const Paiement({super.key});
@@ -17,8 +17,6 @@ class _PaiementState extends State<Paiement> {
   int selectedMethodIndex = 1;
 
   double montantTotal = 20000;
-
-  final format = NumberFormat("#,###", "fr");
 
   @override
   Widget build(BuildContext context) {
@@ -321,7 +319,7 @@ class _PaiementState extends State<Paiement> {
                     height: 5,
                   ),
                   Text(
-                    "XOF ${format.format(montantTotal)}",
+                    "XOF ${moneyFormat.format(montantTotal)}",
                     style: const TextStyle(
                       fontFamily: "Manrope",
                       color: myGrisFonce,

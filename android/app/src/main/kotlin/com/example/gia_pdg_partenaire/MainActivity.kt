@@ -1,4 +1,4 @@
-package com.example.gia_pdg_partenaire
+package com.gia.pdgPartenaire
 
 import io.flutter.embedding.android.FlutterActivity
 

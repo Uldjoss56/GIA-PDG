@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gia_pdg_partenaire/components/const/colors.dart';
 import 'package:gia_pdg_partenaire/components/const/number.dart';
-import 'package:gia_pdg_partenaire/components/graph.dart';
 import 'package:gia_pdg_partenaire/datas/datas.dart';
 import 'package:gia_pdg_partenaire/models/user.dart';
 import 'package:gia_pdg_partenaire/provider/user_provider.dart';
@@ -193,13 +192,13 @@ class _SellerDetailState extends ConsumerState<SellerDetail> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Card(
+                    Card(
                       elevation: 2,
                       child: Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(8.0),
                         child: Column(
                           children: [
-                            Text(
+                            const Text(
                               "aujourd'hui",
                               style: TextStyle(
                                 fontFamily: "Manrope",
@@ -207,10 +206,10 @@ class _SellerDetailState extends ConsumerState<SellerDetail> {
                                 color: myGrisFonceAA,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 20,
                             ),
-                            Row(
+                            const Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Column(
@@ -224,7 +223,7 @@ class _SellerDetailState extends ConsumerState<SellerDetail> {
                                       ),
                                     ),
                                     Text(
-                                      "50 DMAs",
+                                      "-- DMA",
                                       style: TextStyle(
                                         fontFamily: "Manrope",
                                         fontWeight: FontWeight.w800,
@@ -245,7 +244,7 @@ class _SellerDetailState extends ConsumerState<SellerDetail> {
                                       ),
                                     ),
                                     Text(
-                                      "10 DMAs",
+                                      "-- DMA",
                                       style: TextStyle(
                                         fontFamily: "Manrope",
                                         fontWeight: FontWeight.w800,
@@ -257,7 +256,7 @@ class _SellerDetailState extends ConsumerState<SellerDetail> {
                                 ),
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 20,
                             ),
                             Row(
@@ -265,7 +264,7 @@ class _SellerDetailState extends ConsumerState<SellerDetail> {
                               children: [
                                 Column(
                                   children: [
-                                    Text(
+                                    const Text(
                                       "Total restant",
                                       style: TextStyle(
                                         fontFamily: "Manrope",
@@ -274,8 +273,8 @@ class _SellerDetailState extends ConsumerState<SellerDetail> {
                                       ),
                                     ),
                                     Text(
-                                      "40 DMAs",
-                                      style: TextStyle(
+                                      "${moneyFormat.format(double.parse(seller.stock ?? "0"))} DMA",
+                                      style: const TextStyle(
                                         fontFamily: "Manrope",
                                         fontWeight: FontWeight.w800,
                                         fontSize: 18,
@@ -284,7 +283,7 @@ class _SellerDetailState extends ConsumerState<SellerDetail> {
                                     ),
                                   ],
                                 ),
-                                Column(
+                                const Column(
                                   children: [
                                     Text(
                                       "Stock critique",
@@ -295,7 +294,7 @@ class _SellerDetailState extends ConsumerState<SellerDetail> {
                                       ),
                                     ),
                                     Text(
-                                      "10 DMAs",
+                                      "-- DMAs",
                                       style: TextStyle(
                                         fontFamily: "Manrope",
                                         fontWeight: FontWeight.w800,
@@ -307,7 +306,7 @@ class _SellerDetailState extends ConsumerState<SellerDetail> {
                                 ),
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 20,
                             ),
                           ],
@@ -317,6 +316,7 @@ class _SellerDetailState extends ConsumerState<SellerDetail> {
                     const SizedBox(
                       height: 20,
                     ),
+                    /*
                     Row(
                       children: [
                         const Text(
@@ -377,6 +377,7 @@ class _SellerDetailState extends ConsumerState<SellerDetail> {
                       width: 400,
                       child: const MyLineChart(),
                     ),
+                    */
                   ],
                 ),
               ],

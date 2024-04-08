@@ -66,7 +66,12 @@ class _PartnerHomeState extends State<PartnerHome> {
           ),
           BottomNavigationBarItem(
             icon: _selectedIndex == 1
-                ? bottomList[1]['active_icon']
+                ? ColorFiltered(
+                    colorFilter: const ColorFilter.mode(
+                      myWhite,
+                      BlendMode.srcIn,
+                    ),
+                    child: bottomList[1]['active_icon'])
                 : ColorFiltered(
                     colorFilter: const ColorFilter.mode(
                       myWhite,
@@ -114,7 +119,7 @@ class _PartnerHomeState extends State<PartnerHome> {
   List<Widget> get _pages => <Widget>[
         const Home(),
         const DistributeurOffiDetail(),
-        const NotificationPage(),
+        const PartnerNotification(),
         const PartnerProfil(),
       ];
 }
@@ -224,6 +229,45 @@ class Home extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+}
+
+class PartnerNotification extends StatelessWidget {
+  const PartnerNotification({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 4,
+        title: Column(
+          children: [
+            const Text(
+              "GIA-Partenaires",
+              style: TextStyle(
+                fontFamily: "Manrope",
+                fontWeight: FontWeight.w800,
+                color: myPink,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 0.4 * width,
+              ),
+              child: Container(
+                height: 4,
+                decoration: BoxDecoration(
+                  color: myPink,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      body: const NotificationPage(),
     );
   }
 }

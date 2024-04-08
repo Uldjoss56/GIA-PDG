@@ -1,21 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gia_pdg_partenaire/const/colors.dart';
-import 'package:gia_pdg_partenaire/datas/datas.dart';
+import 'package:gia_pdg_partenaire/models/other_models.dart';
+import 'package:gia_pdg_partenaire/provider/other_provider.dart';
 
-class AddDMA extends StatefulWidget {
+class AddDMA extends ConsumerStatefulWidget {
   const AddDMA({super.key});
 
   @override
-  State<AddDMA> createState() => _AddDMAState();
+  ConsumerState<AddDMA> createState() => _AddDMAState();
 }
 
-class _AddDMAState extends State<AddDMA> {
-  String? equipment = "Aucun équipement";
+class _AddDMAState extends ConsumerState<AddDMA> {
+  Device? selectedDevice;
+
+  List<Device> devicesList = [];
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    devicesList = ref.watch(devicesProvider);
+    selectedDevice = devicesList[0];
+  }
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
+
     return Scaffold(
       backgroundColor: myPink,
       appBar: AppBar(
@@ -135,7 +147,7 @@ class _AddDMAState extends State<AddDMA> {
                       ),
                     ),
                     DropdownButtonFormField(
-                      value: equipment,
+                      value: devicesList[0],
                       decoration: InputDecoration(
                         prefixIcon: Padding(
                           padding: const EdgeInsets.symmetric(
@@ -175,15 +187,15 @@ class _AddDMAState extends State<AddDMA> {
                         color: myGrisFonceAA,
                       ),
                       items: List.generate(
-                        equimentList.length,
+                        devicesList.length,
                         (index) => DropdownMenuItem(
-                          value: equimentList[index],
-                          child: Text(equimentList[index]),
+                          value: devicesList[index],
+                          child: Text(devicesList[index].name ?? ""),
                         ),
                       ),
                       onChanged: (value) {
                         setState(() {
-                          equipment = value;
+                          selectedDevice = value;
                         });
                       },
                     ),
