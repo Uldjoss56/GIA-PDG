@@ -98,4 +98,37 @@ class UserService {
 
     return response.data;
   }
+
+  Future validRegistration(int id, Map<String, dynamic> data) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String userToken = prefs.getString('userToken') ?? "";
+
+    final options = Options(headers: {
+      "Authorization": "Bearer $userToken",
+    });
+
+    final response = await api.put(
+      'validInscrption/$id',
+      options: options,
+      data: data,
+    );
+    return response.data;
+  }
+
+  Future updateUser(int id, Map<String, dynamic> data) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String userToken = prefs.getString('userToken') ?? "";
+
+    final options = Options(headers: {
+      "Authorization": "Bearer $userToken",
+    });
+
+    final response = await api.put(
+      'user/update/$id',
+      options: options,
+      data: data,
+    );
+
+    return response.data;
+  }
 }

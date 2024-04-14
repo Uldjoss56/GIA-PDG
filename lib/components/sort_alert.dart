@@ -169,3 +169,8 @@ isIntegrate(String value) {
     return false;
   }
 }
+
+isInteger(String text) {
+  return int.tryParse(text) != null;
+}
+

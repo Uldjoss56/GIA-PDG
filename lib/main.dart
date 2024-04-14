@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gia_pdg_partenaire/const/colors.dart';
+import 'package:gia_pdg_partenaire/services/notifications_service.dart';
 import 'package:gia_pdg_partenaire/ui/begin.dart';
 
 void main() {
-  runApp(
-    const ProviderScope(
-      child: MainApp(),
-    ),
+  WidgetsFlutterBinding.ensureInitialized();
+  NotificationService().initNotification();
+  SystemChrome.setPreferredOrientations(
+    [DeviceOrientation.portraitUp],
+  ).then(
+    (_) {
+      runApp(
+        const ProviderScope(
+          child: MainApp(),
+        ),
+      );
+    },
   );
 }
 
@@ -19,7 +29,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'GIA-Vendeur-Client',
+      title: 'PDG-Partner',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: myPink,

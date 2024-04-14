@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gia_pdg_partenaire/components/sort_alert.dart';
 import 'package:gia_pdg_partenaire/const/colors.dart';
 import 'package:gia_pdg_partenaire/datas/datas.dart';
 import 'package:gia_pdg_partenaire/models/other_models.dart';
@@ -48,6 +49,8 @@ class _RegistrationPartnerState extends ConsumerState<RegistrationPartner> {
   String? _countryImg;
 
   bool _radioAccTypGroup = false;
+
+  final _pbController = TextEditingController();
 
   @override
   void didChangeDependencies() {
@@ -391,6 +394,43 @@ class _RegistrationPartnerState extends ConsumerState<RegistrationPartner> {
                           ),
                         ],
                       ),
+                    const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Définissez votre prix bénéficiaire",
+                        style: TextStyle(
+                          fontFamily: "Manrope",
+                          fontWeight: FontWeight.w400,
+                          color: myGrisFonce,
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                          width: 0.4 * width,
+                          height: 50,
+                          child: TextField(
+                            controller: _pbController,
+                            style: const TextStyle(
+                              fontFamily: "Manrope",
+                              fontWeight: FontWeight.w600,
+                            ),
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              prefix: const Icon(
+                                Icons.numbers,
+                                color: myGrisFonceAA,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                     const SizedBox(
                       height: 20,
                     ),
@@ -451,6 +491,11 @@ class _RegistrationPartnerState extends ConsumerState<RegistrationPartner> {
                                     context,
                                     "vous devez identifier votre distributeur",
                                   );
+                                } else if (!isInteger(_pbController.text)) {
+                                  messenger(
+                                    context,
+                                    "vous devez entrer un nombre",
+                                  );
                                 } else {
                                   signUp({
                                     "email": textEditingControllers[1].text,
@@ -465,6 +510,7 @@ class _RegistrationPartnerState extends ConsumerState<RegistrationPartner> {
                                     "role_id": "1",
                                     "isValided": "",
                                     "codeDistr": "",
+                                    "pu_benef": _pbController.text,
                                   });
                                 }
                               },

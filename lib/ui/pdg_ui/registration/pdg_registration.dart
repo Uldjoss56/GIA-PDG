@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gia_pdg_partenaire/components/sort_alert.dart';
 import 'package:gia_pdg_partenaire/const/colors.dart';
 import 'package:gia_pdg_partenaire/datas/datas.dart';
 import 'package:gia_pdg_partenaire/models/other_models.dart';
@@ -41,6 +42,8 @@ class _PdgRegistrationState extends ConsumerState<PdgRegistration> {
   Country? _country;
   List<Country> _lineCountries = [];
   String? _countryImg;
+
+  final _pvController = TextEditingController();
 
   @override
   void didChangeDependencies() {
@@ -218,9 +221,6 @@ class _PdgRegistrationState extends ConsumerState<PdgRegistration> {
                     ),
                     Column(
                       children: [
-                        const SizedBox(
-                          height: 20,
-                        ),
                         const Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
@@ -306,6 +306,46 @@ class _PdgRegistrationState extends ConsumerState<PdgRegistration> {
                     const SizedBox(
                       height: 20,
                     ),
+                    const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Définissez votre prix de vente",
+                        style: TextStyle(
+                          fontFamily: "Manrope",
+                          fontWeight: FontWeight.w400,
+                          color: myGrisFonce,
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                          width: 0.4 * width,
+                          height: 50,
+                          child: TextField(
+                            controller: _pvController,
+                            style: const TextStyle(
+                              fontFamily: "Manrope",
+                              fontWeight: FontWeight.w600,
+                            ),
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              prefix: const Icon(
+                                Icons.numbers,
+                                color: myGrisFonceAA,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     Row(
                       children: [
                         Expanded(
@@ -358,6 +398,11 @@ class _PdgRegistrationState extends ConsumerState<PdgRegistration> {
                                     context,
                                     "mots de passe non correspondants",
                                   );
+                                } else if (!isInteger(_pvController.text)) {
+                                  messenger(
+                                    context,
+                                    "vous devez entrer un nombre",
+                                  );
                                 } else {
                                   signUp({
                                     "email": textEditingControllers[1].text,
@@ -371,6 +416,7 @@ class _PdgRegistrationState extends ConsumerState<PdgRegistration> {
                                     "role_id": "7",
                                     "isValided": "",
                                     "codeDistr": "",
+                                    "pv": _pvController.text,
                                   });
                                 }
                               },
