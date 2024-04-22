@@ -9,8 +9,8 @@ import 'package:gia_pdg_partenaire/services/const.dart';
 import 'package:gia_pdg_partenaire/services/other_services.dart';
 import 'package:gia_pdg_partenaire/services/users_service.dart';
 import 'package:gia_pdg_partenaire/ui/choose_account.dart';
-import 'package:gia_pdg_partenaire/ui/partner_ui/screen/partner_home.dart';
-import 'package:gia_pdg_partenaire/ui/pdg_ui/home/pdg_home.dart';
+import 'package:gia_pdg_partenaire/ui/partner_ui/home/partner_main_home.dart';
+import 'package:gia_pdg_partenaire/ui/pdg_ui/home/pdg_main_home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Begin extends ConsumerStatefulWidget {
@@ -82,7 +82,7 @@ class _BeginState extends ConsumerState<Begin> {
               // ignore: use_build_context_synchronously
               Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(builder: (context) {
-                  return const PdgHome();
+                  return const PdgMainHome();
                 }),
                 (value) => false,
               );
@@ -91,7 +91,7 @@ class _BeginState extends ConsumerState<Begin> {
               // ignore: use_build_context_synchronously
               Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(builder: (context) {
-                  return const PartnerHome();
+                  return const PartnerMainHome();
                 }),
                 (value) => false,
               );

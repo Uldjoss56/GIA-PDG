@@ -110,7 +110,13 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
             children: [
               if (isLoading)
                 const Center(
-                  child: CircularProgressIndicator(),
+                  child: SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 3,
+                    ),
+                  ),
                 )
               else if (unreadUserNotifications.isEmpty &&
                   readUserNotifications.isEmpty)

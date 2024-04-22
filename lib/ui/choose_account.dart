@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gia_pdg_partenaire/const/colors.dart';
-import 'package:gia_pdg_partenaire/ui/partner_ui/screen/login_partner/login_partner.dart';
-import 'package:gia_pdg_partenaire/ui/pdg_ui/login/pdg_login.dart';
+import 'package:gia_pdg_partenaire/components/login/login.dart';
 
 class ChooseAccount extends StatelessWidget {
   const ChooseAccount({super.key});
@@ -81,7 +80,9 @@ class ChooseAccount extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const LoginPartner(),
+                            builder: (context) => const Login(
+                              roleID: 7,
+                            ),
                           ),
                         );
                       },
@@ -128,7 +129,9 @@ class ChooseAccount extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const PdgLogin(),
+                            builder: (context) => const Login(
+                              roleID: 1,
+                            ),
                           ),
                         );
                       },

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gia_pdg_partenaire/components/const/number.dart';
 import 'package:gia_pdg_partenaire/const/colors.dart';
 import 'package:gia_pdg_partenaire/datas/datas.dart';
-import 'package:gia_pdg_partenaire/ui/pdg_ui/home/pdg_home.dart';
-import 'package:gia_pdg_partenaire/ui/pdg_ui/widget/payment_show_dialog.dart';
+import 'package:gia_pdg_partenaire/ui/pdg_ui/home/pdg_main_home.dart';
+import 'package:gia_pdg_partenaire/components/payment_show_dialog.dart';
 
 class Paiement extends StatefulWidget {
   const Paiement({super.key});
@@ -251,7 +251,7 @@ class _PaiementState extends State<Paiement> {
                                 onPressed: () {
                                   Navigator.of(context).pushAndRemoveUntil(
                                     MaterialPageRoute(
-                                      builder: (_) => const PdgHome(),
+                                      builder: (_) => const PdgMainHome(),
                                     ),
                                     (value) => false,
                                   );

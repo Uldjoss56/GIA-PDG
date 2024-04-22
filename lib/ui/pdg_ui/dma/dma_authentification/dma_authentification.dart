@@ -6,8 +6,8 @@ import 'package:gia_pdg_partenaire/components/show_info.dart';
 import 'package:gia_pdg_partenaire/const/colors.dart';
 import 'package:gia_pdg_partenaire/services/const.dart';
 import 'package:gia_pdg_partenaire/services/product_service.dart';
-import 'package:gia_pdg_partenaire/ui/custom_clipper_seller.dart';
-import 'package:gia_pdg_partenaire/ui/pdg_ui/widget/scan_show_dialog.dart';
+import 'package:gia_pdg_partenaire/components/custom_clipper.dart';
+import 'package:gia_pdg_partenaire/components/scan_show_dialog.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class DMAAuthentification extends ConsumerStatefulWidget {

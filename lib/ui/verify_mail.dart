@@ -7,14 +7,15 @@ import 'package:gia_pdg_partenaire/models/user.dart';
 import 'package:gia_pdg_partenaire/provider/user_provider.dart';
 import 'package:gia_pdg_partenaire/services/const.dart';
 import 'package:gia_pdg_partenaire/services/users_service.dart';
-import 'package:gia_pdg_partenaire/ui/partner_ui/screen/login_partner/login_partner.dart';
-import 'package:gia_pdg_partenaire/ui/pdg_ui/login/pdg_login.dart';
+import 'package:gia_pdg_partenaire/components/login/login.dart';
 import 'package:pinput/pinput.dart';
 
 class VerifyMail extends ConsumerStatefulWidget {
   const VerifyMail({
     super.key,
+    required this.roleID,
   });
+  final int roleID;
 
   @override
   ConsumerState<VerifyMail> createState() => _VerifyMailState();
@@ -309,7 +310,9 @@ class _VerifyMailState extends ConsumerState<VerifyMail> {
         // ignore: use_build_context_synchronously
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) {
-            return const VerifyMail();
+            return VerifyMail(
+              roleID: widget.roleID,
+            );
           }),
         );
 
@@ -373,7 +376,9 @@ class _VerifyMailState extends ConsumerState<VerifyMail> {
             // ignore: use_build_context_synchronously
             Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: (context) {
-                return const PdgLogin();
+                return const Login(
+                  roleID: 1,
+                );
               }),
               (value) => false,
             );
@@ -382,7 +387,9 @@ class _VerifyMailState extends ConsumerState<VerifyMail> {
             // ignore: use_build_context_synchronously
             Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: (context) {
-                return const LoginPartner();
+                return const Login(
+                  roleID: 7,
+                );
               }),
               (value) => false,
             );

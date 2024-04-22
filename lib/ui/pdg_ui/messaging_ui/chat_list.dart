@@ -30,7 +30,7 @@ class ChatList extends ConsumerWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) => const MessagingUI(
-                              title: "Administrateur",
+                              roleID: 5,
                             ),
                           ),
                         );
@@ -79,7 +79,7 @@ class ChatList extends ConsumerWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) => const MessagingUI(
-                              title: "Distributeur Officiel",
+                              roleID: 2,
                             ),
                           ),
                         );

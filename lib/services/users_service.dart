@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class UserService {
   Dio api = Api.api();
   String? responseMessage;
+  final imageStorageUrl = "https://test.princedegboe.com/storage/profil/";
 
   Future createUser(Map<String, dynamic> data) async {
     final response = await api.post(
@@ -115,7 +116,7 @@ class UserService {
     return response.data;
   }
 
-  Future updateUser(int id, Map<String, dynamic> data) async {
+  Future<UserUpdateData> updateUser(int id, Map<String, dynamic> data) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String userToken = prefs.getString('userToken') ?? "";
 
@@ -129,6 +130,22 @@ class UserService {
       data: data,
     );
 
-    return response.data;
+    return UserUpdateData.fromJson(response.data);
+  }
+
+  Future updateUserImage(FormData data) async {
+    Dio dio = Dio();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String userToken = prefs.getString('userToken') ?? "";
+
+    final options = Options(headers: {
+      "Authorization": "Bearer $userToken",
+    });
+    final response = await dio.post(
+      imageStorageUrl,
+      data: data,
+      options: options,
+    );
+    return response;
   }
 }

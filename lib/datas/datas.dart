@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gia_pdg_partenaire/components/notification/notification_page.dart';
-import 'package:gia_pdg_partenaire/ui/pdg_ui/home/home.dart';
+import 'package:gia_pdg_partenaire/ui/partner_ui/home/partner_home.dart';
+import 'package:gia_pdg_partenaire/ui/pdg_ui/distributeur_officiel/distributeur_off_detail.dart';
+import 'package:gia_pdg_partenaire/ui/pdg_ui/home/pdg_home.dart';
 import 'package:gia_pdg_partenaire/ui/pdg_ui/messaging_ui/chat_list.dart';
-import 'package:gia_pdg_partenaire/ui/pdg_ui/profil/user_profil.dart';
+import 'package:gia_pdg_partenaire/components/profil/user_profil.dart';
 
 const staticPath = "assets/img/africa_flag/";
 
@@ -191,7 +193,7 @@ Map<String, dynamic> userData = {
   "langue": "French",
 };
 
-List<Map<String, dynamic>> bottomList = [
+List<Map<String, dynamic>> pdgBottomList = [
   {
     'label': 'Accueil',
     'icon': Image.asset(
@@ -202,7 +204,7 @@ List<Map<String, dynamic>> bottomList = [
       'assets/img/icons/home_white.png',
       width: 25,
     ),
-    "screen": const Home(),
+    "screen": const PDGHome(),
   },
   {
     'label': 'Chat',
@@ -248,6 +250,57 @@ List<Map<String, dynamic>> bottomList = [
   },
 ];
 
+List<Map<String, dynamic>> partnerBottomList = [
+  {
+    'label': 'Accueil',
+    'icon': Image.asset(
+      'assets/img/icons/home.png',
+      width: 25,
+    ),
+    'active_icon': Image.asset(
+      'assets/img/icons/home_white.png',
+      width: 25,
+    ),
+    "screen": const PartnerHome(),
+  },
+  {
+    'label': 'Chat',
+    'icon': Image.asset(
+      'assets/img/icons/distribution_01.png',
+      width: 25,
+    ),
+    'active_icon': Image.asset(
+      'assets/img/icons/distribution.png',
+      width: 25,
+    ),
+    "screen": const DistributeurOffiDetail(),
+  },
+  {
+    'label': 'Notifications',
+    'icon': Image.asset(
+      'assets/img/icons/notification01.png',
+      width: 25,
+    ),
+    'active_icon': Image.asset(
+      'assets/img/icons/notification.png',
+      width: 25,
+    ),
+    "screen": const NotificationPage(),
+  },
+  {
+    'label': 'Profil',
+    'icon': Image.asset(
+      'assets/img/icons/user_01.png',
+      width: 25,
+    ),
+    'active_icon': Image.asset(
+      'assets/img/icons/user_white.png',
+      width: 25,
+    ),
+    "screen": const UserProfil(),
+  },
+];
+
 List<Map<String, dynamic>> profilCardData = [
   {
     "theKey": "fullname",
@@ -255,14 +308,9 @@ List<Map<String, dynamic>> profilCardData = [
     "text": "Nom & Prénom",
   },
   {
-    "theKey": "username",
-    "label": "Saisissez votre om d'utilisateur",
-    "text": "Nom d'utilisateur"
-  },
-  {
-    "theKey": "mail",
-    "label": "Saisissez votre email",
-    "text": "Adresse mail",
+    "theKey": "birthday",
+    "label": "Saisissez votre date de naissance",
+    "text": "Date de naissance"
   },
 ];
 

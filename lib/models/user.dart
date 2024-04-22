@@ -56,6 +56,35 @@ class Authorization {
       };
 }
 
+class UserUpdateData {
+  final bool? status;
+  final String? message;
+  final User? user;
+
+  UserUpdateData({
+    this.status,
+    this.message,
+    this.user,
+  });
+
+  factory UserUpdateData.fromRawJson(String str) =>
+      UserUpdateData.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory UserUpdateData.fromJson(Map<String, dynamic> json) => UserUpdateData(
+        status: json["status"],
+        message: json["message"],
+        user: json["data"] == null ? null : User.fromJson(json["data"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "status": status,
+        "message": message,
+        "data": user?.toJson(),
+      };
+}
+
 class User {
   final int? id;
   final String? name;
