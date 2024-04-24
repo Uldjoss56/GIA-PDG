@@ -10,15 +10,11 @@ void main() {
   NotificationService().initNotification();
   SystemChrome.setPreferredOrientations(
     [DeviceOrientation.portraitUp],
-  ).then(
-    (_) {
-      runApp(
-        const ProviderScope(
-          child: MainApp(),
-        ),
-      );
-    },
-  );
+  ).then((_) {
+    runApp(const ProviderScope(
+      child: MainApp(),
+    ));
+  });
 }
 
 class MainApp extends StatelessWidget {

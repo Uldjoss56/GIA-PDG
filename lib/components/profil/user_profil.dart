@@ -10,7 +10,6 @@ import 'package:gia_pdg_partenaire/models/user.dart';
 import 'package:gia_pdg_partenaire/provider/user_provider.dart';
 import 'package:gia_pdg_partenaire/services/const.dart';
 import 'package:gia_pdg_partenaire/services/users_service.dart';
-import 'package:gia_pdg_partenaire/ui/begin.dart';
 import 'package:gia_pdg_partenaire/components/profil/account.dart';
 import 'package:gia_pdg_partenaire/components/image_input.dart';
 import 'package:gia_pdg_partenaire/ui/choose_account.dart';
@@ -547,10 +546,10 @@ class _UserProfilState extends ConsumerState<UserProfil> {
         print('Upload successful: $response');
         setState(() {
           selectedImage = imageFile;
-          print(selectedImage?.path);
         });
       } on DioException catch (e) {
-        print(e);
+        // ignore: use_build_context_synchronously
+        messenger(context, e.message ?? "");
       } finally {
         setState(() {
           isLoading = false;

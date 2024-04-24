@@ -1,7 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_badged/badge_position.dart';
-import 'package:flutter_badged/flutter_badge.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gia_pdg_partenaire/components/notification/notification_page.dart';
 import 'package:gia_pdg_partenaire/components/profil/user_profil.dart';
@@ -117,26 +115,34 @@ class _PartnerMainHomeState extends ConsumerState<PartnerMainHome> {
             label: 'Distributeur Officiel',
           ),
           BottomNavigationBarItem(
-            icon: FlutterBadge(
-              itemCount: unreadNotifs.length,
-              contentPadding: const EdgeInsets.all(6),
-              position: BadgePosition.topRight(),
-              badgeColor: myPink02,
-              badgeTextColor: myPink01,
-              textStyle: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: myPink01,
-              ),
-              icon: ColorFiltered(
-                colorFilter: const ColorFilter.mode(
-                  myWhite,
-                  BlendMode.srcIn,
-                ),
-                child: partnerBottomList[2]
-                    [_selectedIndex == 2 ? 'active_icon' : 'icon'],
-              ),
-            ),
+            icon: unreadNotifs.isNotEmpty
+                ? Badge(
+                    label: Text(
+                      unreadNotifs.length > 9 ? "+9" : "${unreadNotifs.length}",
+                    ),
+                    textStyle: const TextStyle(
+                      fontFamily: "Manrope",
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: myPink01,
+                    ),
+                    child: ColorFiltered(
+                      colorFilter: const ColorFilter.mode(
+                        myWhite,
+                        BlendMode.srcIn,
+                      ),
+                      child: partnerBottomList[2]
+                          [_selectedIndex == 2 ? 'active_icon' : 'icon'],
+                    ),
+                  )
+                : ColorFiltered(
+                    colorFilter: const ColorFilter.mode(
+                      myWhite,
+                      BlendMode.srcIn,
+                    ),
+                    child: partnerBottomList[2]
+                        [_selectedIndex == 2 ? 'active_icon' : 'icon'],
+                  ),
             label: 'Notification',
           ),
           BottomNavigationBarItem(

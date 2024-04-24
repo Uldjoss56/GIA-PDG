@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_badged/badge_position.dart';
-import 'package:flutter_badged/flutter_badge.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gia_pdg_partenaire/const/colors.dart';
 import 'package:gia_pdg_partenaire/datas/datas.dart';
@@ -42,19 +40,19 @@ class _CustomBottomNavigatorState extends ConsumerState<CustomBottomNavigator> {
           backgroundColor: myPink,
           activeIcon: CircleAvatar(
             backgroundColor: myPink01,
-            child: bottom["label"].toString().contains("Notif")
-                ? FlutterBadge(
-                    itemCount: unreadNotifs.length,
-                    contentPadding: const EdgeInsets.all(6),
-                    position: BadgePosition.topRight(),
-                    badgeColor: myPink02,
-                    badgeTextColor: myPink01,
+            child: (bottom["label"].toString().contains("Notif") &&
+                    unreadNotifs.isNotEmpty)
+                ? Badge(
+                    label: Text(
+                      unreadNotifs.length > 9 ? "+9" : "${unreadNotifs.length}",
+                    ),
                     textStyle: const TextStyle(
+                      fontFamily: "Manrope",
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                       color: myPink01,
                     ),
-                    icon: ColorFiltered(
+                    child: ColorFiltered(
                       colorFilter: const ColorFilter.mode(
                         myWhite,
                         BlendMode.srcIn,
@@ -71,19 +69,19 @@ class _CustomBottomNavigatorState extends ConsumerState<CustomBottomNavigator> {
                   ),
           ),
           label: bottom['label'],
-          icon: bottom["label"].toString().contains("Notif")
-              ? FlutterBadge(
-                  itemCount: unreadNotifs.length,
-                  contentPadding: const EdgeInsets.all(6),
-                  position: BadgePosition.topRight(),
-                  badgeColor: myPink01,
-                  badgeTextColor: myWhite,
+          icon: (bottom["label"].toString().contains("Notif") &&
+                  unreadNotifs.isNotEmpty)
+              ? Badge(
+                  label: Text(
+                    unreadNotifs.length > 9 ? "+9" : "${unreadNotifs.length}",
+                  ),
                   textStyle: const TextStyle(
+                    fontFamily: "Manrope",
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
-                    color: myWhite,
+                    color: myPink01,
                   ),
-                  icon: ColorFiltered(
+                  child: ColorFiltered(
                     colorFilter: const ColorFilter.mode(
                       myWhite,
                       BlendMode.srcIn,

@@ -517,9 +517,7 @@ class _RegistrationState extends ConsumerState<Registration> {
                                   borderRadius: BorderRadius.circular(40),
                                 ),
                               ),
-                              onPressed: !_acceptConditions
-                                  ? null
-                                  : () {
+                              onPressed:() {
                                       if (_textEditingControllers[0]
                                           .text
                                           .isEmpty) {
@@ -571,10 +569,10 @@ class _RegistrationState extends ConsumerState<Registration> {
                                           "role_id": "7",
                                           "isValided": "",
                                           "codeDistr": "",
-                                          "pv": roleID == 1
+                                          "pv": widget.roleID == 1
                                               ? _pvController.text
                                               : "",
-                                          "pu_benef": roleID == 7
+                                          "pu_benef": widget.roleID == 7
                                               ? _pvController.text
                                               : "",
                                         });
