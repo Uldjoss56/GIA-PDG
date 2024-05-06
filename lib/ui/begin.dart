@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,6 +13,7 @@ import 'package:gia_pdg_partenaire/services/users_service.dart';
 import 'package:gia_pdg_partenaire/ui/choose_account.dart';
 import 'package:gia_pdg_partenaire/ui/partner_ui/home/partner_main_home.dart';
 import 'package:gia_pdg_partenaire/ui/pdg_ui/home/pdg_main_home.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Begin extends ConsumerStatefulWidget {
@@ -64,7 +67,20 @@ class _BeginState extends ConsumerState<Begin> {
       try {
         var user = await _userService.getUserProfile();
         final prefs = await SharedPreferences.getInstance();
+          final downloadsDirectory = await getDownloadsDirectory();
+          final directoryPath = downloadsDirectory!.path;
+if (user.profil != "" && user.profil != null) {
+          final downloadResponse = await _userService.downloadUserImage(
+            directoryPath,
+            user.profil ?? "",
+          );
 
+          if (downloadResponse.statusCode == 200) {
+            final userImageFile = File("$directoryPath/${user.profil}");
+            final userImageNotifier = ref.read(userImageProvider.notifier);
+            userImageNotifier.updateUserImage(userImageFile);
+          }
+        }
         final userNotifier = ref.read(userProvider.notifier);
         userNotifier.updateUser(user);
 
@@ -159,10 +175,7 @@ class _BeginState extends ConsumerState<Begin> {
         });
       } on DioException catch (e) {
         // ignore: use_build_context_synchronously
-        messenger(
-          context,
-          e.response!.data["message"],
-        );
+        messenger(context, e.response!.data["message"]);
         return List.empty();
       } finally {
         setState(() {
@@ -171,10 +184,7 @@ class _BeginState extends ConsumerState<Begin> {
       }
     } else {
       // ignore: use_build_context_synchronously
-      messenger(
-        context,
-        "Connectez-vous à internet",
-      );
+      messenger(context, "Connectez-vous à internet");
       return List.empty();
     }
   }
@@ -193,10 +203,7 @@ class _BeginState extends ConsumerState<Begin> {
         _loadDevices();
       } on DioException catch (e) {
         // ignore: use_build_context_synchronously
-        messenger(
-          context,
-          e.response!.data["message"],
-        );
+        messenger(context, e.response!.data["message"]);
         return List.empty();
       } finally {
         setState(() {
@@ -205,10 +212,7 @@ class _BeginState extends ConsumerState<Begin> {
       }
     } else {
       // ignore: use_build_context_synchronously
-      messenger(
-        context,
-        "Connectez-vous à internet",
-      );
+      messenger(context, "Connectez-vous à internet");
       return List.empty();
     }
   }
@@ -227,10 +231,7 @@ class _BeginState extends ConsumerState<Begin> {
         _loadRoles();
       } on DioException catch (e) {
         // ignore: use_build_context_synchronously
-        messenger(
-          context,
-          e.response!.data["message"],
-        );
+        messenger(context, e.response!.data["message"]);
         return List.empty();
       } finally {
         setState(() {
@@ -239,10 +240,7 @@ class _BeginState extends ConsumerState<Begin> {
       }
     } else {
       // ignore: use_build_context_synchronously
-      messenger(
-        context,
-        "Connectez-vous à internet",
-      );
+      messenger(context, "Connectez-vous à internet");
       return List.empty();
     }
   }

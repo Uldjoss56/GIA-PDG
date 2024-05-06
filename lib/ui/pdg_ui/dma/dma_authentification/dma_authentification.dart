@@ -239,8 +239,8 @@ class _DMAAuthentificationState extends ConsumerState<DMAAuthentification> {
 
         if (response.message!.contains("Produit authentique")) {
           await playLocalAudio();
-          // ignore: use_build_context_synchronously
           showDialog(
+            // ignore: use_build_context_synchronously
             context: context,
             builder: (context) {
               return ScanShowDialog(
@@ -255,6 +255,7 @@ class _DMAAuthentificationState extends ConsumerState<DMAAuthentification> {
           await playLocalAudio();
           // ignore: use_build_context_synchronously
           showDialog(
+            // ignore: use_build_context_synchronously
             context: context,
             builder: (context) {
               return ScanShowDialog(
@@ -271,10 +272,7 @@ class _DMAAuthentificationState extends ConsumerState<DMAAuthentification> {
         });
       } on DioException catch (e) {
         // ignore: use_build_context_synchronously
-        messenger(
-          context,
-          e.response!.data["message"],
-        );
+        messenger(context, e.response!.data["message"]);
         setState(() {
           isScanning = true;
           hasFoundCode = false;
@@ -288,10 +286,7 @@ class _DMAAuthentificationState extends ConsumerState<DMAAuthentification> {
       }
     } else {
       // ignore: use_build_context_synchronously
-      messenger(
-        context,
-        "Connectez-vous à internet",
-      );
+      messenger(context, "Connectez-vous à internet");
     }
   }
 }

@@ -517,7 +517,9 @@ class _RegistrationState extends ConsumerState<Registration> {
                                   borderRadius: BorderRadius.circular(40),
                                 ),
                               ),
-                              onPressed:() {
+                              onPressed: !_acceptConditions
+                                  ? null
+                                  : () {
                                       if (_textEditingControllers[0]
                                           .text
                                           .isEmpty) {
@@ -691,19 +693,13 @@ class _RegistrationState extends ConsumerState<Registration> {
           String firstErrorMessage = errorsList[firstErrorField][0];
 
           // ignore: use_build_context_synchronously
-          messenger(
-            context,
-            firstErrorMessage,
-          );
+          messenger(context, firstErrorMessage);
         }
 
         return response;
       } on DioException catch (e) {
         // ignore: use_build_context_synchronously
-        messenger(
-          context,
-          e.response!.data["message"],
-        );
+        messenger(context, e.response!.data["message"]);
       } finally {
         setState(() {
           _isLoading = false;

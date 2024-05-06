@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,6 +13,7 @@ import 'package:gia_pdg_partenaire/ui/partner_ui/home/partner_main_home.dart';
 import 'package:gia_pdg_partenaire/ui/pdg_ui/home/pdg_main_home.dart';
 import 'package:gia_pdg_partenaire/components/recoverypassword/recovery_password.dart';
 import 'package:gia_pdg_partenaire/components/registration/registration.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends ConsumerStatefulWidget {
@@ -297,31 +300,40 @@ class _LoginState extends ConsumerState<Login> {
           await _userService.disconnectUser();
 
           // ignore: use_build_context_synchronously
-          messenger(
-            context,
-            "Ce compte n'est pas un compte correspondant",
-          );
+          messenger(context, "Ce compte n'est pas un compte correspondant");
         } else {
           final user = response.user;
           final userNotifier = ref.read(userProvider.notifier);
-          userNotifier.updateUser(user!);
+          final downloadsDirectory = await getDownloadsDirectory();
+          final directoryPath = downloadsDirectory!.path;
+          if (user!.profil != "" && user.profil != null) {
+            final downloadResponse = await _userService.downloadUserImage(
+              directoryPath,
+              user.profil ?? "",
+            );
+
+            if (downloadResponse.statusCode == 200) {
+              final userImageFile = File("$directoryPath/${user.profil}");
+              final userImageNotifier = ref.read(userImageProvider.notifier);
+              userImageNotifier.updateUserImage(userImageFile);
+            }
+          }
+          userNotifier.updateUser(user);
           prefs.setString("userMail", user.email!);
 
           // ignore: use_build_context_synchronously
           Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(
-              builder: (context) =>
-                  user.roleId == 1 ? const PdgMainHome() : const PartnerMainHome(),
+              builder: (context) => user.roleId == 1
+                  ? const PdgMainHome()
+                  : const PartnerMainHome(),
             ),
             (value) => false,
           );
         }
       } on DioException catch (e) {
         // ignore: use_build_context_synchronously
-        messenger(
-          context,
-          e.response!.data["message"],
-        );
+        messenger(context, e.response!.data["message"]);
       } finally {
         setState(() {
           isLoading = false;
@@ -329,10 +341,7 @@ class _LoginState extends ConsumerState<Login> {
       }
     } else {
       // ignore: use_build_context_synchronously
-      messenger(
-        context,
-        "Connectez-vous à internet",
-      );
+      messenger(context, "Connectez-vous à internet");
     }
   }
 }

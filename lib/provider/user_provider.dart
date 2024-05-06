@@ -1,8 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gia_pdg_partenaire/models/user.dart';
 
 class UserNotifier extends StateNotifier<User> {
-  UserNotifier(User user) : super(user);
+  UserNotifier(super.user);
 
   void updateUser(User user) {
     state = user;
@@ -15,8 +17,21 @@ final userProvider = StateNotifierProvider<UserNotifier, User>(
   ),
 );
 
+class UserImageNotifier extends StateNotifier<File?> {
+  UserImageNotifier(super.userImage);
+
+  void updateUserImage(File? userImage) {
+    state = userImage;
+  }
+}
+
+final userImageProvider =
+    StateNotifierProvider<UserImageNotifier, File?>((ref) {
+  return UserImageNotifier(null);
+});
+
 class SellerNotifier extends StateNotifier<List<User>> {
-  SellerNotifier(List<User> sellers) : super(sellers);
+  SellerNotifier(super.sellers);
 
   void updateListUser(List<User> sellers) {
     state = sellers;
@@ -30,7 +45,7 @@ final sellersProvider = StateNotifierProvider<SellerNotifier, List<User>>(
 );
 
 class DistributeursNotifier extends StateNotifier<List<User>> {
-  DistributeursNotifier(List<User> distributeurs) : super(distributeurs);
+  DistributeursNotifier(super.distributeurs);
 
   void updateListUser(List<User> distributeurs) {
     state = distributeurs;
@@ -62,20 +77,16 @@ final assistantClientProvider = StateNotifierProvider<UserNotifier, User>(
   ),
 );
 
-
 class AssistNotifier extends StateNotifier<List<User>> {
-  AssistNotifier(List<User> assist) : super(assist);
+  AssistNotifier(super.assist);
 
   void updateListUser(List<User> assist) {
     state = assist;
   }
 }
 
-final assistProvider =
-    StateNotifierProvider<AssistNotifier, List<User>>(
+final assistProvider = StateNotifierProvider<AssistNotifier, List<User>>(
   (ref) => AssistNotifier(
     [],
   ),
 );
-
-

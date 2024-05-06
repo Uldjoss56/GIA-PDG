@@ -154,10 +154,7 @@ class _NotificationTileState extends ConsumerState<NotificationTile> {
         loadUnReadNotifications();
       } on DioException catch (e) {
         // ignore: use_build_context_synchronously
-        messenger(
-          context,
-          e.response!.data["message"],
-        );
+        messenger(context, e.response!.data["message"]);
         return List.empty();
       } finally {
         setState(() {
@@ -166,10 +163,7 @@ class _NotificationTileState extends ConsumerState<NotificationTile> {
       }
     } else {
       // ignore: use_build_context_synchronously
-      messenger(
-        context,
-        "Connectez-vous à internet",
-      );
+      messenger(context, "Connectez-vous à internet");
       return List.empty();
     }
   }
@@ -186,10 +180,7 @@ class _NotificationTileState extends ConsumerState<NotificationTile> {
         readNotifNotifier.updateUserNotif(response.notifications!);
       } on DioException catch (e) {
         // ignore: use_build_context_synchronously
-        messenger(
-          context,
-          e.response!.data["message"],
-        );
+        messenger(context, e.response!.data["message"]);
         return List.empty();
       } finally {
         setState(() {
@@ -198,10 +189,7 @@ class _NotificationTileState extends ConsumerState<NotificationTile> {
       }
     } else {
       // ignore: use_build_context_synchronously
-      messenger(
-        context,
-        "Connectez-vous à internet",
-      );
+      messenger(context, "Connectez-vous à internet");
       return List.empty();
     }
   }
@@ -218,10 +206,7 @@ class _NotificationTileState extends ConsumerState<NotificationTile> {
         unreadNotifNotifier.updateUserNotif(response.notifications!);
       } on DioException catch (e) {
         // ignore: use_build_context_synchronously
-        messenger(
-          context,
-          e.response!.data["message"],
-        );
+        messenger(context, e.response!.data["message"]);
         return List.empty();
       } finally {
         setState(() {
@@ -230,10 +215,7 @@ class _NotificationTileState extends ConsumerState<NotificationTile> {
       }
     } else {
       // ignore: use_build_context_synchronously
-      messenger(
-        context,
-        "Connectez-vous à internet",
-      );
+      messenger(context, "Connectez-vous à internet");
       return List.empty();
     }
   }

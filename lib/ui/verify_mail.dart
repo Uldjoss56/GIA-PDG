@@ -319,10 +319,7 @@ class _VerifyMailState extends ConsumerState<VerifyMail> {
         return response;
       } on DioException catch (e) {
         // ignore: use_build_context_synchronously
-        messenger(
-          context,
-          e.response!.data["message"],
-        );
+        messenger(context, e.response!.data["message"]);
       } finally {
         setState(() {
           isLoadingResent = false;
@@ -371,33 +368,17 @@ class _VerifyMailState extends ConsumerState<VerifyMail> {
         final userNotifier = ref.read(userProvider.notifier);
         userNotifier.updateUser(user);
 
-        switch (user.roleId) {
-          case 1:
-            // ignore: use_build_context_synchronously
-            Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) {
-                return const Login(
-                  roleID: 1,
-                );
-              }),
-              (value) => false,
-            );
-            break;
-          case 7:
-            // ignore: use_build_context_synchronously
-            Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) {
-                return const Login(
-                  roleID: 7,
-                );
-              }),
-              (value) => false,
-            );
-            break;
-          default:
-        }
         // ignore: use_build_context_synchronously
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) {
+            return Login(
+              roleID: widget.roleID,
+            );
+          }),
+        );
+        
         showDialog(
+          // ignore: use_build_context_synchronously
           context: context,
           builder: (context) {
             return const ShowInformation(
@@ -412,10 +393,7 @@ class _VerifyMailState extends ConsumerState<VerifyMail> {
         return response;
       } on DioException catch (e) {
         // ignore: use_build_context_synchronously
-        messenger(
-          context,
-          e.response!.data["message"],
-        );
+        messenger(context, e.response!.data["message"]);
       } finally {
         setState(() {
           isLoading = false;

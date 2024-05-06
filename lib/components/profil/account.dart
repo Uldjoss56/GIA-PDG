@@ -407,10 +407,7 @@ class _AccountState extends ConsumerState<Account> {
         Navigator.pop(context);
       } on DioException catch (e) {
         // ignore: use_build_context_synchronously
-        messenger(
-          context,
-          e.response!.data["message"],
-        );
+        messenger(context, e.response!.data["message"]);
       } finally {
         setState(() {
           isLoading = false;
@@ -418,10 +415,7 @@ class _AccountState extends ConsumerState<Account> {
       }
     } else {
       // ignore: use_build_context_synchronously
-      messenger(
-        context,
-        "Connectez-vous à internet",
-      );
+      messenger(context, "Connectez-vous à internet");
     }
   }
 }

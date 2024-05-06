@@ -541,12 +541,10 @@ class _UserProfilState extends ConsumerState<UserProfil> {
             filename: 'profil.jpg',
           ),
         });
-        final response = await _userService.updateUserImage(data);
+        await _userService.updateUserImage(data);
 
-        print('Upload successful: $response');
-        setState(() {
-          selectedImage = imageFile;
-        });
+        final userImageNotifier = ref.read(userImageProvider.notifier);
+        userImageNotifier.updateUserImage(imageFile);
       } on DioException catch (e) {
         // ignore: use_build_context_synchronously
         messenger(context, e.message ?? "");
@@ -557,10 +555,7 @@ class _UserProfilState extends ConsumerState<UserProfil> {
       }
     } else {
       // ignore: use_build_context_synchronously
-      messenger(
-        context,
-        "Connectez-vous à internet",
-      );
+      messenger(context, "Connectez-vous à internet");
     }
   }
 

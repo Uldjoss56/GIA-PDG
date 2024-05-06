@@ -520,10 +520,7 @@ class _CommanderDMAState extends ConsumerState<CommanderDMA> {
         orderNotifier.updateOrderData(response);
       } on DioException catch (e) {
         // ignore: use_build_context_synchronously
-        messenger(
-          context,
-          e.response!.data["message"],
-        );
+        messenger(context, e.response!.data["message"]);
         return List.empty();
       } finally {
         setState(() {
@@ -532,10 +529,7 @@ class _CommanderDMAState extends ConsumerState<CommanderDMA> {
       }
     } else {
       // ignore: use_build_context_synchronously
-      messenger(
-        context,
-        "Connectez-vous à internet",
-      );
+      messenger(context, "Connectez-vous à internet");
       return List.empty();
     }
   }
@@ -550,8 +544,8 @@ class _CommanderDMAState extends ConsumerState<CommanderDMA> {
         final response = await _dmaService.orderDma(data);
         // ignore: use_build_context_synchronously
         Navigator.pop(context);
-        // ignore: use_build_context_synchronously
         showDialog(
+          // ignore: use_build_context_synchronously
           context: context,
           builder: (context) {
             return const ShowInformation(
@@ -565,10 +559,7 @@ class _CommanderDMAState extends ConsumerState<CommanderDMA> {
         return response;
       } on DioException catch (e) {
         // ignore: use_build_context_synchronously
-        messenger(
-          context,
-          e.response!.data["message"],
-        );
+        messenger(context, e.response!.data["message"]);
       } finally {
         setState(() {
           isLoadingOrder = false;
@@ -622,10 +613,7 @@ class _CommanderDMAState extends ConsumerState<CommanderDMA> {
         });
       } on DioException catch (e) {
         // ignore: use_build_context_synchronously
-        messenger(
-          context,
-          e.response!.data["message"],
-        );
+        messenger(context, e.response!.data["message"]);
         return List.empty();
       } finally {
         setState(() {
@@ -634,10 +622,7 @@ class _CommanderDMAState extends ConsumerState<CommanderDMA> {
       }
     } else {
       // ignore: use_build_context_synchronously
-      messenger(
-        context,
-        "Connectez-vous à internet",
-      );
+      messenger(context, "Connectez-vous à internet");
       return List.empty();
     }
   }

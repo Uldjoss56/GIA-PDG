@@ -17,7 +17,7 @@ class CA extends ConsumerStatefulWidget {
 }
 
 class _CAState extends ConsumerState<CA> {
-   bool isLoading = false;
+  bool isLoading = false;
 
   User? currentUser;
   final _userService = UserService();
@@ -220,10 +220,7 @@ class _CAState extends ConsumerState<CA> {
         userNotifier.updateUser(response);
       } on DioException catch (e) {
         // ignore: use_build_context_synchronously
-        messenger(
-          context,
-          e.response!.data["message"],
-        );
+        messenger(context, e.response!.data["message"]);
       } finally {
         setState(() {
           isLoading = false;
@@ -231,10 +228,7 @@ class _CAState extends ConsumerState<CA> {
       }
     } else {
       // ignore: use_build_context_synchronously
-      messenger(
-        context,
-        "Connectez-vous à internet",
-      );
+      messenger(context, "Connectez-vous à internet");
     }
   }
 }

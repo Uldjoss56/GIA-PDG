@@ -431,10 +431,7 @@ class _DistributeurDetailState extends ConsumerState<DistributeurDetail> {
         sellerNotifier.updateListUser(distSellers);
       } on DioException catch (e) {
         // ignore: use_build_context_synchronously
-        messenger(
-          context,
-          e.response!.data["message"],
-        );
+        messenger(context, e.response!.data["message"]);
         return List.empty();
       } finally {
         setState(() {
@@ -443,10 +440,7 @@ class _DistributeurDetailState extends ConsumerState<DistributeurDetail> {
       }
     } else {
       // ignore: use_build_context_synchronously
-      messenger(
-        context,
-        "Connectez-vous à internet",
-      );
+      messenger(context, "Connectez-vous à internet");
       return List.empty();
     }
   }

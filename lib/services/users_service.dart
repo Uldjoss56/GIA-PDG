@@ -148,4 +148,16 @@ class UserService {
     );
     return response;
   }
+
+  Future<Response> downloadUserImage(
+      String directoryPath, String profil) async {
+    final savePath = "$directoryPath/$profil";
+
+    final response = await api.download(
+      "$imageStorageUrl$profil",
+      savePath,
+    );
+
+    return response;
+  }
 }
