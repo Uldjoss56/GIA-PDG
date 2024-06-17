@@ -13,7 +13,7 @@ void main() {
   ).then((_) {
     runApp(const ProviderScope(
       child: MainApp(),
-    ));
+    ));      
   });
 }
 

@@ -1,9 +1,14 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gia_pdg_partenaire/components/button.dart';
 import 'package:gia_pdg_partenaire/components/const/colors.dart';
+import 'package:gia_pdg_partenaire/components/show_info.dart';
 import 'package:gia_pdg_partenaire/datas/datas.dart';
 import 'package:gia_pdg_partenaire/models/user.dart';
+import 'package:gia_pdg_partenaire/provider/user_provider.dart';
+import 'package:gia_pdg_partenaire/services/const.dart';
+import 'package:gia_pdg_partenaire/services/users_service.dart';
 
 class ValidateRegistration extends ConsumerStatefulWidget {
   const ValidateRegistration({
@@ -17,10 +22,24 @@ class ValidateRegistration extends ConsumerStatefulWidget {
 }
 
 class _ValidateRegistrationState extends ConsumerState<ValidateRegistration> {
+  User? _currentUser;
+  User? _user;
+
+  bool _isLoadingValidate = false;
+
+  final _userService = UserService();
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _currentUser = ref.watch(userProvider);
+  }
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final user = widget.user;
+    print(user.isValided);
     return Scaffold(
       backgroundColor: myBackground,
       appBar: AppBar(
@@ -62,7 +81,7 @@ class _ValidateRegistrationState extends ConsumerState<ValidateRegistration> {
                 child: Column(
                   children: [
                     const Text(
-                      "Identité du vendeur",
+                      "Identité du souscripteur",
                       textAlign: TextAlign.center,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
@@ -148,53 +167,82 @@ class _ValidateRegistrationState extends ConsumerState<ValidateRegistration> {
                         ),
                       ],
                     ),
-                    ListTile(
-                      leading: ColorFiltered(
-                        colorFilter: const ColorFilter.mode(
-                          myPink,
-                          BlendMode.srcIn,
-                        ),
-                        child: RotatedBox(
-                          quarterTurns: 1,
-                          child: Image.asset(
-                            "assets/img/icons/country.png",
-                            width: 0.08 * width,
-                          ),
-                        ),
-                      ),
-                      title: const Text(
-                        "pays",
-                      ),
-                      subtitle: Row(
-                        children: [
-                          ClipOval(
-                            child: Image.asset(
-                              countriesList[(user.countryId ?? 1) - 1]["img"],
-                              fit: BoxFit.cover,
-                              width: 20,
-                              height: 20,
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: ListTile(
+                            leading: ColorFiltered(
+                              colorFilter: const ColorFilter.mode(
+                                myPink,
+                                BlendMode.srcIn,
+                              ),
+                              child: RotatedBox(
+                                quarterTurns: 1,
+                                child: Image.asset(
+                                  "assets/img/icons/country.png",
+                                  width: 0.08 * width,
+                                ),
+                              ),
+                            ),
+                            title: const Text(
+                              "pays",
+                            ),
+                            subtitle: Row(
+                              children: [
+                                ClipOval(
+                                  child: Image.asset(
+                                    countriesList[(user.countryId ?? 1) - 1]
+                                        ["img"],
+                                    fit: BoxFit.cover,
+                                    width: 20,
+                                    height: 20,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  countriesList[(user.countryId ?? 1) - 1]
+                                      ["noum"],
+                                  style: const TextStyle(
+                                    fontFamily: "Manrope",
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: myGrisFonce,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            countriesList[(user.countryId ?? 1) - 1]["noum"],
-                            style: const TextStyle(
-                              fontFamily: "Manrope",
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: myGrisFonce,
+                        ),
+                        Expanded(
+                          child: ListTile(
+                            leading: ColorFiltered(
+                              colorFilter: const ColorFilter.mode(
+                                myPink,
+                                BlendMode.srcIn,
+                              ),
+                              child: Image.asset(
+                                "assets/img/icons/link.png",
+                                width: 0.08 * width,
+                              ),
+                            ),
+                            title: const Text(
+                              "status",
+                            ),
+                            subtitle: Text(
+                              theRoles[user.roleId ?? 0] ?? "",
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ),
             ),
-            if (user.isValided == null || user.isValided == 0)
+            if (_user?.isValided == null || _user?.isValided == 0)
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 20,
@@ -212,21 +260,58 @@ class _ValidateRegistrationState extends ConsumerState<ValidateRegistration> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      onpressed: () {},
+                      onpressed: () {
+                        // ignore: use_build_context_synchronously
+                        Navigator.pop(context);
+                      },
                       buttonWidth: width * 0.3,
                       buttonHeight: width * 0.15,
                     ),
                     Button(
-                      buttonText: const Text(
-                        "Valider",
-                        style: TextStyle(
-                          color: myGris,
-                          fontFamily: "Manrope",
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
+                      buttonText: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          if (_isLoadingValidate)
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: SizedBox(
+                                    width: 0.05 * width,
+                                    height: 0.05 * width,
+                                    child: const CircularProgressIndicator(
+                                      color: myWhite,
+                                      strokeWidth: 2,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                              ],
+                            ),
+                          const Text(
+                            "Valider",
+                            style: TextStyle(
+                              color: myGris,
+                              fontFamily: "Manrope",
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
                       ),
-                      onpressed: () {},
+                      onpressed: _user == null
+                          ? null
+                          : () {
+                              validRegistration(
+                                _user!.id!,
+                                {
+                                  "validerId": _currentUser?.id,
+                                  "confirm": "1",
+                                },
+                              );
+                            },
                       buttonWidth: width * 0.3,
                       buttonHeight: width * 0.15,
                     )
@@ -236,7 +321,7 @@ class _ValidateRegistrationState extends ConsumerState<ValidateRegistration> {
             else
               const Button(
                 buttonText: Padding(
-                  padding: EdgeInsets.all(20),
+                  padding: EdgeInsets.symmetric(horizontal: 20),
                   child: Text(
                     "Vendeur déjà validé",
                     textAlign: TextAlign.center,
@@ -254,5 +339,42 @@ class _ValidateRegistrationState extends ConsumerState<ValidateRegistration> {
         ),
       ),
     );
+  }
+
+  validRegistration(int id, Map<String, dynamic> data) async {
+    final internetConnexion = await checkUserConnexion();
+    if (internetConnexion) {
+      setState(() {
+        _isLoadingValidate = true;
+      });
+      try {
+        final response = await _userService.validRegistration(id, data);
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+
+        showDialog(
+            // ignore: use_build_context_synchronously
+            context: context,
+            builder: (context) {
+              return ShowInformation(
+                imgPath: "assets/img/icons/user_white.png",
+                information: "Utilisateur validé",
+                detail: response["message"],
+              );
+            });
+      } on DioException catch (e) {
+        // ignore: use_build_context_synchronously
+        messenger(context, e.response!.data["message"]);
+        return List.empty();
+      } finally {
+        setState(() {
+          _isLoadingValidate = false;
+        });
+      }
+    } else {
+      // ignore: use_build_context_synchronously
+      messenger(context, "Connectez-vous à internet");
+      return List.empty();
+    }
   }
 }

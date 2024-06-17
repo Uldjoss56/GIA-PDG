@@ -60,7 +60,7 @@ class _RegistrationState extends ConsumerState<Registration> {
       );
     }).toList();
     */
-    _country = _lineCountries[2];
+    _country ??= _lineCountries[2];
     final countryID = _country!.countryId;
     _countryImg = countriesList[countryID! - 1]["img"];
   }
@@ -399,28 +399,28 @@ class _RegistrationState extends ConsumerState<Registration> {
                         ),
                       ),
                     ),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: SizedBox(
-                          width: 0.4 * width,
-                          height: 50,
-                          child: TextField(
-                            controller: _pvController,
-                            style: const TextStyle(
-                              fontFamily: "Manrope",
-                              fontWeight: FontWeight.w600,
-                            ),
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              prefix: const Icon(
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: myGris,
+                        ),
+                        child: TextFormField(
+                          controller: _pvController,
+                          decoration: InputDecoration(
+                            prefixIcon: const Padding(
+                              padding: EdgeInsets.all(15),
+                              child: Icon(
                                 Icons.numbers,
-                                color: myGrisFonceAA,
+                                color: myPink,
                               ),
                             ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                              borderSide: BorderSide.none,
+                            ),
+                            errorBorder: InputBorder.none,
                           ),
                         ),
                       ),

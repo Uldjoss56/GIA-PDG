@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gia_pdg_partenaire/components/const/number.dart';
@@ -169,16 +170,18 @@ class _MessagingUIState extends ConsumerState<MessagingUI> {
                                             decoration: const BoxDecoration(
                                               color: myPink,
                                             ),
-                                            child: Text(
+                                            child: ExpandableText(
                                               message.text ?? "",
-                                              maxLines: 4,
-                                              overflow: TextOverflow.ellipsis,
                                               style: const TextStyle(
                                                 fontFamily: "Manrope",
                                                 color: myWhite,
-                                                overflow: TextOverflow.ellipsis,
-                                                //fontSize:  16,
-                                                fontWeight: FontWeight.w500,
+                                              ),
+                                              expandText: "voir plus",
+                                              collapseText: " réduire",
+                                              maxLines: 4,
+                                              linkStyle: const TextStyle(
+                                                fontFamily: "Manrope",
+                                                color: myGrisFonceAA,
                                               ),
                                             ),
                                           ),
@@ -224,10 +227,26 @@ class _MessagingUIState extends ConsumerState<MessagingUI> {
                                             decoration: const BoxDecoration(
                                               color: Colors.blue,
                                             ),
-                                            child: Text(
+                                            child: ExpandableText(
+                                              message.text ?? "",
+                                              style: const TextStyle(
+                                                fontFamily: "Manrope",
+                                                color: myWhite,
+                                              ),
+                                              expandText: "voir plus",
+                                              collapseText: " réduire",
+                                              maxLines: 4,
+                                              linkStyle: const TextStyle(
+                                                fontFamily: "Manrope",
+                                                color: myGrisFonceAA,
+                                              ),
+                                            ),
+
+                                            /*
+                                            Text(
                                               message.text ?? "",
                                               softWrap: true,
-                                              maxLines: 4,
+                                              maxLines: 6,
                                               overflow: TextOverflow.ellipsis,
                                               style: const TextStyle(
                                                 fontFamily: "Manrope",
@@ -237,6 +256,7 @@ class _MessagingUIState extends ConsumerState<MessagingUI> {
                                                 fontWeight: FontWeight.w500,
                                               ),
                                             ),
+                                            */
                                           ),
                                         ),
                                         Text(

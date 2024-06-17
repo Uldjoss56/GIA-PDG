@@ -67,9 +67,9 @@ class _BeginState extends ConsumerState<Begin> {
       try {
         var user = await _userService.getUserProfile();
         final prefs = await SharedPreferences.getInstance();
-          final downloadsDirectory = await getDownloadsDirectory();
-          final directoryPath = downloadsDirectory!.path;
-if (user.profil != "" && user.profil != null) {
+        final downloadsDirectory = await getDownloadsDirectory();
+        final directoryPath = downloadsDirectory!.path;
+        if (user.profil != "" && user.profil != null) {
           final downloadResponse = await _userService.downloadUserImage(
             directoryPath,
             user.profil ?? "",

@@ -27,6 +27,7 @@ dependencies:
   flutter_keyboard_visibility: ^6.0.0
   flutter_file_downloader: ^1.2.1
   connectivity_plus: ^6.0.3
+  expandable_text: ^2.3.0
 
 dev_dependencies:
   flutter_test:

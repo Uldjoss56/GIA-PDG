@@ -117,8 +117,10 @@ class _NotificationTileState extends ConsumerState<NotificationTile> {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                dateFormatDH.format(
-                  widget.notification.createdAt ?? DateTime.now(),
+                dateFormatDH.format((
+                  widget.notification.createdAt ?? DateTime.now()).add(
+                    const Duration(hours: 1),
+                  ),
                 ),
                 style: const TextStyle(
                   fontFamily: "Manrope",

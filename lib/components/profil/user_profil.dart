@@ -7,6 +7,10 @@ import 'package:gia_pdg_partenaire/components/show_info.dart';
 import 'package:gia_pdg_partenaire/const/colors.dart';
 import 'package:gia_pdg_partenaire/datas/datas.dart';
 import 'package:gia_pdg_partenaire/models/user.dart';
+import 'package:gia_pdg_partenaire/provider/dma_provider.dart';
+import 'package:gia_pdg_partenaire/provider/message.dart';
+import 'package:gia_pdg_partenaire/provider/notifications_provider.dart';
+import 'package:gia_pdg_partenaire/provider/product_provider.dart';
 import 'package:gia_pdg_partenaire/provider/user_provider.dart';
 import 'package:gia_pdg_partenaire/services/const.dart';
 import 'package:gia_pdg_partenaire/services/users_service.dart';
@@ -43,6 +47,7 @@ class _UserProfilState extends ConsumerState<UserProfil> {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     currentUser = ref.watch(userProvider);
+    selectedImage = ref.watch(userImageProvider);
     return Scaffold(
       body: Stack(
         children: [
@@ -388,6 +393,7 @@ class _UserProfilState extends ConsumerState<UserProfil> {
                                 actions: [
                                   TextButton(
                                     onPressed: () async {
+                                      invalidateProvider();
                                       logOutUser();
                                     },
                                     child: const Text(
@@ -528,6 +534,17 @@ class _UserProfilState extends ConsumerState<UserProfil> {
     );
   }
 
+  invalidateProvider() {
+    ref.invalidate(userProvider);
+    ref.invalidate(userImageProvider);
+    ref.invalidate(userMessagesProvider);
+    ref.invalidate(unreadNotifProvider);
+    ref.invalidate(readNotifProvider);
+    ref.invalidate(orderMeDataProvider);
+    ref.invalidate(orderDataProvider);
+    ref.invalidate(productsProvider);
+  }
+
   uploadUserImg(File imageFile) async {
     final internetConnexion = await checkUserConnexion();
     if (internetConnexion) {
@@ -542,9 +559,10 @@ class _UserProfilState extends ConsumerState<UserProfil> {
           ),
         });
         await _userService.updateUserImage(data);
-
         final userImageNotifier = ref.read(userImageProvider.notifier);
         userImageNotifier.updateUserImage(imageFile);
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
       } on DioException catch (e) {
         // ignore: use_build_context_synchronously
         messenger(context, e.message ?? "");

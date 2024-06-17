@@ -134,15 +134,14 @@ class UserService {
   }
 
   Future updateUserImage(FormData data) async {
-    Dio dio = Dio();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String userToken = prefs.getString('userToken') ?? "";
 
     final options = Options(headers: {
       "Authorization": "Bearer $userToken",
     });
-    final response = await dio.post(
-      imageStorageUrl,
+    final response = await api.post(
+      'user/update',
       data: data,
       options: options,
     );

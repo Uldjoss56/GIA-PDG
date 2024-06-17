@@ -102,7 +102,11 @@ class _CommandeDetailState extends State<CommandeDetail> {
                           Text(
                             cmd.createdAt == null
                                 ? "----"
-                                : dateFormatDH.format(cmd.createdAt!),
+                                : dateFormatDH.format(
+                                    (cmd.createdAt!).add(
+                                      const Duration(hours: 1),
+                                    ),
+                                  ),
                             style: const TextStyle(
                               fontFamily: "Manrope",
                               color: myGrisFonce,
@@ -125,7 +129,11 @@ class _CommandeDetailState extends State<CommandeDetail> {
                           Text(
                             cmd.updatedAt == null
                                 ? "----"
-                                : dateFormatDH.format(cmd.updatedAt!),
+                                : dateFormatDH.format(
+                                    (cmd.updatedAt!).add(
+                                      const Duration(hours: 1),
+                                    ),
+                                  ),
                             style: const TextStyle(
                               fontFamily: "Manrope",
                               color: myGrisFonce,

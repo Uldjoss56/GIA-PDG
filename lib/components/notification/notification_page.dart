@@ -9,7 +9,6 @@ import 'package:gia_pdg_partenaire/models/orders.dart';
 import 'package:gia_pdg_partenaire/models/user.dart';
 import 'package:gia_pdg_partenaire/provider/dma_provider.dart';
 import 'package:gia_pdg_partenaire/provider/notifications_provider.dart';
-import 'package:gia_pdg_partenaire/provider/user_provider.dart';
 import 'package:gia_pdg_partenaire/services/const.dart';
 import 'package:gia_pdg_partenaire/services/dma_service.dart';
 import 'package:gia_pdg_partenaire/services/notifications_service.dart';
@@ -30,30 +29,21 @@ class NotificationPage extends ConsumerStatefulWidget {
 }
 
 class _NotificationPageState extends ConsumerState<NotificationPage> {
-  bool selectAll = false;
-  List<User> sellers = [];
-  List<User> dists = [];
-  List<User> distPays = [];
-  User? distOff;
-  User? pdg;
-  User? currentUser;
+  User? _user;
+  List<User> _allUsers = [];
 
   final _userService = UserService();
 
-  List<UserNotification> unreadUserNotifications = [];
-  List<UserNotification> readUserNotifications = [];
+  List<UserNotification> _unreadUserNotifications = [];
+  List<UserNotification> _readUserNotifications = [];
 
-  bool isLoading = true;
+  bool _isLoading = true;
 
   final _notificationsService = NotificationService();
 
   final _dmaService = DmaService();
 
   List<OrderData> listOrder = [];
-
-  User? _user;
-
-  List<User> myUsers = [];
 
   @override
   void initState() {
@@ -63,29 +53,8 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    currentUser = ref.watch(userProvider);
-    switch (currentUser?.roleId) {
-      case 1:
-        loadUserSeller();
-        loadUserdist();
-        loadUserdistPays();
-        loadUserdistOff();
-        break;
-      case 2:
-        loadUserSeller();
-        loadUserdist();
-        loadUserdistPays();
-        break;
-      case 4:
-        loadUserSeller();
-        loadUserdist();
-        break;
-      case 6:
-        loadUserSeller();
-        break;
-      default:
-    }
 
+    loadAllUsers();
     loadReadNotifications();
     loadUnReadNotifications();
     dmaOrders();
@@ -93,8 +62,8 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
 
   @override
   Widget build(BuildContext context) {
-    readUserNotifications = ref.watch(readNotifProvider);
-    unreadUserNotifications = ref.watch(unreadNotifProvider);
+    _readUserNotifications = ref.watch(readNotifProvider);
+    _unreadUserNotifications = ref.watch(unreadNotifProvider);
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -108,7 +77,7 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
           ),
           child: Column(
             children: [
-              if (isLoading)
+              if (_isLoading)
                 const Center(
                   child: SizedBox(
                     width: 20,
@@ -118,8 +87,8 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
                     ),
                   ),
                 )
-              else if (unreadUserNotifications.isEmpty &&
-                  readUserNotifications.isEmpty)
+              else if (_unreadUserNotifications.isEmpty &&
+                  _readUserNotifications.isEmpty)
                 const Center(
                   child: Text(
                     "Aucune notification",
@@ -129,7 +98,7 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
                     ),
                   ),
                 ),
-              if (unreadUserNotifications.isNotEmpty)
+              if (_unreadUserNotifications.isNotEmpty)
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -143,10 +112,10 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
                     const SizedBox(
                       height: 10,
                     ),
-                    notifListWidget(unreadUserNotifications),
+                    notifListWidget(_unreadUserNotifications),
                   ],
                 ),
-              if (readUserNotifications.isNotEmpty)
+              if (_readUserNotifications.isNotEmpty)
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -160,7 +129,7 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
                     const SizedBox(
                       height: 10,
                     ),
-                    notifListWidget(readUserNotifications),
+                    notifListWidget(_readUserNotifications),
                   ],
                 ),
             ],
@@ -179,22 +148,7 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
             notification: notification,
           );
         } else if (notification.type!.contains("ValidInscription")) {
-          switch (currentUser?.roleId) {
-            case 1:
-              myUsers = [distOff!];
-              break;
-            case 2:
-              myUsers = distPays;
-              break;
-            case 4:
-              myUsers = dists;
-              break;
-            case 6:
-              myUsers = sellers;
-              break;
-            default:
-          }
-          for (User myUser in myUsers) {
+          for (User myUser in _allUsers) {
             if (myUser.id == notification.data?.userId) {
               _user = myUser;
             }
@@ -216,14 +170,14 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
     final internetConnexion = await checkUserConnexion();
     if (internetConnexion) {
       setState(() {
-        isLoading = true;
+        _isLoading = true;
       });
       try {
         final response = await _notificationsService.getReadNotifications();
         final readNotifNotifier = ref.read(readNotifProvider.notifier);
         readNotifNotifier.updateUserNotif(response.notifications!);
         setState(() {
-          readUserNotifications = response.notifications!;
+          _readUserNotifications = response.notifications!;
         });
       } on DioException catch (e) {
         // ignore: use_build_context_synchronously
@@ -231,7 +185,7 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
         return List.empty();
       } finally {
         setState(() {
-          isLoading = false;
+          _isLoading = false;
         });
       }
     } else {
@@ -245,14 +199,14 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
     final internetConnexion = await checkUserConnexion();
     if (internetConnexion) {
       setState(() {
-        isLoading = true;
+        _isLoading = true;
       });
       try {
         final response = await _notificationsService.getUnreadNotifications();
         final unreadNotifNotifier = ref.read(unreadNotifProvider.notifier);
         unreadNotifNotifier.updateUserNotif(response.notifications!);
         setState(() {
-          unreadUserNotifications = response.notifications!;
+          _unreadUserNotifications = response.notifications!;
         });
       } on DioException catch (e) {
         // ignore: use_build_context_synchronously
@@ -260,7 +214,7 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
         return List.empty();
       } finally {
         setState(() {
-          isLoading = false;
+          _isLoading = false;
         });
       }
     } else {
@@ -274,7 +228,7 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
     final internetConnexion = await checkUserConnexion();
     if (internetConnexion) {
       setState(() {
-        isLoading = true;
+        _isLoading = true;
       });
       try {
         final orderData = await _dmaService.getDMAOrders();
@@ -287,7 +241,7 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
         return List.empty();
       } finally {
         setState(() {
-          isLoading = false;
+          _isLoading = false;
         });
       }
     } else {
@@ -297,167 +251,25 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
     }
   }
 
-  loadUserSeller() async {
+  loadAllUsers() async {
     final internetConnexion = await checkUserConnexion();
     if (internetConnexion) {
       setState(() {
-        isLoading = true;
+        _isLoading = true;
       });
       try {
-        final response = await _userService.getUsersByRole(
-          {
-            "role_id": 9,
-          },
-        );
-        sellers = [];
-        setState(() {
-          sellers = (response["users"] as List)
-              .map(
-                (e) => User.fromJson(e),
-              )
-              .toList();
-        });
+        final response = await _userService.getAllUsers();
+        final users = response["users"]["data"];
+        _allUsers = (users as List).map((user) {
+          return User.fromJson(user);
+        }).toList();
       } on DioException catch (e) {
         // ignore: use_build_context_synchronously
         messenger(context, e.response!.data["message"]);
         return List.empty();
       } finally {
         setState(() {
-          isLoading = false;
-        });
-      }
-    } else {
-      // ignore: use_build_context_synchronously
-      messenger(context, "Connectez-vous à internet");
-      return List.empty();
-    }
-  }
-
-  loadUserPDG() async {
-    final internetConnexion = await checkUserConnexion();
-    if (internetConnexion) {
-      setState(() {
-        isLoading = true;
-      });
-      try {
-        final response = await _userService.getUsersByRole(
-          {
-            "role_id": 1,
-          },
-        );
-        setState(() {
-          pdg = User.fromJson((response["users"] as List)[0]);
-        });
-      } on DioException catch (e) {
-        // ignore: use_build_context_synchronously
-        messenger(context, e.response!.data["message"]);
-        return List.empty();
-      } finally {
-        setState(() {
-          isLoading = false;
-        });
-      }
-    } else {
-      // ignore: use_build_context_synchronously
-      messenger(context, "Connectez-vous à internet");
-      return List.empty();
-    }
-  }
-
-  loadUserdist() async {
-    final internetConnexion = await checkUserConnexion();
-    if (internetConnexion) {
-      setState(() {
-        isLoading = true;
-      });
-      try {
-        final response = await _userService.getUsersByRole(
-          {
-            "role_id": 6,
-          },
-        );
-        dists = [];
-        setState(() {
-          dists = (response["users"] as List)
-              .map(
-                (e) => User.fromJson(e),
-              )
-              .toList();
-        });
-      } on DioException catch (e) {
-        // ignore: use_build_context_synchronously
-        messenger(context, e.response!.data["message"]);
-        return List.empty();
-      } finally {
-        setState(() {
-          isLoading = false;
-        });
-      }
-    } else {
-      // ignore: use_build_context_synchronously
-      messenger(context, "Connectez-vous à internet");
-      return List.empty();
-    }
-  }
-
-  loadUserdistOff() async {
-    final internetConnexion = await checkUserConnexion();
-    if (internetConnexion) {
-      setState(() {
-        isLoading = true;
-      });
-      try {
-        final response = await _userService.getUsersByRole(
-          {
-            "role_id": 2,
-          },
-        );
-        setState(() {
-          distOff = User.fromJson((response["users"] as List)[0]);
-        });
-      } on DioException catch (e) {
-        // ignore: use_build_context_synchronously
-        messenger(context, e.response!.data["message"]);
-        return List.empty();
-      } finally {
-        setState(() {
-          isLoading = false;
-        });
-      }
-    } else {
-      // ignore: use_build_context_synchronously
-      messenger(context, "Connectez-vous à internet");
-      return List.empty();
-    }
-  }
-
-  loadUserdistPays() async {
-    final internetConnexion = await checkUserConnexion();
-    if (internetConnexion) {
-      setState(() {
-        isLoading = true;
-      });
-      try {
-        final response = await _userService.getUsersByRole(
-          {
-            "role_id": 4,
-          },
-        );
-        distPays = [];
-        setState(() {
-          distPays = (response["users"] as List)
-              .map(
-                (e) => User.fromJson(e),
-              )
-              .toList();
-        });
-      } on DioException catch (e) {
-        // ignore: use_build_context_synchronously
-        messenger(context, e.response!.data["message"]);
-        return List.empty();
-      } finally {
-        setState(() {
-          isLoading = false;
+          _isLoading = false;
         });
       }
     } else {

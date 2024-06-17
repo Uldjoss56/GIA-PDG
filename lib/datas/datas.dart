@@ -599,3 +599,16 @@ List<String> pdgOptionsImg = [
   "assets/img/list.jpg",
   "assets/img/order.jpg",
 ];
+
+final theRoles = {
+  1: "PDG",
+  2: "Distributeur Officiel",
+  3: "Conseiller clientèle",
+  4: "Distributeur Pays",
+  5: "Administrateur",
+  6: "Distributeur",
+  7: "Partenaire",
+  8: "Investisseur",
+  9: "Vendeur",
+  10: "Client",
+};
