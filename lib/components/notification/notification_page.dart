@@ -9,6 +9,7 @@ import 'package:gia_pdg_partenaire/models/orders.dart';
 import 'package:gia_pdg_partenaire/models/user.dart';
 import 'package:gia_pdg_partenaire/provider/dma_provider.dart';
 import 'package:gia_pdg_partenaire/provider/notifications_provider.dart';
+import 'package:gia_pdg_partenaire/provider/user_provider.dart';
 import 'package:gia_pdg_partenaire/services/const.dart';
 import 'package:gia_pdg_partenaire/services/dma_service.dart';
 import 'package:gia_pdg_partenaire/services/notifications_service.dart';
@@ -64,6 +65,8 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
   Widget build(BuildContext context) {
     _readUserNotifications = ref.watch(readNotifProvider);
     _unreadUserNotifications = ref.watch(unreadNotifProvider);
+    _allUsers = ref.watch(allUsersProvider);
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -260,9 +263,14 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
       try {
         final response = await _userService.getAllUsers();
         final users = response["users"]["data"];
-        _allUsers = (users as List).map((user) {
+
+        final allusersNotifier = ref.read(allUsersProvider.notifier);
+
+        final allUsers = (users as List).map((user) {
           return User.fromJson(user);
         }).toList();
+
+        allusersNotifier.updateAllUsers(allUsers);
       } on DioException catch (e) {
         // ignore: use_build_context_synchronously
         messenger(context, e.response!.data["message"]);

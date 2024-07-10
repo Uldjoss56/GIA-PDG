@@ -6,8 +6,10 @@ import 'package:gia_pdg_partenaire/components/const/colors.dart';
 import 'package:gia_pdg_partenaire/components/show_info.dart';
 import 'package:gia_pdg_partenaire/datas/datas.dart';
 import 'package:gia_pdg_partenaire/models/user.dart';
+import 'package:gia_pdg_partenaire/provider/notifications_provider.dart';
 import 'package:gia_pdg_partenaire/provider/user_provider.dart';
 import 'package:gia_pdg_partenaire/services/const.dart';
+import 'package:gia_pdg_partenaire/services/notifications_service.dart';
 import 'package:gia_pdg_partenaire/services/users_service.dart';
 
 class ValidateRegistration extends ConsumerStatefulWidget {
@@ -29,6 +31,8 @@ class _ValidateRegistrationState extends ConsumerState<ValidateRegistration> {
 
   final _userService = UserService();
 
+  final _notificationsService = NotificationService();
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -38,8 +42,7 @@ class _ValidateRegistrationState extends ConsumerState<ValidateRegistration> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    final user = widget.user;
-    print(user.isValided);
+    _user = widget.user;
     return Scaffold(
       backgroundColor: myBackground,
       appBar: AppBar(
@@ -113,7 +116,7 @@ class _ValidateRegistrationState extends ConsumerState<ValidateRegistration> {
                               "nom & prénoms",
                             ),
                             subtitle: Text(
-                              user.name ?? "----",
+                              _user?.name ?? "----",
                             ),
                           ),
                         ),
@@ -128,7 +131,7 @@ class _ValidateRegistrationState extends ConsumerState<ValidateRegistration> {
                               "email",
                             ),
                             subtitle: Text(
-                              user.email ?? "------",
+                              _user?.email ?? "------",
                             ),
                           ),
                         ),
@@ -147,7 +150,7 @@ class _ValidateRegistrationState extends ConsumerState<ValidateRegistration> {
                               "date de naissance",
                             ),
                             subtitle: Text(
-                              user.dateOfBirth ?? "------",
+                              _user?.dateOfBirth ?? "------",
                             ),
                           ),
                         ),
@@ -161,7 +164,7 @@ class _ValidateRegistrationState extends ConsumerState<ValidateRegistration> {
                               "sexe",
                             ),
                             subtitle: Text(
-                              user.sex ?? "-----",
+                              _user?.sex ?? "-----",
                             ),
                           ),
                         ),
@@ -192,7 +195,7 @@ class _ValidateRegistrationState extends ConsumerState<ValidateRegistration> {
                               children: [
                                 ClipOval(
                                   child: Image.asset(
-                                    countriesList[(user.countryId ?? 1) - 1]
+                                    countriesList[(_user?.countryId ?? 1) - 1]
                                         ["img"],
                                     fit: BoxFit.cover,
                                     width: 20,
@@ -203,7 +206,7 @@ class _ValidateRegistrationState extends ConsumerState<ValidateRegistration> {
                                   width: 10,
                                 ),
                                 Text(
-                                  countriesList[(user.countryId ?? 1) - 1]
+                                  countriesList[(_user?.countryId ?? 1) - 1]
                                       ["noum"],
                                   style: const TextStyle(
                                     fontFamily: "Manrope",
@@ -232,7 +235,7 @@ class _ValidateRegistrationState extends ConsumerState<ValidateRegistration> {
                               "status",
                             ),
                             subtitle: Text(
-                              theRoles[user.roleId ?? 0] ?? "",
+                              theRoles[_user?.roleId ?? 0] ?? "",
                             ),
                           ),
                         ),
@@ -341,6 +344,30 @@ class _ValidateRegistrationState extends ConsumerState<ValidateRegistration> {
     );
   }
 
+  reloadReadNotifications() async {
+    try {
+      final response = await _notificationsService.getReadNotifications();
+      final readNotifNotifier = ref.read(readNotifProvider.notifier);
+      readNotifNotifier.updateUserNotif(response.notifications!);
+    } on DioException catch (e) {
+      // ignore: use_build_context_synchronously
+      messenger(context, e.response!.data["message"]);
+      return List.empty();
+    }
+  }
+
+  reloadUnReadNotifications() async {
+    try {
+      final response = await _notificationsService.getUnreadNotifications();
+      final unreadNotifNotifier = ref.read(unreadNotifProvider.notifier);
+      unreadNotifNotifier.updateUserNotif(response.notifications!);
+    } on DioException catch (e) {
+      // ignore: use_build_context_synchronously
+      messenger(context, e.response!.data["message"]);
+      return List.empty();
+    }
+  }
+
   validRegistration(int id, Map<String, dynamic> data) async {
     final internetConnexion = await checkUserConnexion();
     if (internetConnexion) {
@@ -349,6 +376,8 @@ class _ValidateRegistrationState extends ConsumerState<ValidateRegistration> {
       });
       try {
         final response = await _userService.validRegistration(id, data);
+        await reloadUnReadNotifications();
+        await reloadReadNotifications();
         // ignore: use_build_context_synchronously
         Navigator.pop(context);
 

@@ -74,23 +74,27 @@ class _NotificationTileState extends ConsumerState<NotificationTile> {
             markedAsRead();
           }
           if (userNotif!.type!.contains("CmdNotification")) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) {
-                return ValidateOrder(
-                  orderID: userNotif!.data!.orderId!,
-                );
-              }),
-            );
+            if (userNotif?.data?.orderId != null) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) {
+                  return ValidateOrder(
+                    orderID: userNotif!.data!.orderId!,
+                  );
+                }),
+              );
+            }
           } else if (userNotif!.type!.contains("ValidInscription")) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) {
-                return ValidateRegistration(
-                  user: widget.user!,
-                );
-              }),
-            );
+            if (widget.user != null) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) {
+                  return ValidateRegistration(
+                    user: widget.user!,
+                  );
+                }),
+              );
+            }
           }
         },
         leading: Image.asset(
@@ -117,8 +121,8 @@ class _NotificationTileState extends ConsumerState<NotificationTile> {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                dateFormatDH.format((
-                  widget.notification.createdAt ?? DateTime.now()).add(
+                dateFormatDH.format(
+                  (widget.notification.createdAt ?? DateTime.now()).add(
                     const Duration(hours: 1),
                   ),
                 ),

@@ -17,6 +17,20 @@ final userProvider = StateNotifierProvider<UserNotifier, User>(
   ),
 );
 
+class AllUsersNotifier extends StateNotifier<List<User>> {
+  AllUsersNotifier(super.user);
+
+  void updateAllUsers(List<User> allUsers) {
+    state = allUsers;
+  }
+}
+
+final allUsersProvider = StateNotifierProvider<AllUsersNotifier, List<User>>(
+  (ref) => AllUsersNotifier(
+    List.empty(),
+  ),
+);
+
 class UserImageNotifier extends StateNotifier<File?> {
   UserImageNotifier(super.userImage);
 
