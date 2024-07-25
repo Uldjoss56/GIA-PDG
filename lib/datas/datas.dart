@@ -183,8 +183,8 @@ List<Map<String, dynamic>> notificationData = [
 ];
 
 Map<String, dynamic> userData = {
-  "imgCoverPath": "assets/img/background02.jpg",
-  "profilImage": "assets/img/user_image.jpg",
+  "imgCoverPath": "assets/img/background02.png",
+  "profilImage": "assets/img/user_image.png",
   "fullname": "DJOSSOU Ulrich",
   "email": "uldjoss56@gmail.com",
   "birthday": "20-07-2004",
@@ -592,12 +592,12 @@ List<String> pdgOptions = [
 ];
 
 List<String> pdgOptionsImg = [
-  "assets/img/heart_phone.jpg",
-  "assets/img/list.jpg",
-  "assets/img/list.jpg",
-  "assets/img/list.jpg",
-  "assets/img/list.jpg",
-  "assets/img/order.jpg",
+  "assets/img/heart_phone.png",
+  "assets/img/list.png",
+  "assets/img/list.png",
+  "assets/img/list.png",
+  "assets/img/list.png",
+  "assets/img/order.png",
 ];
 
 final theRoles = {

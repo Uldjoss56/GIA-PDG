@@ -45,7 +45,7 @@ class ChatList extends ConsumerWidget {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: Image.asset(
-                                "assets/img/dist.jpg",
+                                "assets/img/dist.png",
                                 fit: BoxFit.fitWidth,
                                 height: 0.3 * width,
                                 width: 0.6 * width,
@@ -94,7 +94,7 @@ class ChatList extends ConsumerWidget {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: Image.asset(
-                                "assets/img/heart_phone.jpg",
+                                "assets/img/heart_phone.png",
                                 fit: BoxFit.fitWidth,
                                 height: 0.3 * width,
                                 width: 0.6 * width,

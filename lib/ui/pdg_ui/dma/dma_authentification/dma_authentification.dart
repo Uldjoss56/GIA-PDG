@@ -103,7 +103,7 @@ class _DMAAuthentificationState extends ConsumerState<DMAAuthentification> {
                           decoration: const BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage(
-                                "assets/img/background02.jpg",
+                                "assets/img/background02.png",
                               ),
                               fit: BoxFit.cover,
                             ),

@@ -38,7 +38,7 @@ class _PaymentShowDialogState extends State<PaymentShowDialog> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Image.asset(
-                      "assets/img/background02.jpg",
+                      "assets/img/background02.png",
                       fit: BoxFit.cover,
                       width: double.infinity,
                       height: double.infinity,

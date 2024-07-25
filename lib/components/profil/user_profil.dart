@@ -54,7 +54,7 @@ class _UserProfilState extends ConsumerState<UserProfil> {
           Container(
             color: myPink,
             child: Image.asset(
-              "assets/img/background02.jpg",
+              "assets/img/background02.png",
               width: double.infinity,
               height: double.infinity,
               fit: BoxFit.cover,

@@ -106,7 +106,7 @@ class _DistributeurDetailState extends ConsumerState<DistributeurDetail> {
                       child: AspectRatio(
                         aspectRatio: 1,
                         child: Image.asset(
-                          "assets/img/user_image.jpg",
+                          "assets/img/user_image.png",
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -380,7 +380,7 @@ class _DistributeurDetailState extends ConsumerState<DistributeurDetail> {
                                 child: AspectRatio(
                                   aspectRatio: 1,
                                   child: Image.asset(
-                                    "assets/img/user_image.jpg",
+                                    "assets/img/user_image.png",
                                     fit: BoxFit.fitWidth,
                                     height: 0.079 * width,
                                     width: 0.079 * width,

@@ -23,12 +23,12 @@ class CustomButton extends StatelessWidget {
       child: TextButton(
         onPressed: onpressed,
         style: ButtonStyle(
-          foregroundColor: const MaterialStatePropertyAll(
+          foregroundColor: const WidgetStatePropertyAll(
               Colors.white
           ),
-          shadowColor: MaterialStateProperty.all(Colors.purpleAccent),
-          elevation: MaterialStateProperty.all(4),
-          shape: MaterialStateProperty.all<OutlinedBorder>(
+          shadowColor: WidgetStateProperty.all(Colors.purpleAccent),
+          elevation: WidgetStateProperty.all(4),
+          shape: WidgetStateProperty.all<OutlinedBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
             ),

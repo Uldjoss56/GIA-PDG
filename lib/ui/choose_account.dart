@@ -26,7 +26,7 @@ class ChooseAccount extends StatelessWidget {
                       bottomRight: Radius.circular(50),
                     ),
                     child: Image.asset(
-                      "assets/img/background_pdg.jpg",
+                      "assets/img/background_pdg.png",
                       fit: BoxFit.cover,
                       width: double.infinity,
                       height: double.infinity,
@@ -96,7 +96,7 @@ class ChooseAccount extends StatelessWidget {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: Image.asset(
-                                "assets/img/partners.jpg",
+                                "assets/img/partners.png",
                                 fit: BoxFit.fitWidth,
                                 height: 0.3 * width,
                                 width: 0.6 * width,
@@ -109,8 +109,8 @@ class ChooseAccount extends StatelessWidget {
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontFamily: "Manrope-Medium",
-                                  fontWeight: FontWeight.w700,
-                                  color: myPink01,
+                                  //fontWeight: FontWeight.w700,
+                                  color: myWhite,
                                 ),
                               ),
                             ),
@@ -145,7 +145,7 @@ class ChooseAccount extends StatelessWidget {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: Image.asset(
-                                "assets/img/pdg.jpg",
+                                "assets/img/pdg.png",
                                 fit: BoxFit.fitWidth,
                                 height: 0.3 * width,
                                 width: 0.6 * width,
@@ -158,8 +158,8 @@ class ChooseAccount extends StatelessWidget {
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontFamily: "Manrope-Medium",
-                                  fontWeight: FontWeight.w700,
-                                  color: myPink01,
+                                  //fontWeight: FontWeight.w700,
+                                  color: myWhite,
                                 ),
                               ),
                             ),

@@ -100,7 +100,7 @@ class _AssistDetailState extends ConsumerState<AssistDetail> {
                           child: AspectRatio(
                             aspectRatio: 1,
                             child: Image.asset(
-                              "assets/img/user_image.jpg",
+                              "assets/img/user_image.png",
                               fit: BoxFit.cover,
                             ),
                           ),
