@@ -110,7 +110,7 @@ class ChooseAccount extends StatelessWidget {
                                 style: TextStyle(
                                   fontFamily: "Manrope-Medium",
                                   //fontWeight: FontWeight.w700,
-                                  color: myWhite,
+                                  color: myPink01,
                                 ),
                               ),
                             ),
@@ -159,7 +159,7 @@ class ChooseAccount extends StatelessWidget {
                                 style: TextStyle(
                                   fontFamily: "Manrope-Medium",
                                   //fontWeight: FontWeight.w700,
-                                  color: myWhite,
+                                  color: myPink01,
                                 ),
                               ),
                             ),

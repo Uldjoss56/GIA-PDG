@@ -6,12 +6,6 @@ import 'package:gia_pdg_partenaire/models/other_models.dart';
 import 'package:gia_pdg_partenaire/models/user.dart';
 import 'package:gia_pdg_partenaire/provider/other_provider.dart';
 import 'package:gia_pdg_partenaire/provider/user_provider.dart';
-import 'package:gia_pdg_partenaire/ui/pdg_ui/commander_dma/commander_dma.dart';
-import 'package:gia_pdg_partenaire/ui/pdg_ui/distributeur_officiel/distributeur_off_detail.dart';
-import 'package:gia_pdg_partenaire/ui/pdg_ui/liste_assist/assist_list.dart';
-import 'package:gia_pdg_partenaire/ui/pdg_ui/liste_distributeur/distributeur_list.dart';
-import 'package:gia_pdg_partenaire/ui/pdg_ui/liste_distributeur_pays/distributeur_pays_list.dart';
-import 'package:gia_pdg_partenaire/ui/pdg_ui/liste_vendeur/seller_list.dart';
 
 class PDGHome extends ConsumerStatefulWidget {
   const PDGHome({super.key});
@@ -96,46 +90,15 @@ class _PDGHomeState extends ConsumerState<PDGHome> {
               mainAxisSpacing: 10,
               crossAxisCount: 2,
               children: List.generate(pdgOptions.length, (int index) {
+                final option = pdgOptions[index];
                 return GridTile(
                   child: GestureDetector(
                     onTap: () {
-                      index == 0
-                          ? Navigator.of(context).push(
-                              MaterialPageRoute(builder: (context) {
-                                return const DistributeurOffiDetail();
-                              }),
-                            )
-                          : index == 1
-                              ? Navigator.of(context).push(
-                                  MaterialPageRoute(builder: (context) {
-                                    return const SellerList();
-                                  }),
-                                )
-                              : index == 2
-                                  ? Navigator.of(context).push(
-                                      MaterialPageRoute(builder: (context) {
-                                        return const DistributeurList();
-                                      }),
-                                    )
-                                  : index == 3
-                                      ? Navigator.of(context).push(
-                                          MaterialPageRoute(builder: (context) {
-                                            return const DistributeurPaysList();
-                                          }),
-                                        )
-                                      : index == 4
-                                          ? Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) {
-                                                return const AssistList();
-                                              }),
-                                            )
-                                          : Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) {
-                                                return const CommanderDMA();
-                                              }),
-                                            );
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) {
+                          return option["route"];
+                        }),
+                      );
                     },
                     child: Card(
                       color: myWhite,
@@ -144,13 +107,13 @@ class _PDGHomeState extends ConsumerState<PDGHome> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Image.asset(
-                            pdgOptionsImg[index],
+                            option["img"],
                             fit: BoxFit.fitWidth,
                             height: 0.3 * width,
                             width: 0.6 * width,
                           ),
                           Text(
-                            pdgOptions[index],
+                            option["title"],
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                               fontFamily: "Manrope-Regular",

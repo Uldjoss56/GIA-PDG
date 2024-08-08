@@ -174,7 +174,7 @@ class _CAState extends ConsumerState<CA> {
                             child: isLoading
                                 ? const CircularProgressIndicator()
                                 : Text(
-                                    moneyFormat.format(currentUser?.b ?? 0),
+                                    moneyFormat.format(currentUser?.puBenef ?? 0),
                                     style: const TextStyle(
                                       fontFamily: "Manrope",
                                       color: myPink01,

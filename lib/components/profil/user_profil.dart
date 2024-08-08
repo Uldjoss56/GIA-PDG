@@ -181,6 +181,7 @@ class _UserProfilState extends ConsumerState<UserProfil> {
                                     ),
                                     title: const Text(
                                       "date de naissance",
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                     subtitle: Text(
                                       currentUser?.dateOfBirth ?? "-----",
@@ -195,6 +196,7 @@ class _UserProfilState extends ConsumerState<UserProfil> {
                                     ),
                                     title: const Text(
                                       "sexe",
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                     subtitle: Text(
                                       currentUser?.sex ?? "-----",
@@ -214,6 +216,7 @@ class _UserProfilState extends ConsumerState<UserProfil> {
                                     ),
                                     title: const Text(
                                       "phone",
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                     subtitle: const Text(
                                       "------",
@@ -234,6 +237,7 @@ class _UserProfilState extends ConsumerState<UserProfil> {
                                     ),
                                     title: const Text(
                                       "statut",
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                     subtitle: Text(
                                       currentUser!.roleId == 1

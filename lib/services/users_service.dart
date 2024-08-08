@@ -124,8 +124,8 @@ class UserService {
       "Authorization": "Bearer $userToken",
     });
 
-    final response = await api.put(
-      'user/update/$id',
+    final response = await api.post(
+      'user/update',
       options: options,
       data: data,
     );

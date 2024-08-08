@@ -37,7 +37,6 @@ class ChatList extends ConsumerWidget {
                       },
                       child: Card(
                         elevation: 2,
-                        color: myPink02,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -59,7 +58,6 @@ class ChatList extends ConsumerWidget {
                                 style: TextStyle(
                                   fontFamily: "Manrope-Medium",
                                   fontWeight: FontWeight.w700,
-                                  color: myPink01,
                                 ),
                               ),
                             ),
@@ -86,7 +84,6 @@ class ChatList extends ConsumerWidget {
                       },
                       child: Card(
                         elevation: 2,
-                        color: myPink02,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -108,7 +105,6 @@ class ChatList extends ConsumerWidget {
                                 style: TextStyle(
                                   fontFamily: "Manrope-Medium",
                                   fontWeight: FontWeight.w700,
-                                  color: myPink01,
                                 ),
                               ),
                             ),

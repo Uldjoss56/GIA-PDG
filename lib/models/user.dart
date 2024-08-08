@@ -89,15 +89,15 @@ class User {
   final int? id;
   final String? name;
   final String? email;
-  final dynamic profil;
+  final String? profil;
   final dynamic identityCards;
   final String? sex;
-  final dynamic stock;
+  final String? stock;
   final int? countryId;
   final int? isValided;
   final int? roleId;
-  final dynamic validerId;
-  final dynamic codeDistr;
+  final int? validerId;
+  final String? codeDistr;
   final String? dateOfBirth;
   final String? confirmCode;
   final dynamic passwordCode;
@@ -106,8 +106,10 @@ class User {
   final DateTime? updatedAt;
   final dynamic fcmToken;
   final int? pv;
-  final dynamic b;
-  final dynamic ca;
+  final int? b;
+  final int? ca;
+  final dynamic benef;
+  final dynamic puBenef;
 
   User({
     this.id,
@@ -132,6 +134,8 @@ class User {
     this.pv,
     this.b,
     this.ca,
+    this.benef,
+    this.puBenef,
   });
 
   factory User.fromRawJson(String str) => User.fromJson(json.decode(str));
@@ -150,7 +154,9 @@ class User {
             ? null
             : double.parse(json["country_id"].toString()).toInt(),
         isValided: json["is_valided"],
-        roleId: double.parse(json["role_id"].toString()).toInt(),
+        roleId: json["role_id"] == null
+            ? null
+            : double.parse(json["role_id"].toString()).toInt(),
         validerId: json["valider_id"],
         codeDistr: json["code_distr"],
         dateOfBirth: json["date_of_birth"],
@@ -166,9 +172,17 @@ class User {
             ? null
             : DateTime.parse(json["updated_at"]),
         fcmToken: json["fcm_token"],
-        pv: json["pv"],
-        b: json["b"],
-        ca: json["ca"],
+        pv: json["pv"] == null
+            ? null
+            : double.parse(json["pv"].toString()).toInt(),
+        b: json["b"] == null
+            ? null
+            : double.parse(json["b"].toString()).toInt(),
+        ca: json["ca"] == null
+            ? null
+            : double.parse(json["ca"].toString()).toInt(),
+        benef: json["benef"],
+        puBenef: json["pu_benef"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -194,5 +208,7 @@ class User {
         "pv": pv,
         "b": b,
         "ca": ca,
+        "benef": benef,
+        "pu_benef": puBenef,
       };
 }

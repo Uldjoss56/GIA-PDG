@@ -69,277 +69,293 @@ class _ValidateRegistrationState extends ConsumerState<ValidateRegistration> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Card(
-              margin: const EdgeInsets.symmetric(
-                vertical: 30,
-                horizontal: 18,
-              ),
-              elevation: 5,
-              color: Colors.white,
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  children: [
-                    const Text(
-                      "Identité du souscripteur",
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontFamily: "Manrope",
-                        color: myPink,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+      body: Stack(
+        children: [
+          Image.asset(
+            "assets/img/dist.png",
+            fit: BoxFit.cover,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 30.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Card(
+                  margin: const EdgeInsets.symmetric(
+                    vertical: 30,
+                    horizontal: 18,
+                  ),
+                  elevation: 5,
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Column(
                       children: [
-                        Expanded(
-                          child: ListTile(
-                            leading: ColorFiltered(
-                              colorFilter: const ColorFilter.mode(
-                                myPink,
-                                BlendMode.srcIn,
+                        const Text(
+                          "Identité du souscripteur",
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontFamily: "Manrope",
+                            color: myPink,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: ListTile(
+                                leading: ColorFiltered(
+                                  colorFilter: const ColorFilter.mode(
+                                    myPink,
+                                    BlendMode.srcIn,
+                                  ),
+                                  child: Image.asset(
+                                    "assets/img/icons/user.png",
+                                    width: 0.08 * width,
+                                  ),
+                                ),
+                                title: const Text(
+                                  "nom & prénoms",
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                subtitle: Text(
+                                  _user?.name ?? "----",
+                                ),
                               ),
-                              child: Image.asset(
-                                "assets/img/icons/user.png",
-                                width: 0.08 * width,
+                            ),
+                            Expanded(
+                              child: ListTile(
+                                leading: Icon(
+                                  Icons.mail_outline_rounded,
+                                  color: myPink,
+                                  size: 0.08 * width,
+                                ),
+                                title: const Text(
+                                  "email",
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                subtitle: Text(
+                                  _user?.email ?? "------",
+                                ),
                               ),
                             ),
-                            title: const Text(
-                              "nom & prénoms",
-                            ),
-                            subtitle: Text(
-                              _user?.name ?? "----",
-                            ),
-                          ),
+                          ],
                         ),
-                        Expanded(
-                          child: ListTile(
-                            leading: Icon(
-                              Icons.mail_outline_rounded,
-                              color: myPink,
-                              size: 0.08 * width,
-                            ),
-                            title: const Text(
-                              "email",
-                            ),
-                            subtitle: Text(
-                              _user?.email ?? "------",
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: ListTile(
-                            leading: Image.asset(
-                              "assets/img/icons/birthday-cake_pink.png",
-                              width: 0.08 * width,
-                            ),
-                            title: const Text(
-                              "date de naissance",
-                            ),
-                            subtitle: Text(
-                              _user?.dateOfBirth ?? "------",
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: ListTile(
-                            leading: Image.asset(
-                              "assets/img/icons/gender-fluid_pink.png",
-                              width: 0.08 * width,
-                            ),
-                            title: const Text(
-                              "sexe",
-                            ),
-                            subtitle: Text(
-                              _user?.sex ?? "-----",
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: ListTile(
-                            leading: ColorFiltered(
-                              colorFilter: const ColorFilter.mode(
-                                myPink,
-                                BlendMode.srcIn,
-                              ),
-                              child: RotatedBox(
-                                quarterTurns: 1,
-                                child: Image.asset(
-                                  "assets/img/icons/country.png",
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: ListTile(
+                                leading: Image.asset(
+                                  "assets/img/icons/birthday-cake_pink.png",
                                   width: 0.08 * width,
                                 ),
+                                title: const Text(
+                                  "date de naissance",
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                subtitle: Text(
+                                  _user?.dateOfBirth ?? "------",
+                                ),
                               ),
                             ),
-                            title: const Text(
-                              "pays",
+                            Expanded(
+                              child: ListTile(
+                                leading: Image.asset(
+                                  "assets/img/icons/gender-fluid_pink.png",
+                                  width: 0.08 * width,
+                                ),
+                                title: const Text(
+                                  "sexe",
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                subtitle: Text(
+                                  _user?.sex ?? "-----",
+                                ),
+                              ),
                             ),
-                            subtitle: Row(
-                              children: [
-                                ClipOval(
-                                  child: Image.asset(
-                                    countriesList[(_user?.countryId ?? 1) - 1]
-                                        ["img"],
-                                    fit: BoxFit.cover,
-                                    width: 20,
-                                    height: 20,
+                          ],
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: ListTile(
+                                leading: ColorFiltered(
+                                  colorFilter: const ColorFilter.mode(
+                                    myPink,
+                                    BlendMode.srcIn,
                                   ),
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  countriesList[(_user?.countryId ?? 1) - 1]
-                                      ["noum"],
-                                  style: const TextStyle(
-                                    fontFamily: "Manrope",
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                    color: myGrisFonce,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: ListTile(
-                            leading: ColorFiltered(
-                              colorFilter: const ColorFilter.mode(
-                                myPink,
-                                BlendMode.srcIn,
-                              ),
-                              child: Image.asset(
-                                "assets/img/icons/link.png",
-                                width: 0.08 * width,
-                              ),
-                            ),
-                            title: const Text(
-                              "status",
-                            ),
-                            subtitle: Text(
-                              theRoles[_user?.roleId ?? 0] ?? "",
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            if (_user?.isValided == null || _user?.isValided == 0)
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Button(
-                      buttonText: const Text(
-                        "Annuler",
-                        style: TextStyle(
-                          fontFamily: "Manrope",
-                          color: myGris,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      onpressed: () {
-                        // ignore: use_build_context_synchronously
-                        Navigator.pop(context);
-                      },
-                      buttonWidth: width * 0.3,
-                      buttonHeight: width * 0.15,
-                    ),
-                    Button(
-                      buttonText: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          if (_isLoadingValidate)
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: SizedBox(
-                                    width: 0.05 * width,
-                                    height: 0.05 * width,
-                                    child: const CircularProgressIndicator(
-                                      color: myWhite,
-                                      strokeWidth: 2,
+                                  child: RotatedBox(
+                                    quarterTurns: 1,
+                                    child: Image.asset(
+                                      "assets/img/icons/country.png",
+                                      width: 0.08 * width,
                                     ),
                                   ),
                                 ),
-                                const SizedBox(
-                                  width: 10,
+                                title: const Text(
+                                  "pays",
+                                  overflow: TextOverflow.ellipsis,
                                 ),
-                              ],
+                                subtitle: Row(
+                                  children: [
+                                    ClipOval(
+                                      child: Image.asset(
+                                        countriesList[
+                                            (_user?.countryId ?? 1) - 1]["img"],
+                                        fit: BoxFit.cover,
+                                        width: 20,
+                                        height: 20,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      countriesList[(_user?.countryId ?? 1) - 1]
+                                          ["noum"],
+                                      style: const TextStyle(
+                                        fontFamily: "Manrope",
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                        color: myGrisFonce,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
-                          const Text(
-                            "Valider",
+                            Expanded(
+                              child: ListTile(
+                                leading: ColorFiltered(
+                                  colorFilter: const ColorFilter.mode(
+                                    myPink,
+                                    BlendMode.srcIn,
+                                  ),
+                                  child: Image.asset(
+                                    "assets/img/icons/link.png",
+                                    width: 0.08 * width,
+                                  ),
+                                ),
+                                title: const Text(
+                                  "status",
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                subtitle: Text(
+                                  theRoles[_user?.roleId ?? 0] ?? "",
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                if (_user?.isValided == null || _user?.isValided == 0)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Button(
+                          buttonText: const Text(
+                            "Annuler",
                             style: TextStyle(
-                              color: myGris,
                               fontFamily: "Manrope",
+                              color: myGris,
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                        ],
-                      ),
-                      onpressed: _user == null
-                          ? null
-                          : () {
-                              validRegistration(
-                                _user!.id!,
-                                {
-                                  "validerId": _currentUser?.id,
-                                  "confirm": "1",
+                          onpressed: () {
+                            // ignore: use_build_context_synchronously
+                            Navigator.pop(context);
+                          },
+                          buttonWidth: width * 0.3,
+                          buttonHeight: width * 0.15,
+                        ),
+                        Button(
+                          buttonText: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              if (_isLoadingValidate)
+                                Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: SizedBox(
+                                        width: 0.05 * width,
+                                        height: 0.05 * width,
+                                        child: const CircularProgressIndicator(
+                                          color: myWhite,
+                                          strokeWidth: 2,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                  ],
+                                ),
+                              const Text(
+                                "Valider",
+                                style: TextStyle(
+                                  color: myGris,
+                                  fontFamily: "Manrope",
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                          onpressed: _user == null
+                              ? null
+                              : () {
+                                  validRegistration(
+                                    _user!.id!,
+                                    {
+                                      "validerId": _currentUser?.id,
+                                      "confirm": "1",
+                                    },
+                                  );
                                 },
-                              );
-                            },
-                      buttonWidth: width * 0.3,
-                      buttonHeight: width * 0.15,
-                    )
-                  ],
-                ),
-              )
-            else
-              const Button(
-                buttonText: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: Text(
-                    "Vendeur déjà validé",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: myGris,
-                      fontFamily: "Manrope",
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
+                          buttonWidth: width * 0.3,
+                          buttonHeight: width * 0.15,
+                        )
+                      ],
                     ),
-                  ),
-                ),
-                onpressed: null,
-              )
-          ],
-        ),
+                  )
+                else
+                  const Button(
+                    buttonText: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Text(
+                        "Utilisateur déjà validé",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: myGris,
+                          fontFamily: "Manrope",
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    onpressed: null,
+                  )
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

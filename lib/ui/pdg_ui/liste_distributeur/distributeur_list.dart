@@ -32,9 +32,9 @@ class _DistributeurListState extends ConsumerState<DistributeurList> {
   final _userService = UserService();
 
   @override
-  void didChangeDependencies() {
+  void didChangeDependencies() async {
     super.didChangeDependencies();
-    loadUserDist();
+    await loadUserDist();
   }
 
   @override
@@ -220,79 +220,81 @@ class _DistributeurListState extends ConsumerState<DistributeurList> {
                 Column(
                   children: List.generate(distList.length, (index) {
                     final dist = distList[index];
-                    return Card(
-                      elevation: 2,
-                      surfaceTintColor: myWhite,
-                      child: ListTile(
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) {
-                              return DistributeurDetail(
-                                user: dist,
-                              );
-                            }),
-                          );
-                        },
-                        shape: const ContinuousRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(20),
-                          ),
+                    return ListTile(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) {
+                            return DistributeurDetail(
+                              user: dist,
+                            );
+                          }),
+                        );
+                      },
+                      shape: const ContinuousRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(20),
                         ),
-                        leading: CircleAvatar(
-                          backgroundColor: myPink,
-                          child: ClipOval(
-                            child: AspectRatio(
-                              aspectRatio: 1,
-                              child: Image.asset(
-                                "assets/img/user_image.png",
-                                fit: BoxFit.cover,
-                              ),
+                      ),
+                      leading: CircleAvatar(
+                        backgroundColor: myPink,
+                        child: ClipOval(
+                          child: AspectRatio(
+                            aspectRatio: 1,
+                            child: Image.asset(
+                              "assets/img/icons/profile.png",
+                              fit: BoxFit.cover,
                             ),
                           ),
                         ),
-                        title: Text(
-                          "Distributeur ${numberFormat.format(index + 1)}",
-                          style: const TextStyle(
-                            fontFamily: 'Manrope',
-                            fontWeight: FontWeight.w600,
-                          ),
+                      ),
+                      title: Text(
+                        "Distributeur ${numberFormat.format(index + 1)}",
+                        style: const TextStyle(
+                          fontFamily: 'Manrope',
+                          fontWeight: FontWeight.w600,
                         ),
-                        subtitle: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
+                      ),
+                      subtitle: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Text(
                               dist.name ?? "----",
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
                               style: const TextStyle(
                                 fontFamily: 'Manrope',
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            SizedBox(
-                              width: 0.2 * width,
-                              child: Text(
-                                dist.email ?? "----",
-                                style: const TextStyle(
-                                  fontFamily: 'Manrope',
-                                  color: myPink,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 10,
-                                ),
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Expanded(
+                            child: Text(
+                              dist.email ?? "----",
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                              style: const TextStyle(
+                                fontFamily: 'Manrope',
+                                color: myPink,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 10,
                               ),
                             ),
-                          ],
-                        ),
-                        trailing: Checkbox(
-                          value: itemSelections[index],
-                          onChanged: (value) {
-                            setState(() {
-                              itemSelections.removeAt(index);
-                              itemSelections.insert(index, value!);
-                            });
-                          },
-                        ),
+                          ),
+                        ],
+                      ),
+                      trailing: Checkbox(
+                        shape: const CircleBorder(),
+                        value: itemSelections[index],
+                        onChanged: (value) {
+                          setState(() {
+                            itemSelections.removeAt(index);
+                            itemSelections.insert(index, value!);
+                          });
+                        },
                       ),
                     );
                   }),

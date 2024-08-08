@@ -100,7 +100,7 @@ class _DistributeurOffiDetailState
                           child: AspectRatio(
                             aspectRatio: 1,
                             child: Image.asset(
-                              "assets/img/user_image.png",
+                              "assets/img/icons/profile.png",
                               fit: BoxFit.cover,
                             ),
                           ),

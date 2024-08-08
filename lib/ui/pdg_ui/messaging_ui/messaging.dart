@@ -111,8 +111,9 @@ class _MessagingUIState extends ConsumerState<MessagingUI> {
                                                         ? index + 1
                                                         : index]
                                                     .updatedAt!) ==
-                                                dateFormatD
-                                                    .format(DateTime.now())
+                                                dateFormatD.format(
+                                                  DateTime.now(),
+                                                )
                                             ? "aujourd'hui"
                                             : dateFormatD.format(messages[index !=
                                                                 messages.length -
@@ -147,25 +148,25 @@ class _MessagingUIState extends ConsumerState<MessagingUI> {
                                 ),
                               if (message.idReceiver == _currentUser!.id)
                                 Align(
-                                  alignment: Alignment.centerRight,
+                                  alignment: Alignment.centerLeft,
                                   child: Padding(
                                     padding: const EdgeInsets.only(
                                       top: 10,
                                       bottom: 10,
-                                      left: 100,
+                                      right: 100,
                                     ),
                                     child: Column(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.end,
+                                          CrossAxisAlignment.start,
                                       children: [
                                         ClipPath(
-                                          clipper: ContainerClipper(),
+                                          clipper: ContainerClipper01(),
                                           child: Container(
                                             padding: const EdgeInsets.only(
-                                              left: 12,
-                                              top: 12,
-                                              bottom: 10,
-                                              right: 20,
+                                              left: 25,
+                                              top: 10,
+                                              bottom: 12,
+                                              right: 10,
                                             ),
                                             decoration: const BoxDecoration(
                                               color: myPink,
@@ -186,6 +187,7 @@ class _MessagingUIState extends ConsumerState<MessagingUI> {
                                             ),
                                           ),
                                         ),
+                                        /*
                                         Text(
                                           "${_destinataire!.name!.split(" ")[0]}, ${dateFormatH.format(
                                             message.updatedAt ?? DateTime.now(),
@@ -198,31 +200,32 @@ class _MessagingUIState extends ConsumerState<MessagingUI> {
                                             fontSize: 10,
                                           ),
                                         ),
+                                        */
                                       ],
                                     ),
                                   ),
                                 )
                               else
                                 Align(
-                                  alignment: Alignment.centerLeft,
+                                  alignment: Alignment.centerRight,
                                   child: Padding(
                                     padding: const EdgeInsets.only(
                                       top: 10,
                                       bottom: 10,
-                                      right: 100,
+                                      left: 100,
                                     ),
                                     child: Column(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                          CrossAxisAlignment.end,
                                       children: [
                                         ClipPath(
-                                          clipper: ContainerClipper01(),
+                                          clipper: ContainerClipper(),
                                           child: Container(
                                             padding: const EdgeInsets.only(
-                                              left: 25,
-                                              top: 10,
-                                              bottom: 12,
-                                              right: 10,
+                                              left: 12,
+                                              top: 12,
+                                              bottom: 10,
+                                              right: 20,
                                             ),
                                             decoration: const BoxDecoration(
                                               color: Colors.blue,
@@ -259,6 +262,7 @@ class _MessagingUIState extends ConsumerState<MessagingUI> {
                                             */
                                           ),
                                         ),
+                                        /*
                                         Text(
                                           "vous, ${dateFormatH.format(
                                             message.updatedAt ?? DateTime.now(),
@@ -271,6 +275,7 @@ class _MessagingUIState extends ConsumerState<MessagingUI> {
                                             fontSize: 10,
                                           ),
                                         ),
+                                        */
                                       ],
                                     ),
                                   ),

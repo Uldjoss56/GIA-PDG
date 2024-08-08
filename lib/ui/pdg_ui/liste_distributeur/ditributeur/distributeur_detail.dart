@@ -40,10 +40,10 @@ class _DistributeurDetailState extends ConsumerState<DistributeurDetail> {
   }
 
   @override
-  void didChangeDependencies() {
+  void didChangeDependencies() async {
     super.didChangeDependencies();
     dist = widget.user;
-    loadUserSeller(dist!.id!);
+    await loadUserSeller(dist!.id!);
   }
 
   @override
@@ -106,7 +106,7 @@ class _DistributeurDetailState extends ConsumerState<DistributeurDetail> {
                       child: AspectRatio(
                         aspectRatio: 1,
                         child: Image.asset(
-                          "assets/img/user_image.png",
+                          "assets/img/icons/profile.png",
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -345,7 +345,7 @@ class _DistributeurDetailState extends ConsumerState<DistributeurDetail> {
                             BlendMode.srcIn,
                           ),
                           child: Image.asset(
-                            "assets/img/icons/language_pink.png",
+                            "assets/img/icons/list.png",
                             width: 0.08 * width,
                           ),
                         ),
@@ -362,37 +362,34 @@ class _DistributeurDetailState extends ConsumerState<DistributeurDetail> {
                     body: Column(
                       children: List.generate(distSellers.length, (subIndex) {
                         final seller = distSellers[subIndex];
-                        return Card(
-                          color: Colors.white,
-                          child: ListTile(
-                            onTap: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(builder: (context) {
-                                  return SellerDetail(
-                                    sellerIndex: subIndex,
-                                  );
-                                }),
-                              );
-                            },
-                            leading: CircleAvatar(
-                              backgroundColor: myPink,
-                              child: ClipOval(
-                                child: AspectRatio(
-                                  aspectRatio: 1,
-                                  child: Image.asset(
-                                    "assets/img/user_image.png",
-                                    fit: BoxFit.fitWidth,
-                                    height: 0.079 * width,
-                                    width: 0.079 * width,
-                                  ),
+                        return ListTile(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context) {
+                                return SellerDetail(
+                                  sellerIndex: subIndex,
+                                );
+                              }),
+                            );
+                          },
+                          leading: CircleAvatar(
+                            backgroundColor: myPink,
+                            child: ClipOval(
+                              child: AspectRatio(
+                                aspectRatio: 1,
+                                child: Image.asset(
+                                  "assets/img/icons/profile.png",
+                                  fit: BoxFit.fitWidth,
+                                  height: 0.079 * width,
+                                  width: 0.079 * width,
                                 ),
                               ),
                             ),
-                            title: Text(
-                              seller.name ?? "",
-                            ),
-                            subtitle: const Text("vendeur"),
                           ),
+                          title: Text(
+                            seller.name ?? "",
+                          ),
+                          subtitle: const Text("vendeur"),
                         );
                       }),
                     ),

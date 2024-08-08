@@ -215,7 +215,7 @@ class _DistributeurPaysListState extends ConsumerState<DistributeurPaysList> {
                                     child: AspectRatio(
                                       aspectRatio: 1,
                                       child: Image.asset(
-                                        "assets/img/user_image.png",
+                                        "assets/img/icons/profile.png",
                                         fit: BoxFit.cover,
                                       ),
                                     ),
@@ -229,6 +229,7 @@ class _DistributeurPaysListState extends ConsumerState<DistributeurPaysList> {
                                     children: [
                                       Text(
                                         aDistPays.name ?? "----",
+                                        overflow: TextOverflow.ellipsis,
                                         style: const TextStyle(
                                           fontFamily: "Manrope",
                                           fontSize: 18,

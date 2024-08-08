@@ -91,7 +91,7 @@ class _DistributeurPaysState extends ConsumerState<DistributeurPays> {
                         child: AspectRatio(
                           aspectRatio: 1,
                           child: Image.asset(
-                            "assets/img/user_image.png",
+                            "assets/img/icons/profile.png",
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -373,7 +373,7 @@ class _DistributeurPaysState extends ConsumerState<DistributeurPays> {
                                 child: AspectRatio(
                                   aspectRatio: 1,
                                   child: Image.asset(
-                                    "assets/img/user_image.png",
+                                    "assets/img/icons/profile.png",
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -389,20 +389,28 @@ class _DistributeurPaysState extends ConsumerState<DistributeurPays> {
                             subtitle: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  dist.name ?? "---",
-                                  style: const TextStyle(
-                                    fontFamily: 'Manrope',
-                                    fontWeight: FontWeight.w400,
+                                Expanded(
+                                  child: Text(
+                                    dist.name ?? "---",
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      fontFamily: 'Manrope',
+                                      fontWeight: FontWeight.w400,
+                                    ),
                                   ),
                                 ),
-                                Text(
-                                  dist.email ?? "---",
-                                  style: const TextStyle(
-                                    fontFamily: 'Manrope',
-                                    color: myPink,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 10,
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    dist.email ?? "---",
+                                    style: const TextStyle(
+                                      fontFamily: 'Manrope',
+                                      color: myPink,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 10,
+                                    ),
                                   ),
                                 ),
                               ],

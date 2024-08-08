@@ -229,54 +229,55 @@ class _AssistListState extends ConsumerState<AssistList> {
                     Column(
                       children: List.generate(assist.length, (index) {
                         final seller = assist[index];
-                        return Card(
-                          elevation: 2,
-                          surfaceTintColor: myWhite,
-                          child: ListTile(
-                            onTap: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(builder: (context) {
-                                  return AssistDetail(
-                                    assistIndex: index,
-                                  );
-                                }),
-                              );
-                            },
-                            shape: const ContinuousRectangleBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(20),
-                              ),
+                        return ListTile(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context) {
+                                return AssistDetail(
+                                  assistIndex: index,
+                                );
+                              }),
+                            );
+                          },
+                          shape: const ContinuousRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(20),
                             ),
-                            leading: CircleAvatar(
-                              backgroundColor: myPink,
-                              child: ClipOval(
-                                child: AspectRatio(
-                                  aspectRatio: 1,
-                                  child: Image.asset(
-                                    "assets/img/user_image.png",
-                                    fit: BoxFit.cover,
-                                  ),
+                          ),
+                          leading: CircleAvatar(
+                            backgroundColor: myPink,
+                            child: ClipOval(
+                              child: AspectRatio(
+                                aspectRatio: 1,
+                                child: Image.asset(
+                                  "assets/img/icons/profile.png",
+                                  fit: BoxFit.cover,
                                 ),
                               ),
                             ),
-                            title: Text(
-                              "Assistanr ${numberFormat.format(index + 1)}",
-                              style: const TextStyle(
-                                fontFamily: 'Manrope',
-                                fontWeight: FontWeight.w600,
-                              ),
+                          ),
+                          title: Text(
+                            "Assistant ${numberFormat.format(index + 1)}",
+                            style: const TextStyle(
+                              fontFamily: 'Manrope',
+                              fontWeight: FontWeight.w600,
                             ),
-                            subtitle: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
+                          ),
+                          subtitle: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Text(
                                   "${seller.name}",
+                                  overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
                                     fontFamily: 'Manrope',
                                     fontWeight: FontWeight.w400,
                                   ),
                                 ),
-                                Text(
+                              ),
+                              Expanded(
+                                child: Text(
                                   "${seller.email}",
                                   style: const TextStyle(
                                     fontFamily: 'Manrope',
@@ -285,18 +286,19 @@ class _AssistListState extends ConsumerState<AssistList> {
                                     fontSize: 10,
                                   ),
                                 ),
-                              ],
-                            ),
-                            trailing: Checkbox(
-                              value: itemSelections[index],
-                              onChanged: (value) {
-                                setState(() {
-                                  itemSelections.removeAt(index);
-                                  itemSelections.insert(index, value!);
-                                  checkSelectAll();
-                                });
-                              },
-                            ),
+                              ),
+                            ],
+                          ),
+                          trailing: Checkbox(
+                            shape: const CircleBorder(),
+                            value: itemSelections[index],
+                            onChanged: (value) {
+                              setState(() {
+                                itemSelections.removeAt(index);
+                                itemSelections.insert(index, value!);
+                                checkSelectAll();
+                              });
+                            },
                           ),
                         );
                       }),

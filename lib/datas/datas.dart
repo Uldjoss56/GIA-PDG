@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:gia_pdg_partenaire/components/notification/notification_page.dart';
 import 'package:gia_pdg_partenaire/ui/partner_ui/home/partner_home.dart';
+import 'package:gia_pdg_partenaire/ui/partner_ui/turnover/ca.dart';
+import 'package:gia_pdg_partenaire/ui/pdg_ui/commander_dma/commander_dma.dart';
 import 'package:gia_pdg_partenaire/ui/pdg_ui/distributeur_officiel/distributeur_off_detail.dart';
 import 'package:gia_pdg_partenaire/ui/pdg_ui/home/pdg_home.dart';
+import 'package:gia_pdg_partenaire/ui/pdg_ui/liste_assist/assist_list.dart';
+import 'package:gia_pdg_partenaire/ui/pdg_ui/liste_distributeur/distributeur_list.dart';
+import 'package:gia_pdg_partenaire/ui/pdg_ui/liste_distributeur_pays/distributeur_pays_list.dart';
+import 'package:gia_pdg_partenaire/ui/pdg_ui/liste_vendeur/seller_list.dart';
 import 'package:gia_pdg_partenaire/ui/pdg_ui/messaging_ui/chat_list.dart';
 import 'package:gia_pdg_partenaire/components/profil/user_profil.dart';
+import 'package:gia_pdg_partenaire/ui/pdg_ui/stock/stock.dart';
 
 const staticPath = "assets/img/africa_flag/";
 
@@ -184,7 +191,7 @@ List<Map<String, dynamic>> notificationData = [
 
 Map<String, dynamic> userData = {
   "imgCoverPath": "assets/img/background02.png",
-  "profilImage": "assets/img/user_image.png",
+  "profilImage": "assets/img/icons/profile.png",
   "fullname": "DJOSSOU Ulrich",
   "email": "uldjoss56@gmail.com",
   "birthday": "20-07-2004",
@@ -582,22 +589,47 @@ List<Map<String, dynamic>> notifData = [
   },
 ];
 
-List<String> pdgOptions = [
-  "Distributeur Officiel",
-  "Liste des vendeurs",
-  "Liste des distributeurs",
-  "Liste des distributeurs pays",
-  "Liste des assistants clientèles",
-  "Commande",
-];
-
-List<String> pdgOptionsImg = [
-  "assets/img/heart_phone.png",
-  "assets/img/list.png",
-  "assets/img/list.png",
-  "assets/img/list.png",
-  "assets/img/list.png",
-  "assets/img/order.png",
+List<Map<String, dynamic>> pdgOptions = [
+  {
+    "title": "Chiffre d'affaire",
+    "img": "assets/img/turnover.png",
+    "route": const CA(),
+  },
+  {
+    "title": "Stock",
+    "img": "assets/img/affect.png",
+    "route": const Stock(),
+  },
+  {
+    "title": "Commande",
+    "img": "assets/img/order.png",
+    "route": const CommanderDMA(),
+  },
+  {
+    "title": "Liste des assistants clientèles",
+    "img": "assets/img/list.png",
+    "route": const AssistList(),
+  },
+  {
+    "title": "Liste des distributeurs pays",
+    "img": "assets/img/list.png",
+    "route": const DistributeurPaysList(),
+  },
+  {
+    "title": "Liste des distributeurs",
+    "img": "assets/img/list.png",
+    "route": const DistributeurList(),
+  },
+  {
+    "title": "Liste des vendeurs",
+    "img": "assets/img/list.png",
+    "route": const SellerList(),
+  },
+  {
+    "title": "Distributeur Officiel",
+    "img": "assets/img/heart_phone.png",
+    "route": const DistributeurOffiDetail(),
+  },
 ];
 
 final theRoles = {

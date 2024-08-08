@@ -116,7 +116,7 @@ messenger(BuildContext context, String text) {
           ),
           Expanded(
             child: Text(
-              "Erreur survenue : $text",
+              " $text",
               style: const TextStyle(
                 color: myGris,
                 fontWeight: FontWeight.w500,

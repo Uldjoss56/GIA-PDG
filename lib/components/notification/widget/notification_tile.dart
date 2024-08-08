@@ -5,7 +5,7 @@ import 'package:gia_pdg_partenaire/components/const/colors.dart';
 import 'package:gia_pdg_partenaire/components/const/number.dart';
 import 'package:gia_pdg_partenaire/components/show_info.dart';
 import 'package:gia_pdg_partenaire/components/validation_inscription/validate_registration.dart';
-import 'package:gia_pdg_partenaire/components/validation_order/validate_order.dart';
+import 'package:gia_pdg_partenaire/components/view_order/view_order.dart';
 import 'package:gia_pdg_partenaire/datas/datas.dart';
 import 'package:gia_pdg_partenaire/models/notifications.dart';
 import 'package:gia_pdg_partenaire/models/user.dart';
